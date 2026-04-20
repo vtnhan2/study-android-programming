@@ -1,0 +1,23 @@
+
+# IDE & Build
+.gradle/
+.idea/
+build/
+*.iml
+local.properties
+.DS_Store
+
+# Android Artifacts
+Captures/
+*.apk
+*.aar
+*.jks
+
+# Backup/Compressed
+*.rar
+*.zip
+*.7z
+
+# Logs
+*.log
+

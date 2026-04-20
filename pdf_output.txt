@@ -1,0 +1,800 @@
+--- PAGE 1 ---
+1 
+ 
+THỰC HÀNH LẬP TRÌNH DI ĐỘNG 
+ 
+ 
+Bài 1: Cộng 2 số như hình dưới 
+ 
+Bài giải tham khảo: 
+- Khởi động Android Studio 
+- Tạo mới Project  -> chọn Empty project  (hoặc Empty Views Activity với 
+phiên bản Android studio 2023 trở lên) 
+
+--- PAGE 2 ---
+2 
+ 
+ 
+- Đặt tên cho Project, chọn ngôn ngữ Java và nhấn Finish 
+ 
+- Chờ đợi Project được tạo ra 
+
+--- PAGE 3 ---
+3 
+ 
+ 
+Thiết kế giao diện 
+- Chọn tới file activity_main.xml trong thư mục layout của Project 
+- Mặc định layout là ConstrainLayout, nhấn phải chuột vào chữ này và chọn 
+Convert View… để chuyển sang RelativeLayout 
+ 
+- Cầm kéo TextView vào giao diện, 
+
+--- PAGE 4 ---
+4 
+ 
+ 
+- Gõ chữ layout trong ô tìm kiếm thuộc tính, thiết lập các thuộc tính 
+android:layout_alignParentTop="true", 
+android:layout_centerHorizontal="true" như hình dưới 
+ 
+- Đổi thuộc tính text của TextView là Enter Number 1 
+
+--- PAGE 5 ---
+5 
+ 
+ 
+- Khi chúng ta thiết kế giao diện thì code XML trong file activity_main.xml 
+cũng thay đổi tương ứng. 
+Tương tự, sinh viên cầm kéo thả các Widget khác vào phần giao diện thiết kế, chọn 
+thuộc tính để thiết kế giao diện như yêu cầu đề bài. Tham khảo code sau nếu gặp 
+khó khăn khi thiết kế. 
+activity_main.xml 
+<?xml version="1.0" encoding="utf-8"?> 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+xmlns:app="http://schemas.android.com/apk/res-auto" 
+xmlns:tools="http://schemas.android.com/tools" 
+android:layout_width="match_parent" 
+android:layout_height="match_parent" 
+android:layout_centerHorizontal="true" 
+tools:context=".MainActivity"> 
+<TextView  
+android:id="@+id/textview1" 
+android:layout_width="wrap_content" 
+
+--- PAGE 6 ---
+6 
+ 
+android:layout_height="wrap_content" 
+android:layout_alignParentTop="true" 
+android:layout_centerHorizontal="true" 
+android:text="Enter number 1" 
+android:textSize="18sp" /> 
+<EditText  
+android:id="@+id/first" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_below="@id/textview1" 
+android:layout_alignParentTop="false" 
+android:layout_alignParentRight="false" 
+android:layout_centerHorizontal="true" 
+android:ems="10" 
+android:inputType="number" /> 
+<TextView  
+android:id="@+id/textView2" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_below="@id/first" 
+android:layout_centerHorizontal="true" 
+android:text="Enter Number 2" 
+android:textSize="18sp" /> 
+<EditText  
+android:id="@+id/second" 
+--- PAGE 7 ---
+7 
+ 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_below="@id/textView2" 
+android:layout_centerHorizontal="true" 
+android:ems="10" 
+android:inputType="number" /> 
+<Button 
+android:id="@+id/buttonadd" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_below="@id/second" 
+android:layout_centerHorizontal="true" 
+android:text="Add" /> 
+<TextView  
+android:id="@+id/result" 
+android:layout_width="wrap_content" 
+android:layout_height="wrap_content" 
+android:layout_below="@id/buttonadd" 
+android:layout_centerHorizontal="true" 
+android:textSize="24sp" /> 
+</RelativeLayout> 
+Viết code java thực thi, đưa code sau vào MainActivity 
+MainActivity.java 
+package org.teachics.addition; 
+import androidx.appcompat.app.AppCompatActivity; 
+--- PAGE 8 ---
+8 
+ 
+import android.os.Bundle; 
+import android.view.View; 
+import android.widget.Button; 
+import android.widget.EditText; 
+import android.widget.TextView; 
+public class MainActivity extends AppCompatActivity { 
+EditText firstnum,secondnum; 
+TextView r; 
+Button bt; 
+double a,b,c; 
+    @Override 
+    protected void onCreate(Bundle savedInstanceState) { 
+        super.onCreate(savedInstanceState); 
+        setContentView(R.layout.activity_main); 
+        firstnum=(EditText) findViewById(R.id.first); 
+        secondnum=(EditText) findViewById(R.id.second); 
+        bt=(Button) findViewById(R.id.buttonadd); 
+        r=(TextView) findViewById(R.id.result); 
+        bt.setOnClickListener(new View.OnClickListener() { 
+            @Override 
+            public void onClick(View v) { 
+                a=Double.parseDouble(firstnum.getText().toString()); 
+                b=Double.parseDouble(secondnum.getText().toString()); 
+                c=a+b; 
+                r.setText("Sum="+c); 
+--- PAGE 9 ---
+9 
+ 
+            } 
+        }); 
+    } 
+} 
+Chạy và xem kết quả. 
+Bài 1.1: Tạo Button góc bo tròn  
+ 
+Hướng dẫn: 
+- Tạo mới 1 Project 
+- Tạo file button.xml trong thư mục Drawable để tạo button 
+ 
+- Đưa code XML sau vào 
+<?xml version ="1.0" encoding ="utf-8" ?> 
+<selector xmlns:android ="http://schemas.android.com/apk/res/android" > 
+    <item android :state_pressed ="false" > 
+        <shape> 
+            <solid 
+                android :color="#FDC36B" /> 
+
+--- PAGE 10 ---
+10 
+ 
+            <stroke 
+                android :width="1px" 
+                android :color="#DAB545" /> 
+            <corners android :radius ="50dp" /> 
+        </shape> 
+    </item> 
+    <item android :state_pressed ="true" > 
+        <shape> 
+            <solid 
+                android :color="#FF5722" /> 
+            <stroke 
+                android :width="1px" 
+                android :color="#FF5722" /> 
+            <corners android :radius ="50dp" /> 
+        </shape> 
+    </item> 
+</selector>  
+ 
+- Đưa vào Activity_main code sau 
+<?xml version ="1.0" encoding ="utf-8" ?> 
+<androidx.constraintlayout.widget.ConstraintLayout 
+xmlns:android ="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools" 
+    android :layout_width ="match_parent" 
+    android :layout_height ="match_parent" 
+    tools:context =".MainActivity" > 
+    <Button 
+        android :id="@+id/button2" 
+        android :layout_width ="wrap_content" 
+        android :layout_height ="wrap_content" 
+        android :layout_marginTop ="72dp" 
+        android :background ="@drawable/button" 
+        android :text="Button" 
+        app:backgroundTint ="@null" 
+        app:layout_constraintEnd_toEndOf ="parent" 
+        app:layout_constraintStart_toStartOf ="parent" 
+        app:layout_constraintTop_toTopOf ="parent" /> 
+</androidx.constraintlayout.widget.ConstraintLayout>  
+ 
+ 
+Bài 1.2: Tạo máy tính toán đơn giản như hình dưới 
+
+--- PAGE 11 ---
+11 
+ 
+ 
+Tham khảo code tại: 
+https://javapapers.com/android/how-to-build-android-calculator-app/  
+Bài 2: Dùng LinearLayout thiết kế giao diện sau:  
+ 
+
+--- PAGE 12 ---
+12 
+ 
+ 
+Một số thuộc tính quan trọng: 
+android:layout_weight   
+android:layout_gravity 
+Các icon có thể tải từ: https://www.iconarchive.com/  hoặc dùng icon có sẵn của 
+Android studio: Right click on Drawable folder then New–>Vector Asset.  
+Bài tham khảo: 
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools" 
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent" 
+    tools:context=".LinearLayoutActivity" 
+    android:orientation="vertical" > 
+    <ScrollView  
+        android:layout_width="match_parent" 
+        android:layout_height="0dp" 
+        android:layout_weight="1" > 
+        <LinearLayout  
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content" 
+            android:orientation="vertical" 
+            android:padding="16dp" > 
+            <LinearLayout  
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:orientation="horizontal" > 
+                <ImageView  
+--- PAGE 13 ---
+13 
+ 
+                    android:id="@+id/imgName" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:layout_marginTop="11dp" 
+                    app:srcCompat="@drawable/ic_person_near_black_24dp" ></ImageView>  
+                <EditText  
+                    android:id="@+id/etName" 
+                    android:layout_width="0dp" 
+                    android:layout_height="wrap_content" 
+                    android:layout_weight="1" 
+                    android:layout_marginLeft="16dp" 
+                    android:layout_marginRight="16dp" 
+                    android:hint="Name" ></EditText>  
+                <ImageButton  
+                    android:id="@+id/imgBtnToggleName" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    app:srcCompat="@drawable/ic_expand_more_near_black_24dp" ></ImageButton>  
+            </LinearLayout>  
+            <LinearLayout  
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:orientation="horizontal" 
+                android:layout_marginTop="16dp" > 
+                <ImageView  
+                    android:id="@+id/imgPhone" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:layout_marginTop="11dp" 
+--- PAGE 14 ---
+14 
+ 
+                    app:srcCompat="@drawable/ic_phone_near_black_24dp" ></ImageView>  
+                <EditText  
+                    android:id="@+id/etPhone" 
+                    android:layout_width="0dp" 
+                    android:layout_height="wrap_content" 
+                    android:layout_weight="1" 
+                    android:layout_marginLeft="16dp" 
+                    android:hint="Phone" ></EditText>  
+            </LinearLayout>  
+            <LinearLayout  
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:orientation="horizontal" 
+                android:layout_marginTop="16dp" > 
+                <ImageView  
+                    android:id="@+id/imgEmail" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:layout_marginTop="11dp" 
+                    app:srcCompat="@drawable/ic_email_near_black_24dp" ></ImageView>  
+                <EditText  
+                    android:id="@+id/etEmail" 
+                    android:layout_width="0dp" 
+                    android:layout_height="wrap_content" 
+                    android:layout_weight="1" 
+                    android:layout_marginLeft="16dp" 
+                    android:hint="Email" ></EditText>  
+            </LinearLayout>  
+            <LinearLayout  
+--- PAGE 15 ---
+15 
+ 
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:orientation="horizontal" 
+                android:layout_marginTop="16dp" > 
+                <ImageView  
+                    android:id="@+id/imgWork" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:layout_marginTop="11dp" 
+                    app:srcCompat="@drawable/ic_business_near_black_24dp" ></ImageView>  
+                <EditText  
+                    android:id="@+id/etWork" 
+                    android:layout_width="0dp" 
+                    android:layout_height="wrap_content" 
+                    android:layout_weight="1" 
+                    android:layout_marginLeft="16dp" 
+                    android:hint="Work" ></EditText>  
+            </LinearLayout>  
+            <LinearLayout  
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:orientation="horizontal" 
+                android:layout_marginTop="16dp" > 
+                <ImageView  
+                    android:id="@+id/imgGroups" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:layout_marginTop="11dp" 
+                    app:srcCompat="@drawable/ic_people_near_black_24dp" ></ImageView>  
+--- PAGE 16 ---
+16 
+ 
+                <EditText  
+                    android:id="@+id/etGroups" 
+                    android:layout_width="0dp" 
+                    android:layout_height="wrap_content" 
+                    android:layout_weight="1" 
+                    android:layout_marginLeft="16dp" 
+                    android:hint="Groups" ></EditText>  
+            </LinearLayout>  
+            <LinearLayout  
+                android:layout_width="match_parent" 
+                android:layout_height="wrap_content" 
+                android:orientation="horizontal" 
+                android:layout_marginTop="16dp" > 
+                <ImageView  
+                    android:id="@+id/imgAddress" 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:layout_marginTop="11dp" 
+                    app:srcCompat="@drawable/ic_location_on_near_black_24dp" ></ImageView>  
+                <EditText  
+                    android:id="@+id/etAddress" 
+                    android:layout_width="0dp" 
+                    android:layout_height="wrap_content" 
+                    android:layout_weight="1" 
+                    android:layout_marginLeft="16dp" 
+                    android:hint="Address" ></EditText>  
+            </LinearLayout>  
+        </LinearLayout>  
+    </ScrollView>  
+--- PAGE 17 ---
+17 
+ 
+    <LinearLayout  
+        android:padding="16dp" 
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content" 
+        android:orientation="horizontal" > 
+        <Button 
+            android:layout_width="0dp" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="1" 
+            android:text="Cancel" ></Button>  
+        <Button 
+            android:layout_width="0dp" 
+            android:layout_height="wrap_content" 
+            android:layout_weight="1" 
+            android:text="Save" ></Button>  
+    </LinearLayout>  
+</LinearLayout> 
+Bài 3.1: Thiết kế giao diện Login như sau 
+--- PAGE 18 ---
+18 
+ 
+ 
+Tham khảo code tại: https://appsnipp.com/free-login-registration-xml-design-for-
+android/ 
+Bài 3.2: Thiết kế giao diện Login/ Register như sau 
+ 
+
+--- PAGE 19 ---
+19 
+ 
+ 
+Gợi ý: xem clip  https://youtu.be/jCmG8z_wrXM  
+Cách tạo editText góc tròn 
+Bước 1: tạo file rounded_edittext 
+ 
+<?xml version="1.0" encoding="utf-8"?> 
+<!--  res/drawable/rounded_edittext.xml --> 
+<shape xmlns:android="http://schemas.android.com/apk/res/android" 
+
+--- PAGE 20 ---
+20 
+ 
+    android:shape="rectangle"  
+    android:padding="10dp"> 
+ 
+    <solid android:color="#FFFFFF" /> 
+    <corners 
+        android:bottomRightRadius="15dp" 
+        android:bottomLeftRadius="15dp" 
+        android:topLeftRadius="15dp" 
+        android:topRightRadius="15dp" /> 
+</shape> 
+<?xml version="1.0" encoding="utf-8"?> 
+ 
+Bước 2: thiết lập thuộc tính background của edittext 
+ 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:orientation="vertical" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"> 
+ 
+    <EditText   
+        android:layout_width="fill_parent"  
+        android:layout_height="wrap_content"  
+        android:padding="5dip" 
+        android:background="@drawable/rounded_edittext" /> 
+</LinearLayout> 
+Bài 4.1: Thiết kế giao diện như sau 
+--- PAGE 21 ---
+21 
+ 
+ 
+Tham khảo code tại:  
+https://www.androidcodefinder.com/blog/2019/03/01/designing-a-circle-layout-
+using-linearlayout-in-android/  
+Bài 4.2: Thiết kế giao diện vào game như sau 
+
+--- PAGE 22 ---
+22 
+ 
+ 
+Tham khảo giao diện tại: https://abhiandroid.com/sourcecode/quiz  
+Bài 5.1: Thiết kế listview hiển thị như sau 
+ 
+ 
+
+--- PAGE 23 ---
+23 
+ 
+File activity_main.xml như sau: 
+<?xml version ="1.0" encoding ="utf-8" ?> 
+<RelativeLayout  xmlns:android ="http://schemas.android.com/apk/res/android"  
+xmlns:app ="http://schemas.android.com/apk/res-auto"  
+xmlns:tools ="http://schemas.android.com/tools"  
+android:layout_width ="match_parent"  
+android:layout_height ="match_parent"  
+tools:context ="com.sanktips.customlistviewexample.MainActivity" > 
+<ListView  
+android:id ="@+id/androidList"  
+android:layout_width ="match_parent"  
+android:layout_height ="match_parent" /> 
+ 
+</RelativeLayout>  
+Ở thư mục layout chọn New và chọn Layout resource đặt tên là single_list_item.xml  
+<?xml version ="1.0" encoding ="utf-8" ?> 
+<RelativeLayout  xmlns:android ="http://schemas.android.com/apk/res/android"  
+android:layout_width ="match_parent"  
+android:layout_height ="match_parent"  
+android:padding ="8dp"> 
+<ImageView  
+android:id ="@+id/appIconIV"  
+android:src ="@drawable/applepie"  
+android:layout_width ="60dp" 
+android:layout_height ="60dp" /> 
+<TextView  
+android:id ="@+id/aNametxt"  
+android:text ="Android Name"  
+android:textSize ="20sp" 
+android:layout_marginTop ="8dp" 
+android:maxLines ="1" 
+android:layout_width ="match_parent"  
+android:layout_height ="wrap_content"  
+--- PAGE 24 ---
+24 
+ 
+android:layout_alignParentTop ="true" 
+android:layout_toRightOf ="@+id/appIconIV"  
+android:layout_toEndOf ="@+id/appIconIV"  
+android:layout_marginLeft ="12dp" 
+android:layout_marginStart ="12dp" /> 
+<TextView  
+android:id ="@+id/aVersiontxt"  
+android:text ="Android Version"  
+android:textSize ="14sp" 
+android:maxLines ="1" 
+android:layout_width ="match_parent"  
+android:layout_height ="wrap_content"  
+android:layout_below ="@+id/aNametxt"  
+android:layout_alignLeft ="@+id/aNametxt"  
+android:layout_alignStart ="@+id/aNametxt"  /> 
+</RelativeLayout>  
+Tạo lớp ListAdapter.java 
+import android .content .Context ; 
+import android .support .annotation .NonNull ; 
+import android .support .annotation .Nullable ; 
+import android .view.LayoutInflater ; 
+import android .view.View; 
+import android .view.ViewGroup ; 
+import android .widget.ArrayAdapter ; 
+import android .widget.BaseAdapter ; 
+import android .widget.ImageView ; 
+import android .widget.TextView ; 
+import java.util.ArrayList ; 
+public class ListAdapter  extends  BaseAdapter  { 
+    Context  context ; 
+    private  final String [] values ; 
+    private  final String [] numbers ; 
+    private  final int [] images ; 
+--- PAGE 25 ---
+25 
+ 
+ 
+    public ListAdapter (Context  context , String [] values , String [] numbers , int [] i
+mages){ 
+        //super(context, R.layout.single_list_app_item, utilsArrayList);  
+        this.context = context ; 
+        this.values = values ; 
+        this.numbers = numbers ; 
+        this.images = images ; 
+    } 
+ 
+    @Override  
+    public int getCount () { 
+        return values .length; 
+    } 
+ 
+    @Override  
+    public Object getItem (int i) { 
+        return i; 
+    } 
+ 
+    @Override  
+    public long getItemId (int i) { 
+        return i; 
+    } 
+ 
+    @NonNull  
+    @Override  
+    public View getView (int position , @Nullable  View convertView , @NonNull  ViewGroup  
+parent) { 
+ 
+        ViewHolder  viewHolder ; 
+        final View result ; 
+        if (convertView == null) { 
+            viewHolder = new ViewHolder (); 
+--- PAGE 26 ---
+26 
+ 
+            LayoutInflater  inflater = LayoutInflater .from(context ); 
+            convertView = inflater .inflate (R.layout.single_list_item , parent , false); 
+            viewHolder .txtName = (TextView ) convertView .findViewById (R.id.aNametxt ); 
+            viewHolder .txtVersion = (TextView ) convertView .findViewById (R.id.aVersion
+txt); 
+            viewHolder .icon = (ImageView ) convertView .findViewById (R.id.appIconIV ); 
+            result =convertView ; 
+            convertView .setTag(viewHolder ); 
+        } else { 
+            viewHolder = (ViewHolder ) convertView .getTag(); 
+            result =convertView ; 
+        } 
+        viewHolder .txtName .setText (values[position ]); 
+        viewHolder .txtVersion .setText ("Version: " +numbers [position ]); 
+        viewHolder .icon.setImageResource (images[position ]); 
+        return convertView ; 
+    } 
+ 
+    private  static class ViewHolder  { 
+        TextView  txtName ; 
+        TextView  txtVersion ; 
+        ImageView  icon; 
+    } 
+Trong MainActivity.java đưa vào code sau 
+import androidx.appcompat.app.AppCompatActivity; 
+import android.os.Bundle; 
+import android.view.View; 
+import android.widget.AdapterView; 
+import android.widget.ListView; 
+import android.widget.Toast; 
+public class MainActivity extends AppCompatActivity { 
+    int[] images = {R.drawable.applepie, R.drawable.bananabread, 
+R.drawable.cupcake, R.drawable.donut, R.drawable.eclair, R.drawable.froyo}; 
+ 
+    String[] version = {"Android Apple Pie" , "Android Banana Bread" , "Android 
+Cupcake" , "Android Donut" , "Android Eclair" , "Android Froyo" }; 
+ 
+    String[] versionNumber = {"1.0", "1.1", "1.5", "1.6", "2.0", "2.2"}; 
+ 
+    ListView lView; 
+--- PAGE 27 ---
+27 
+ 
+ 
+    ListAdapter lAdapter ; 
+    @Override 
+    protected void onCreate (Bundle savedInstanceState) { 
+        super.onCreate(savedInstanceState); 
+        setContentView(R.layout. activity_main ); 
+        lView = (ListView) findViewById(R.id. androidList ); 
+ 
+        lAdapter = new ListAdapter(MainActivity. this, version , versionNumber , 
+images); 
+ 
+        lView.setAdapter( lAdapter ); 
+ 
+        lView.setOnItemClickListener( new AdapterView.OnItemClickListener() { 
+            @Override 
+            public void onItemClick (AdapterView<?> adapterView, View view, 
+int i, long l) { 
+ 
+                Toast. makeText (MainActivity. this, version [i]+" 
+"+versionNumber [i], Toast. LENGTH_SHORT ).show(); 
+ 
+            } 
+        }); 
+    } 
+} 
+ 
+Bài 5.2: Thiết kế listview hiển thị như sau 
+ 
+--- PAGE 28 ---
+28 
+ 
+ 
+Tham khảo code tại: https://javapapers.com/android/android-listview-custom-
+layout-tutorial/ 
+Bài 5.2: Thiết kế listview hiển thị như sau 
+
+--- PAGE 29 ---
+29 
+ 
+ 
+Tham khảo code tại: https://www.javatpoint.com/android-custom-listview  
+Bài 6: Thiết kế giao diện Shop Cart như sau: 
+
+--- PAGE 30 ---
+30 
+ 
+ 
+Tham khảo code tại: https://github.com/arpit-288/Fresh_Basket  
+Bài 7: Thiết kế giao diện Shop Cart như sau: 
+
+--- PAGE 31 ---
+31 
+ 
+ 
+Tham khảo code tại: https://semycolon.blogspot.com/2014/11/first-android-app-
+step-11-shopping-cart.html  
+Bài 8: Viết Game Tic-Tac-Toe, giao diện như sau 
+
+--- PAGE 32 ---
+32 
+ 
+ 
+Tham khảo code tại: https://androidknowledge.com/tic-tac-toe-app-in-android-
+studio/ 
+Bài 9: Thiết kế 2 giao diện: first_activity có button send và Second_activity có 
+TextView receiver. First_activity gửi chuỗi “Hello :  “ + tên của bạn sang 
+Second_activity, Second_activity hiển thị chuỗi này lên giao diện. 
+Bài giải tham khảo: 
+first_activity: 
+import android.content.Intent;  
+import android.os.Bundle;  
+import android.widget.Button;  
+import android.widget.EditText;  
+import androidx.appcompat.app.AppCompatActivity;  
+
+--- PAGE 33 ---
+33 
+ 
+   
+public class first_activity extends AppCompatActivity {    
+    // define the variable  
+    Button send_button;  
+    EditText send_text;    
+    @Override 
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.activity_first_activity);          
+        send_button = findViewById(R.id.send_button_id);  
+        send_text = findViewById(R.id.send_text_id);    
+        // add the OnClickListener in sender button after clicked this button following  
+Instruction will run  
+        send_button.setOnClickListener  (new View.OnClickListener(){  
+            // get the value which input by user in EditText and convert it to string  
+            String str = send_text.getText().toString();  
+            // Create the Intent object of this class Context() to Second_activity class  
+            Intent intent = new Intent(getApplicationContext(), Second_activity.class);  
+            // now by putExtra method put the value in key, value pair key is  
+            // message_key by this key we will receive the value, and put the string  
+            intent.putExtra("message_key", str);  
+            // start the Intent  
+            startActivity(intent);  
+        });  
+    }  
+} 
+--- PAGE 34 ---
+34 
+ 
+Second_activity: 
+import android.content.Intent;  
+import android.os.Bundle;  
+import android.widget.TextView;  
+import androidx.appcompat.app.AppCompatActivity;    
+public class Second_activity extends AppCompatActivity {    
+    TextView receiver_msg;    
+    @Override 
+    protected void onCreate(Bundle savedInstanceState) {  
+        super.onCreate(savedInstanceState);  
+        setContentView(R.layout.activity_second_activity);    
+        receiver_msg = findViewById(R.id.received_value_id);  
+        // create the get Intent object  
+        Intent intent = getIntent();  
+        // receive the value by getStringExtra() method and   
+        // key must be same which is send by first activity  
+        String str = intent.getStringExtra("message_key");  
+        // display the string into textView  
+        receiver_msg.setText(str);  
+    }  
+} 
+Bài 10: Thiết kế 2 giao diện: giao diện 1 cho nhập vào 1 số tự nhiên n, một button 
+gửi và một TextView kết quả. Giao diện 2, có button thực hiện. Giao diện 1 gửi số 
+tự nhiên n sang giao diện 2, giao diện 2 tính giai thừa n và gửi kết quả về giao diện 
+1, giao diện 1 hiển thị kết quả lên. 
+--- PAGE 35 ---
+35 
+ 
+Bài 11: Thiết kế 2 giao diện: giao diện 1 gửi sang giao diện 2 một mảng các chuỗi, 
+giao diện 2 nhận mảng chuỗi, tính các ký tự ‘i’ trong tất cả các chuỗi và gửi về để 
+giao diện 1 hiển thị lên. 
+Bài 11.1:  Tạo các menu: Option menu, Context menu, Popup menu như các hình 
+dưới 
+ 
+ 
+
+--- PAGE 36 ---
+36 
+ 
+ 
+Bài 12: Thiết kế giao diện như hình dưới: 2 button, 2 fragment, nhấn vào button 
+Fragment One thì load fragment One lên, nhấn vào button Fragment Two thì load 
+fragment two lên 
+ 
+
+--- PAGE 37 ---
+37 
+ 
+ 
+Tham khảo code tại: https://www.concretepage.com/android/android-
+fragmentmanager-and-fragmenttransaction-example-replace-fragment-with-
+another-fragment-using-button-onclicklistener 
+Bài 13: Thiết kế giao diện form đăng ký (gồm username, email và mật khẩu) và 
+form đăng nhập (gồm username và mật khẩu). Thông tin form đăng ký được lưu 
+vào SQLite khi người dùng nhấn vào nút đăng ký, form đăng nhập kiểm tra tên và 
+password người dùng, nếu đã có trong SQLite thì hiển thị lên đăng nhập thành 
+công. 
+Bài tổng hợp:  Xây dựng ứng dụng bán hàng 
+Tham khảo code tại: https://www.sourcecodester.com/android/14606/e-commerce-
+application-android-full-source-code.html  
+ 
+ 
+ 
+
