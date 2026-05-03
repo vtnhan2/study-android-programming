@@ -10,7 +10,6 @@ import com.example.motoshop.data.model.Motorcycle;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.example.motoshop.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,17 +224,6 @@ public class SalesViewModel extends BaseViewModel {
             if (callback != null) callback.onError("Dữ liệu đơn hàng không hợp lệ");
             return;
         }
-
-        // Tự động sinh mã nếu chưa có
-        int countToday = 1;
-        List<SalesOrder> all = _firebaseOrders.getValue();
-        if (all != null) {
-            long todayStart = DateUtils.startOfDay(System.currentTimeMillis());
-            for (SalesOrder o : all) {
-                if (o.orderDate >= todayStart) countToday++;
-            }
-        }
-        order.orderCode = DateUtils.generateCode("DH", countToday);
 
         db.runTransaction(transaction -> {
             // 1. Đọc dữ liệu tồn kho trước
