@@ -54,6 +54,7 @@ public class DashboardFragment extends Fragment {
         setupFab(view);
         initViewModels();
         setupManagementSummary(view);
+        setupHeader(view);
         observeData();
     }
 
@@ -115,14 +116,35 @@ public class DashboardFragment extends Fragment {
         mostSearchedAdapter = new BikeCardAdapter();
         rvMostSearched.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvMostSearched.setAdapter(mostSearchedAdapter);
-        mostSearchedAdapter.setOnBikeClickListener(this::openBikeDetail);
+        mostSearchedAdapter.setOnBikeClickListener(new BikeCardAdapter.OnBikeClickListener() {
+            @Override
+            public void onBikeClick(Motorcycle bike) {
+                openBikeDetail(bike);
+            }
+
+            @Override
+            public void onFavoriteClick(Motorcycle bike) {
+                // Hiển thị thông báo hoặc xử lý yêu thích cho nhân viên (nếu cần)
+                android.widget.Toast.makeText(getContext(), "Tính năng yêu thích dành cho khách hàng", android.widget.Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Recommended
         RecyclerView rvRecommended = v.findViewById(R.id.rvRecommended);
         recommendedAdapter = new BikeCardAdapter();
         rvRecommended.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvRecommended.setAdapter(recommendedAdapter);
-        recommendedAdapter.setOnBikeClickListener(this::openBikeDetail);
+        recommendedAdapter.setOnBikeClickListener(new BikeCardAdapter.OnBikeClickListener() {
+            @Override
+            public void onBikeClick(Motorcycle bike) {
+                openBikeDetail(bike);
+            }
+
+            @Override
+            public void onFavoriteClick(Motorcycle bike) {
+                android.widget.Toast.makeText(getContext(), "Tính năng yêu thích dành cho khách hàng", android.widget.Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Chuẩn bị view, dữ liệu hoặc sự kiện cần dùng cho màn hình.
@@ -220,5 +242,18 @@ public class DashboardFragment extends Fragment {
         Intent intent = new Intent(getContext(), MotorcycleDetailActivity.class);
         intent.putExtra("MOTORCYCLE_DOC_ID", bike.documentId);
         startActivity(intent);
+    }
+
+    private void setupHeader(View view) {
+        View btnNotif = view.findViewById(R.id.btnNotification);
+        if (btnNotif != null) {
+            btnNotif.setOnClickListener(v -> {
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Thông báo")
+                        .setMessage("Tính năng thông báo đang được phát triển.")
+                        .setPositiveButton("Đã hiểu", null)
+                        .show();
+            });
+        }
     }
 }

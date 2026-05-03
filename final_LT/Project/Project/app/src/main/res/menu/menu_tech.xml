@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/nav_dashboard"
+        android:icon="@drawable/ic_dashboard"
+        android:title="Tổng quan" />
+    <item
         android:id="@+id/nav_repair"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_repair"
         android:title="Công việc" />
     <item
         android:id="@+id/nav_repair_services"
-        android:icon="@drawable/ic_search"
+        android:icon="@drawable/ic_inventory"
         android:title="Dịch vụ" />
     <item
         android:id="@+id/nav_user_profile"

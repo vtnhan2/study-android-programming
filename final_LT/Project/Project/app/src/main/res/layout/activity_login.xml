@@ -116,28 +116,28 @@
             style="@style/Widget.Material3.Chip.Assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Admin" />
+            android:text="Quản trị" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipSales"
             style="@style/Widget.Material3.Chip.Assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sales" />
+            android:text="Bán hàng" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipTech"
             style="@style/Widget.Material3.Chip.Assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tech" />
+            android:text="Kỹ thuật" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipUser"
             style="@style/Widget.Material3.Chip.Assist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="User" />
+            android:text="Khách hàng" />
     </com.google.android.material.chip.ChipGroup>
 
     <!-- Nút khởi tạo dữ liệu — chỉ hiện khi Firestore chưa có dữ liệu -->

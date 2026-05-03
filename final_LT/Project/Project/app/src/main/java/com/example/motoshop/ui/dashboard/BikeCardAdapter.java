@@ -24,6 +24,7 @@ public class BikeCardAdapter extends RecyclerView.Adapter<BikeCardAdapter.ViewHo
     // Interface báo ra ngoài khi người dùng bấm vào một item.
     public interface OnBikeClickListener {
         void onBikeClick(Motorcycle bike);
+        void onFavoriteClick(Motorcycle bike);
     }
 
     // Nhận sự kiện click từ màn hình để xử lý khi bấm vào item.
@@ -53,7 +54,7 @@ public class BikeCardAdapter extends RecyclerView.Adapter<BikeCardAdapter.ViewHo
 
         holder.tvBikeName.setText(bike.brand + " " + bike.model);
         holder.tvBikePrice.setText(CurrencyFormatter.format(bike.price));
-        holder.tvBikeSubInfo.setText("Avg. Ex-showroom price");
+        holder.tvBikeSubInfo.setText("Giá tham khảo");
 
         // Xử lý hình ảnh cần hiển thị trên màn hình.
         int resId = getMotorcycleImageResId(context, bike.imageUri);
@@ -65,6 +66,10 @@ public class BikeCardAdapter extends RecyclerView.Adapter<BikeCardAdapter.ViewHo
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onBikeClick(bike);
+        });
+
+        holder.ivHeart.setOnClickListener(v -> {
+            if (listener != null) listener.onFavoriteClick(bike);
         });
     }
 

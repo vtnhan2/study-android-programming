@@ -54,6 +54,9 @@ public class UserProfileFragment extends Fragment {
         session = new UserSession(requireContext());
 
         binding.btnLogout.setOnClickListener(v -> confirmLogout());
+        binding.btnBack.setOnClickListener(v -> {
+            androidx.navigation.Navigation.findNavController(view).navigateUp();
+        });
         binding.ivAvatar.setOnClickListener(null);
         binding.fabEditAvatar.setVisibility(View.GONE);
 

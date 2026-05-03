@@ -36,13 +36,23 @@
                 android:textColor="@color/primary_dark"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivBell"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="6dp"
+                android:src="@drawable/ic_notification_bell"
+                app:tint="@color/black" />
         </RelativeLayout>
 
         <TextView
             android:id="@+id/tvMemberRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hạng: Silver | Điểm: 500"
+            android:text="Hạng: Bạc | Điểm: 500"
             android:textColor="@color/primary"
             android:textSize="14sp" />
 

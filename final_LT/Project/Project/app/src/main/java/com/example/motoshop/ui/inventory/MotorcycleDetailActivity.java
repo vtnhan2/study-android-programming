@@ -45,8 +45,8 @@ public class MotorcycleDetailActivity extends AppCompatActivity {
         btnShare.setOnClickListener(v -> {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this bike on MotoShop!");
-            startActivity(Intent.createChooser(shareIntent, "Share via"));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Xem thử chiếc xe này trên MotoShop nhé!");
+            startActivity(Intent.createChooser(shareIntent, "Chia sẻ qua"));
         });
     }
 
@@ -72,13 +72,13 @@ public class MotorcycleDetailActivity extends AppCompatActivity {
         ImageView btnFavorite = findViewById(R.id.btnFavorite);
 
         // Tên xe (model)
-        tvMotorName.setText(m.model != null ? m.model : "Unknown");
+        tvMotorName.setText(m.model != null ? m.model : "Không xác định");
         // Hãng xe
-        tvMotorBrand.setText("By " + (m.brand != null ? m.brand : "Unknown"));
+        tvMotorBrand.setText("Hãng: " + (m.brand != null ? m.brand : "Không xác định"));
         // Giá
         tvPrice.setText(CurrencyFormatter.format(m.price));
-        // Variants (dùng quantity)
-        tvVariants.setText(m.quantity + " Variants");
+        // Phiên bản (dùng quantity)
+        tvVariants.setText(m.quantity + " Phiên bản");
 
         // Mô tả
         String desc = (m.longDescription != null && !m.longDescription.isEmpty()) ? m.longDescription : m.description;
@@ -96,16 +96,49 @@ public class MotorcycleDetailActivity extends AppCompatActivity {
         }
 
         // Toggle favorite
+        com.example.motoshop.utils.UserSession session = new com.example.motoshop.utils.UserSession(this);
+        String customerId = session.getCustomerDocId();
         final boolean[] isFavorite = {false};
+
+        if (customerId != null) {
+            FirebaseFirestore.getInstance().collection("customers").document(customerId).get()
+                    .addOnSuccessListener(doc -> {
+                        java.util.List<String> favorites = (java.util.List<String>) doc.get("favoriteBikeIds");
+                        if (favorites != null && favorites.contains(m.documentId)) {
+                            isFavorite[0] = true;
+                            btnFavorite.setColorFilter(getResources().getColor(R.color.notification_red));
+                        }
+                    });
+        }
+
         btnFavorite.setOnClickListener(v -> {
+            if (customerId == null) {
+                Toast.makeText(this, "Vui lòng đăng nhập để yêu thích", Toast.LENGTH_SHORT).show();
+                return;
+            }
             isFavorite[0] = !isFavorite[0];
             if (isFavorite[0]) {
                 btnFavorite.setColorFilter(getResources().getColor(R.color.notification_red));
-                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
             } else {
                 btnFavorite.setColorFilter(getResources().getColor(R.color.heart_green));
-                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Đã bỏ yêu thích", Toast.LENGTH_SHORT).show();
             }
+
+            // Update Firestore
+            FirebaseFirestore.getInstance().collection("customers").document(customerId).get()
+                    .addOnSuccessListener(doc -> {
+                        java.util.List<String> favorites = (java.util.List<String>) doc.get("favoriteBikeIds");
+                        if (favorites == null) favorites = new java.util.ArrayList<>();
+                        
+                        if (isFavorite[0]) {
+                            if (!favorites.contains(m.documentId)) favorites.add(m.documentId);
+                        } else {
+                            favorites.remove(m.documentId);
+                        }
+                        FirebaseFirestore.getInstance().collection("customers").document(customerId)
+                                .update("favoriteBikeIds", favorites);
+                    });
         });
     }
 

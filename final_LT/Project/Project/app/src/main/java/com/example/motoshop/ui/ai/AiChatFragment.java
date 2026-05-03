@@ -72,6 +72,13 @@ public class AiChatFragment extends Fragment {
         btnSend.setOnClickListener(v -> sendMessage(etMessage.getText().toString().trim()));
         btnAiSearch.setOnClickListener(v -> showAiSearchDialog());
 
+        View btnBack = view.findViewById(R.id.btnBack);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> {
+                androidx.navigation.Navigation.findNavController(view).navigateUp();
+            });
+        }
+
         if (adapter.getItemCount() == 0) {
             addMessage(getString(R.string.welcome_ai), false);
         }

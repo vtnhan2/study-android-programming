@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="₹ 80,000*"
+                android:text="Liên hệ"
                 android:textColor="@color/text_secondary"
                 android:textSize="12sp" />
 
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="Avg. Ex-showroom price"
+            android:text="Giá tham khảo"
             android:textColor="@color/gray_light"
             android:textSize="10sp" />
 

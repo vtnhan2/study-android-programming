@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,7 @@ import com.example.motoshop.ui.repair.RepairOrderAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserDashboardFragment extends Fragment {
 
@@ -33,6 +35,7 @@ public class UserDashboardFragment extends Fragment {
     private RepairViewModel repairViewModel;
     private BikeCardAdapter mostSearchedAdapter;
     private BikeCardAdapter recommendedAdapter;
+    private FirebaseFirestore db;
 
     private TextView tvWelcome, tvRank;
     private RecyclerView rvVehicles, rvOrders, rvRepairs;
@@ -48,6 +51,7 @@ public class UserDashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         session = new UserSession(requireContext());
+        db = FirebaseFirestore.getInstance();
         motorcycleViewModel = new ViewModelProvider(this).get(MotorcycleViewModel.class);
         salesViewModel = new ViewModelProvider(this).get(SalesViewModel.class);
         repairViewModel = new ViewModelProvider(this).get(RepairViewModel.class);
@@ -70,7 +74,8 @@ public class UserDashboardFragment extends Fragment {
 
         setupBikeRecyclerViews(view);
         setupOrderRecyclerViews();
-        setupSeeAll(view);
+        setupHeader(view);
+        setupSearch(view);
         observeData();
     }
 
@@ -79,13 +84,33 @@ public class UserDashboardFragment extends Fragment {
         mostSearchedAdapter = new BikeCardAdapter();
         rvMostSearched.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvMostSearched.setAdapter(mostSearchedAdapter);
-        mostSearchedAdapter.setOnBikeClickListener(this::openBikeDetail);
+        mostSearchedAdapter.setOnBikeClickListener(new BikeCardAdapter.OnBikeClickListener() {
+            @Override
+            public void onBikeClick(Motorcycle bike) {
+                openBikeDetail(bike);
+            }
+
+            @Override
+            public void onFavoriteClick(Motorcycle bike) {
+                onFavoriteClicked(bike);
+            }
+        });
 
         RecyclerView rvRecommended = v.findViewById(R.id.rvRecommended);
         recommendedAdapter = new BikeCardAdapter();
         rvRecommended.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rvRecommended.setAdapter(recommendedAdapter);
-        recommendedAdapter.setOnBikeClickListener(this::openBikeDetail);
+        recommendedAdapter.setOnBikeClickListener(new BikeCardAdapter.OnBikeClickListener() {
+            @Override
+            public void onBikeClick(Motorcycle bike) {
+                openBikeDetail(bike);
+            }
+
+            @Override
+            public void onFavoriteClick(Motorcycle bike) {
+                onFavoriteClicked(bike);
+            }
+        });
     }
 
     private void setupOrderRecyclerViews() {
@@ -99,7 +124,43 @@ public class UserDashboardFragment extends Fragment {
         rvRepairs.setAdapter(repairAdapter);
     }
 
-    private void setupSeeAll(View v) {
+    public void onFavoriteClicked(Motorcycle m) {
+        String customerId = session.getCustomerDocId();
+        if (customerId == null) {
+            Toast.makeText(getContext(), "Vui lòng đăng nhập để yêu thích", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("customers").document(customerId).get().addOnSuccessListener(doc -> {
+            List<String> favorites = (List<String>) doc.get("favoriteBikeIds");
+            if (favorites == null) favorites = new ArrayList<>();
+
+            if (favorites.contains(m.documentId)) {
+                favorites.remove(m.documentId);
+                Toast.makeText(getContext(), "Đã bỏ yêu thích", Toast.LENGTH_SHORT).show();
+            } else {
+                favorites.add(m.documentId);
+                Toast.makeText(getContext(), "Đã thêm vào yêu thích", Toast.LENGTH_SHORT).show();
+            }
+
+            db.collection("customers").document(customerId).update("favoriteBikeIds", favorites);
+        });
+    }
+
+    private void setupHeader(View view) {
+        View ivBell = view.findViewById(R.id.ivBell);
+        if (ivBell != null) {
+            ivBell.setOnClickListener(v -> {
+                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Thông báo")
+                        .setMessage("Tính năng thông báo đang được phát triển.")
+                        .setPositiveButton("Đã hiểu", null)
+                        .show();
+            });
+        }
+    }
+
+    private void setupSearch(View v) {
         TextView tvSeeAll = v.findViewById(R.id.tvSeeAllBikes);
         tvSeeAll.setOnClickListener(view -> {
             if (getActivity() != null) {

@@ -6,7 +6,33 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <!-- Đã bỏ Toolbar ở đây vì đã có Toolbar chung của Activity -->
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/primary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Trợ lý AI MotoShop"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChat"
@@ -14,7 +40,7 @@
         android:layout_height="0dp"
         android:padding="8dp"
         app:layout_constraintBottom_toTopOf="@+id/layoutQuickChips"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader"
         tools:listitem="@layout/item_chat_message" />
 
     <HorizontalScrollView

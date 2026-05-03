@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         View headerView = navigationView.getHeaderView(0);
         if (headerView != null) {
             TextView tvDrawerWelcome = headerView.findViewById(R.id.tvDrawerWelcome);
-            tvDrawerWelcome.setText("Welcome " + session.getUserName() + "!");
+            tvDrawerWelcome.setText("Xin Chào, " + session.getUserName() + "!");
         }
 
         navigationView.setNavigationItemSelectedListener(item -> {
@@ -120,11 +120,11 @@ public class MainActivity extends AppCompatActivity {
                 // Use bottomNav to switch tab — avoids broken back stack
                 bottomNav.setSelectedItemId(R.id.nav_inventory);
             } else if (id == R.id.drawer_notifications) {
-                Toast.makeText(this, "Notifications - Coming soon!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Tính năng thông báo đang được phát triển!", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.drawer_rate_us) {
-                Toast.makeText(this, "Rate Us - Thank you!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cảm ơn bạn đã đánh giá!", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.drawer_help) {
-                Toast.makeText(this, "Help Center - Coming soon!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Trung tâm hỗ trợ đang được phát triển!", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.drawer_import_data) {
                 FirebaseSeeder.uploadSeedData(this);
             } else if (id == R.id.drawer_profile) {

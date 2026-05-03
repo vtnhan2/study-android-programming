@@ -79,9 +79,13 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Vi
             holder.layoutActions.setVisibility(View.GONE);
         }
 
-        holder.btnComplete.setOnClickListener(v -> listener.onComplete(order));
+        holder.btnComplete.setOnClickListener(v -> {
+            if (listener != null) listener.onComplete(order);
+        });
         holder.btnCancel.setOnClickListener(v -> showStructuredCancelDialog(context, order));
-        holder.itemView.setOnClickListener(v -> listener.onViewDetail(order));
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) listener.onViewDetail(order);
+        });
     }
 
     // Hiển thị hộp thoại nhập lý do hủy đơn bán.
@@ -133,7 +137,9 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Vi
                     } else {
                         reason = selectedRb.getText().toString();
                     }
-                    listener.onCancel(order, reason);
+                    if (listener != null) {
+                        listener.onCancel(order, reason);
+                    }
                 })
                 .setNegativeButton("Hủy", null)
                 .show();

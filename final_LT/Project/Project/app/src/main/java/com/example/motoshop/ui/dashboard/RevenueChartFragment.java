@@ -79,11 +79,11 @@ public class RevenueChartFragment extends Fragment {
 
     // Chuẩn bị view, dữ liệu hoặc sự kiện cần dùng cho màn hình.
     private void setupSpinner() {
-        String[] years = {"2022", "2023", "2024", "2025"};
+        String[] years = {"2023", "2024", "2025", "2026"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, years);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerYear.setAdapter(adapter);
-        spinnerYear.setSelection(2); // 2024
+        spinnerYear.setSelection(3); // Chọn 2026 làm mặc định
 
         spinnerYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             // Cập nhật biểu đồ khi người dùng chọn năm.

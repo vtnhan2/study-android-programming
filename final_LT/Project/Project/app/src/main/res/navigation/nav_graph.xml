@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/nav_revenue"
         android:name="com.example.motoshop.ui.dashboard.RevenueChartFragment"
-        android:label="Statistics"
+        android:label="Thống kê"
         tools:layout="@layout/fragment_revenue_chart" />
 
     <fragment
@@ -66,6 +66,6 @@
     <fragment
         android:id="@+id/userDashboardFragment"
         android:name="com.example.motoshop.ui.dashboard.UserDashboardFragment"
-        android:label="My Dashboard"
+        android:label="Bảng điều khiển"
         tools:layout="@layout/fragment_user_dashboard" />
 </navigation>

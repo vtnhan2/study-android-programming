@@ -12,13 +12,26 @@
         android:paddingBottom="32dp">
 
         <!-- Header cá nhân hóa -->
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/primary"
-            android:gravity="center"
-            android:orientation="vertical"
             android:paddingVertical="32dp">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_back"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -70,8 +83,9 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
         </LinearLayout>
+    </FrameLayout>
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
