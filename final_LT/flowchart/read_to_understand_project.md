@@ -412,4 +412,40 @@ erDiagram
 
 ---
 
+## 11. 👥 Phân chia Công việc và Vai trò Nhóm (4 Thành viên)
+
+Dựa trên cấu trúc dự án **MotoShop**, đây là phương án phân chia khối lượng công việc tối ưu:
+
+### 🛡️ Thành viên 1: Backend & AI Engineer (Nhóm trưởng)
+> **Trọng tâm**: Cấu trúc dữ liệu, Logic nghiệp vụ lõi, Tích hợp AI.
+
+- **Thiết lập Firebase**: Cấu trúc Firestore Collections, Rules và Authentication.
+- **Logic Nghiệp vụ (ViewModels)**: `SalesViewModel` (Transactions), `BaseViewModel`.
+- **Tích hợp AI**: Phát triển `GeminiHelper.java`, xây dựng prompt chuyên sâu.
+- **Tiện ích**: `FirebaseSeeder`, `UserSession`, `LocaleHelper`.
+
+### 🎨 Thành viên 2: Frontend & UI/UX Designer
+> **Trọng tâm**: Giao diện người dùng, Navigation, Trải nghiệm người dùng.
+
+- **Layout & Styling**: Thiết kế XML, áp dụng Dark/Light mode (`ThemeHelper`).
+- **Navigation**: Thiết lập `nav_graph.xml` và điều hướng trong `MainActivity`.
+- **Dashboard UI**: `DashboardFragment` (nhân viên) và `UserDashboardFragment` (khách hàng).
+- **Hiệu ứng**: Micro-animations, transitions và Custom Adapters (`BikeCardAdapter`).
+
+### 📦 Thành viên 3: Sales & Inventory Specialist
+> **Trọng tâm**: Module Quản lý kho và Bán hàng.
+
+- **Module Kho xe**: Màn hình danh sách xe, CRUD xe máy, logic lọc/tìm kiếm.
+- **Module Bán hàng**: Quy trình tạo đơn hàng (`CreateSaleActivity`), giỏ hàng, chiết khấu.
+- **Báo cáo**: Thống kê tồn kho thực tế và doanh số đơn lẻ.
+
+### 🛠️ Thành viên 4: Services & Customer Specialist
+> **Trọng tâm**: Module Sửa chữa và Chăm sóc khách hàng.
+
+- **Module Sửa chữa**: Tạo phiếu sửa chữa, tích hợp gợi ý AI, quản lý trạng thái phiếu.
+- **Module Khách hàng**: Quản lý hồ sơ, hiển thị lịch sử mua/sửa.
+- **Loyalty & Partner**: Hệ thống điểm/hạng thành viên và quản lý nhà cung cấp.
+
+---
+
 > 📅 Cập nhật lần cuối: 03/05/2026
