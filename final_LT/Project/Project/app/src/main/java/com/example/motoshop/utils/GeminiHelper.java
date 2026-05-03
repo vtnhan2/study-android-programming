@@ -18,9 +18,8 @@ import okhttp3.Response;
 public class GeminiHelper {
 
     private static final String TAG = "GEMINI";
-    private static final String API_KEY = "AIzaSyBI29wif5Klk6iJYkUxdCZBciEIsWUI4o0";
+    private static final String API_KEY = BuildConfig.GEMINI_API_KEY;
 
-    // Sử dụng model gemini-1.5-flash chính xác và ổn định
     private static final String MODEL_NAME = "gemini-2.5-flash";
 
     private static final String API_URL =
@@ -103,6 +102,9 @@ public class GeminiHelper {
             String responseBody = response.body() != null ? response.body().string() : "";
             if (!response.isSuccessful()) {
                 Log.e(TAG, "Error Response: " + responseBody);
+                if (response.code() == 429) {
+                    throw new Exception("Hệ thống AI đang bận (quá nhiều yêu cầu). Vui lòng thử lại sau 1 phút.");
+                }
                 throw new Exception("Lỗi " + response.code());
             }
             JSONObject json = new JSONObject(responseBody);

@@ -1,5 +1,6 @@
 package com.example.motoshop.ui.customer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -8,14 +9,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import com.example.motoshop.ui.login.LoginActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.bumptech.glide.Glide;
 import com.example.motoshop.R;
 import com.example.motoshop.data.model.Customer;
 import com.example.motoshop.data.model.RepairOrder;
 import com.example.motoshop.data.model.SalesOrder;
+import com.example.motoshop.data.model.Staff;
 import com.example.motoshop.databinding.FragmentUserProfileBinding;
 import com.example.motoshop.utils.CurrencyFormatter;
 import com.example.motoshop.utils.UserSession;
@@ -30,7 +32,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-// Fragment hiển thị một phần giao diện và xử lý dữ liệu cho màn hình này.
 public class UserProfileFragment extends Fragment {
 
     private FragmentUserProfileBinding binding;
@@ -39,7 +40,6 @@ public class UserProfileFragment extends Fragment {
     private Customer currentCustomer;
     private UserHistoryAdapter adapter;
 
-    // Tạo giao diện cho Fragment.
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,32 +47,81 @@ public class UserProfileFragment extends Fragment {
         return binding.getRoot();
     }
 
-    // Ánh xạ view và chuẩn bị dữ liệu sau khi giao diện được tạo.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = FirebaseFirestore.getInstance();
         session = new UserSession(requireContext());
 
+        binding.btnLogout.setOnClickListener(v -> confirmLogout());
+        binding.ivAvatar.setOnClickListener(null);
+        binding.fabEditAvatar.setVisibility(View.GONE);
+
+        if (UserSession.ROLE_USER.equals(session.getUserRole())) {
+            setupCustomerMode();
+        } else {
+            setupStaffMode();
+        }
+    }
+
+    private void setupCustomerMode() {
         setupRecyclerView();
         loadCustomerData();
         loadHistory();
-
         binding.btnUpdate.setOnClickListener(v -> showEditDialog());
-
-        // Tạm thời chỉ xem ảnh đại diện, không cho đổi ảnh trong màn hình này
-        binding.ivAvatar.setOnClickListener(null);
-        binding.fabEditAvatar.setVisibility(View.GONE);
+        binding.btnUpdate.setVisibility(View.VISIBLE);
     }
 
-    // Chuẩn bị RecyclerView và adapter để hiển thị danh sách.
+    private void setupStaffMode() {
+        // Hide customer-only sections
+        binding.cardLoyalty.setVisibility(View.GONE);
+        binding.tvMaintenanceSectionLabel.setVisibility(View.GONE);
+        binding.cardMaintenance.setVisibility(View.GONE);
+        binding.tvHistoryLabel.setVisibility(View.GONE);
+        binding.rvUserHistory.setVisibility(View.GONE);
+        binding.btnUpdate.setVisibility(View.GONE);
+
+        loadStaffData();
+    }
+
+    private void loadStaffData() {
+        String staffId = session.getUserId();
+        db.collection("staff")
+                .whereEqualTo("staffId", staffId)
+                .get()
+                .addOnSuccessListener(snap -> {
+                    if (!snap.isEmpty()) {
+                        Staff staff = snap.getDocuments().get(0).toObject(Staff.class);
+                        if (staff != null) showStaffUI(staff);
+                    } else {
+                        // Fallback: show from session data
+                        binding.tvHeaderName.setText(session.getUserName());
+                        binding.tvHeaderPhone.setText(session.getRoleDisplayName());
+                        binding.layoutInfo.tvValue.setText(session.getUserName());
+                        binding.layoutInfo.tvDetailPhone.setText("Mã NV: " + staffId);
+                        binding.layoutInfo.tvDetailEmail.setText(session.getRoleDisplayName());
+                        binding.layoutInfo.tvDetailAddress.setText("---");
+                        binding.layoutInfo.tvDetailIdCard.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    private void showStaffUI(Staff staff) {
+        binding.tvHeaderName.setText(staff.name);
+        binding.tvHeaderPhone.setText(session.getRoleDisplayName());
+        binding.layoutInfo.tvValue.setText(staff.name);
+        binding.layoutInfo.tvDetailPhone.setText(nonEmpty(staff.phone));
+        binding.layoutInfo.tvDetailEmail.setText("Mã NV: " + staff.staffId);
+        binding.layoutInfo.tvDetailAddress.setText(session.getRoleDisplayName());
+        binding.layoutInfo.tvDetailIdCard.setVisibility(View.GONE);
+    }
+
     private void setupRecyclerView() {
         adapter = new UserHistoryAdapter();
         binding.rvUserHistory.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvUserHistory.setAdapter(adapter);
     }
 
-    // Lấy dữ liệu cần thiết và đưa lên giao diện.
     private void loadCustomerData() {
         String docId = session.getCustomerDocId();
         if (docId == null) return;
@@ -87,7 +136,6 @@ public class UserProfileFragment extends Fragment {
                 });
     }
 
-    // Định dạng dữ liệu để hiển thị dễ đọc hơn.
     private void updateUI() {
         if (currentCustomer == null) return;
         binding.tvHeaderName.setText(currentCustomer.name);
@@ -109,7 +157,6 @@ public class UserProfileFragment extends Fragment {
         calculateMaintenance();
     }
 
-    // Chuyển mã hạng thành viên sang chữ tiếng Việt để hiển thị.
     private String translateRank(String rank) {
         if (rank == null || rank.equals("NORMAL")) return "Thành viên";
         switch (rank) {
@@ -120,7 +167,6 @@ public class UserProfileFragment extends Fragment {
         }
     }
 
-    // Chuyển mã trạng thái sang chữ tiếng Việt để hiển thị.
     private static String translateStatus(String status) {
         if (status == null) return "---";
         switch (status) {
@@ -136,12 +182,10 @@ public class UserProfileFragment extends Fragment {
         }
     }
 
-    // Trả về dấu gạch nếu dữ liệu bị trống.
     private String nonEmpty(String val) {
         return (val == null || val.isEmpty()) ? "---" : val;
     }
 
-    // Xử lý nội dung AI hoặc tin nhắn trả về cho người dùng.
     private void calculateMaintenance() {
         if (currentCustomer == null) return;
         long baseDate = currentCustomer.createdAt > 0 ? currentCustomer.createdAt : System.currentTimeMillis();
@@ -159,7 +203,6 @@ public class UserProfileFragment extends Fragment {
         binding.tvMaintenanceSchedule.setText(schedule.toString().trim());
     }
 
-    // Hiển thị thông tin hoặc hộp thoại cho người dùng.
     private void showEditDialog() {
         if (currentCustomer == null) return;
         View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_add_customer, null);
@@ -196,7 +239,6 @@ public class UserProfileFragment extends Fragment {
                 .show();
     }
 
-    // Lấy dữ liệu cần thiết và đưa lên giao diện.
     private void loadHistory() {
         String docId = session.getCustomerDocId();
         if (docId == null) return;
@@ -221,13 +263,25 @@ public class UserProfileFragment extends Fragment {
                 });
     }
 
-    // Sắp xếp lịch sử mới nhất lên đầu rồi cập nhật adapter.
+    private void confirmLogout() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Đăng xuất")
+                .setMessage("Bạn có chắc muốn đăng xuất không?")
+                .setPositiveButton("Đăng xuất", (dialog, which) -> {
+                    session.logout();
+                    Intent intent = new Intent(requireContext(), LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                })
+                .setNegativeButton("Huỷ", null)
+                .show();
+    }
+
     private void sortAndNotify(List<HistoryItem> list) {
         list.sort((a, b) -> Long.compare(b.timestamp, a.timestamp));
         if (adapter != null) adapter.setItems(list);
     }
 
-    // Class nhỏ lưu một dòng lịch sử mua xe hoặc sửa chữa.
     private static class HistoryItem {
         String type, code, status; long timestamp; double amount;
         HistoryItem(String type, long timestamp, String code, double amount, String status) {
@@ -235,7 +289,6 @@ public class UserProfileFragment extends Fragment {
         }
     }
 
-    // Adapter dùng để đưa dữ liệu lên RecyclerView.
     private static class UserHistoryAdapter extends androidx.recyclerview.widget.RecyclerView.Adapter<UserHistoryAdapter.ViewHolder> {
         private List<HistoryItem> items = new ArrayList<>();
         void setItems(List<HistoryItem> items) { this.items = items; notifyDataSetChanged(); }
@@ -251,7 +304,6 @@ public class UserProfileFragment extends Fragment {
             holder.tvAmount.setText(CurrencyFormatter.format(item.amount));
             holder.chipStatus.setText(translateStatus(item.status));
         }
-        // Trả về số lượng item đang có trong danh sách.
         @Override public int getItemCount() { return items.size(); }
         static class ViewHolder extends androidx.recyclerview.widget.RecyclerView.ViewHolder {
             android.widget.TextView tvType, tvDate, tvContent, tvAmount;

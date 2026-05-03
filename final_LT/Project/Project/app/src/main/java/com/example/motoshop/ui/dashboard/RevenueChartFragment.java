@@ -54,7 +54,13 @@ public class RevenueChartFragment extends Fragment {
         initViews(view);
         setupSpinner();
         setupTabLayout();
-        updateChart();
+
+        // Quan sát dữ liệu từ ViewModel để cập nhật biểu đồ khi có thay đổi.
+        salesViewModel.allOrders.observe(getViewLifecycleOwner(), orders -> {
+            if (orders != null) {
+                updateChart();
+            }
+        });
     }
 
     // Chuẩn bị view, dữ liệu hoặc sự kiện cần dùng cho màn hình.

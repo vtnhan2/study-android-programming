@@ -5,15 +5,11 @@
         android:icon="@drawable/ic_home"
         android:title="Home" />
     <item
-        android:id="@+id/nav_customer"
+        android:id="@+id/nav_inventory"
         android:icon="@drawable/ic_search"
-        android:title="Xe của tôi" />
+        android:title="Xem xe" />
     <item
-        android:id="@+id/nav_sales"
-        android:icon="@drawable/ic_heart_outline"
-        android:title="Đơn hàng" />
-    <item
-        android:id="@+id/nav_repair"
+        android:id="@+id/nav_user_profile"
         android:icon="@drawable/ic_profile"
-        android:title="Sửa chữa" />
+        android:title="Hồ sơ" />
 </menu>

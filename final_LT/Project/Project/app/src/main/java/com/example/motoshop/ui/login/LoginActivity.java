@@ -2,10 +2,12 @@ package com.example.motoshop.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.motoshop.databinding.ActivityLoginBinding;
 import com.example.motoshop.ui.main.MainActivity;
+import com.example.motoshop.utils.FirebaseSeeder;
 import com.example.motoshop.utils.UserSession;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -40,6 +42,29 @@ public class LoginActivity extends AppCompatActivity {
 
         // Chuyển sang đăng nhập khách hàng
         binding.chipUser.setOnClickListener(v -> switchToCustomerMode());
+
+        // Kiểm tra Firestore — nếu chưa có dữ liệu thì hiện nút khởi tạo
+        checkAndShowSeedButton();
+    }
+
+    // Kiểm tra Firestore — nếu collection staff trống thì hiện nút seed.
+    private void checkAndShowSeedButton() {
+        db.collection("staff").limit(1).get()
+                .addOnSuccessListener(snapshot -> {
+                    if (snapshot.isEmpty()) {
+                        binding.btnSeedData.setVisibility(View.VISIBLE);
+                        binding.btnSeedData.setOnClickListener(v -> {
+                            binding.btnSeedData.setEnabled(false);
+                            binding.btnSeedData.setText("Đang khởi tạo...");
+                            FirebaseSeeder.uploadSeedData(this);
+                            // Sau 3 giây ẩn nút đi (dữ liệu đã được ghi)
+                            binding.btnSeedData.postDelayed(() -> {
+                                binding.btnSeedData.setVisibility(View.GONE);
+                                Toast.makeText(this, "Khởi tạo xong! Bạn có thể đăng nhập.", Toast.LENGTH_LONG).show();
+                            }, 3000);
+                        });
+                    }
+                });
     }
 
     // Gán giá trị mới cho dữ liệu trong object.
@@ -84,13 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (pass.equals("123")) {
                             checkCustomerLogin(id);
                         } else {
-                            // Fallback cho tài khoản demo nếu Firestore trống (chỉ dùng trong quá trình dev)
-                            if (id.equals("AD01") && pass.equals("1111")) {
-                                session.createLoginSession(id, "Admin Manager", UserSession.ROLE_ADMIN);
-                                navigateToMain();
-                            } else {
-                                Toast.makeText(this, "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(this, "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

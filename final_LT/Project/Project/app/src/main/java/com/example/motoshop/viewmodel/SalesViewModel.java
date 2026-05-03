@@ -10,6 +10,7 @@ import com.example.motoshop.data.model.Motorcycle;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.example.motoshop.utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,21 @@ public class SalesViewModel extends BaseViewModel {
     public interface OrderCallback {
         void onSuccess();
         void onError(String message);
+    }
+
+    public final LiveData<List<SalesOrder>> getOrdersByCustomer(String customerId) {
+        MutableLiveData<List<SalesOrder>> customerOrders = new MutableLiveData<>();
+        if (customerId == null) return customerOrders;
+        
+        db.collection("sales_orders")
+                .whereEqualTo("customerDocumentId", customerId)
+                .orderBy("orderDate", Query.Direction.DESCENDING)
+                .addSnapshotListener((value, error) -> {
+                    if (value != null) {
+                        customerOrders.setValue(value.toObjects(SalesOrder.class));
+                    }
+                });
+        return customerOrders;
     }
 
     // Constructor khởi tạo object của class này.
@@ -89,10 +105,22 @@ public class SalesViewModel extends BaseViewModel {
                 }));
     }
 
-    // Định dạng dữ liệu để hiển thị dễ đọc hơn.
-    public void updateStatus(String documentId, String status) {
+    // Cập nhật trạng thái đơn hàng với kiểm tra state machine.
+    // Chỉ cho phép: PROCESSING → COMPLETED hoặc PROCESSING → CANCELLED.
+    public void updateStatus(String documentId, String newStatus, OrderCallback callback) {
         if (documentId == null) return;
-        db.collection("sales_orders").document(documentId).update("status", status);
+        db.collection("sales_orders").document(documentId).get()
+                .addOnSuccessListener(doc -> {
+                    String current = doc.getString("status");
+                    if (!"PROCESSING".equals(current)) {
+                        if (callback != null) callback.onError("Không thể đổi trạng thái: đơn hàng đã " + current);
+                        return;
+                    }
+                    doc.getReference().update("status", newStatus)
+                            .addOnSuccessListener(a -> { if (callback != null) callback.onSuccess(); })
+                            .addOnFailureListener(e -> { if (callback != null) callback.onError(e.getMessage()); });
+                })
+                .addOnFailureListener(e -> { if (callback != null) callback.onError(e.getMessage()); });
     }
 
     /**
@@ -117,14 +145,14 @@ public class SalesViewModel extends BaseViewModel {
             transaction.update(orderRef, "status", "COMPLETED");
 
             // 3. Tính toán điểm và hạng mới
-            // Giả sử: 1,000,000đ = 1 điểm.
-            int newPoints = (int) (order.finalAmount / 1000000);
+            // 100,000đ = 1 điểm. Rank dựa trên tổng chi tiêu.
+            int newPoints = (int) (order.finalAmount / 100000);
             double newTotalSpent = customer.totalSpent + order.finalAmount;
-            
-            String newRank = "Standard";
-            if (newTotalSpent >= 500000000) newRank = "Diamond";
-            else if (newTotalSpent >= 200000000) newRank = "Gold";
-            else if (newTotalSpent >= 50000000) newRank = "Silver";
+
+            String newRank = "NORMAL";
+            if (newTotalSpent >= 100000000) newRank = "VIP";
+            else if (newTotalSpent >= 50000000) newRank = "GOLD";
+            else if (newTotalSpent >= 20000000) newRank = "SILVER";
 
             transaction.update(customerRef, 
                 "loyaltyPoints", customer.loyaltyPoints + newPoints,
@@ -145,6 +173,10 @@ public class SalesViewModel extends BaseViewModel {
     public void cancelOrder(SalesOrder order, String reason, OrderCallback callback) {
         if (order == null || order.documentId == null) {
             if (callback != null) callback.onError("Dữ liệu đơn hàng không hợp lệ");
+            return;
+        }
+        if (!"PROCESSING".equals(order.status)) {
+            if (callback != null) callback.onError("Chỉ có thể hủy đơn đang xử lý");
             return;
         }
 
@@ -193,6 +225,17 @@ public class SalesViewModel extends BaseViewModel {
             if (callback != null) callback.onError("Dữ liệu đơn hàng không hợp lệ");
             return;
         }
+
+        // Tự động sinh mã nếu chưa có
+        int countToday = 1;
+        List<SalesOrder> all = _firebaseOrders.getValue();
+        if (all != null) {
+            long todayStart = DateUtils.startOfDay(System.currentTimeMillis());
+            for (SalesOrder o : all) {
+                if (o.orderDate >= todayStart) countToday++;
+            }
+        }
+        order.orderCode = DateUtils.generateCode("DH", countToday);
 
         db.runTransaction(transaction -> {
             // 1. Đọc dữ liệu tồn kho trước

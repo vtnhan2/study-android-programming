@@ -29,7 +29,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Vi
 
     // Interface xử lý các nút trong đơn bán hàng.
     public interface OnOrderActionListener {
-        void onComplete(String documentId);
+        void onComplete(SalesOrder order);
         void onCancel(SalesOrder order, String reason);
         void onViewDetail(SalesOrder order);
     }
@@ -63,6 +63,13 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Vi
         holder.tvCustomerName.setText("Khách hàng: " + order.customerName);
         holder.tvOrderDate.setText("Ngày tạo: " + DateUtils.formatDate(order.orderDate));
         holder.tvFinalAmount.setText(CurrencyFormatter.format(order.finalAmount));
+        
+        if (order.note != null && !order.note.isEmpty()) {
+            holder.tvNote.setVisibility(View.VISIBLE);
+            holder.tvNote.setText("Ghi chú: " + order.note);
+        } else {
+            holder.tvNote.setVisibility(View.GONE);
+        }
 
         applyStatusStyle(holder.tvStatus, order.status, context);
 
@@ -72,7 +79,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Vi
             holder.layoutActions.setVisibility(View.GONE);
         }
 
-        holder.btnComplete.setOnClickListener(v -> listener.onComplete(order.documentId));
+        holder.btnComplete.setOnClickListener(v -> listener.onComplete(order));
         holder.btnCancel.setOnClickListener(v -> showStructuredCancelDialog(context, order));
         holder.itemView.setOnClickListener(v -> listener.onViewDetail(order));
     }
@@ -138,7 +145,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Vi
 
     // ViewHolder giữ các view của một item để RecyclerView dùng lại.
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvOrderCode, tvCustomerName, tvOrderDate, tvFinalAmount, tvStatus;
+        TextView tvOrderCode, tvCustomerName, tvOrderDate, tvFinalAmount, tvStatus, tvNote;
         View layoutActions;
         MaterialButton btnComplete, btnCancel;
 
@@ -148,6 +155,7 @@ public class SalesOrderAdapter extends RecyclerView.Adapter<SalesOrderAdapter.Vi
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvCustomerName = itemView.findViewById(R.id.tvCustomerName);
             tvOrderDate = itemView.findViewById(R.id.tvOrderDate);
+            tvNote = itemView.findViewById(R.id.tvNote);
             tvFinalAmount = itemView.findViewById(R.id.tvFinalAmount);
             layoutActions = itemView.findViewById(R.id.layoutActions);
             btnComplete = itemView.findViewById(R.id.btnComplete);

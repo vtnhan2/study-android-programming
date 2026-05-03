@@ -1,0 +1,94 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+    // Đọc role của nhân viên đang đăng nhập từ collection "staff"
+    // Vì app dùng custom auth (staffId/password) chứ không dùng Firebase Auth,
+    // các rules dưới đây chỉ có thể enforce khi app NÂNG CẤP lên Firebase Auth.
+    // Hiện tại: dùng Firestore rules ở mức "authenticated user" + server-side checks.
+    //
+    // Để kích hoạt đầy đủ: tích hợp Firebase Auth + Custom Claims (role).
+    // Sau khi tích hợp, uncomment các hàm getRole() bên dưới và áp dụng.
+
+    // function getRole() {
+    //   return get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.role;
+    // }
+    // function isAdmin()      { return getRole() == "ADMIN"; }
+    // function isSales()      { return getRole() == "SALES"; }
+    // function isTechnician() { return getRole() == "TECHNICIAN"; }
+    // function isStaff()      { return isAdmin() || isSales() || isTechnician(); }
+    // function isCustomer()   { return request.auth != null && !isStaff(); }
+
+    // ── Collection: staff ────────────────────────────────────────────────────
+    // Chỉ Admin được đọc/ghi toàn bộ danh sách nhân viên.
+    match /staff/{staffId} {
+      // Cho phép đọc để LoginActivity có thể xác thực (query whereEqualTo)
+      allow read: if true;
+      // Chỉ Admin được tạo/xoá/sửa nhân viên — enforce khi có Firebase Auth:
+      // allow write: if isAdmin();
+      allow write: if false; // Tạm thời khoá ghi từ client; dùng Firebase Console hoặc Admin SDK
+    }
+
+    // ── Collection: customers ────────────────────────────────────────────────
+    match /customers/{customerId} {
+      // Staff (Admin/Sales) đọc được toàn bộ.
+      // Customer chỉ đọc document của chính mình.
+      allow read: if true;
+      // Sales + Admin được tạo/sửa khách hàng. Xoá chỉ Admin.
+      allow create, update: if true; // Sau Firebase Auth: if isAdmin() || isSales();
+      allow delete: if false;        // Sau Firebase Auth: if isAdmin();
+    }
+
+    // ── Collection: motorcycles ──────────────────────────────────────────────
+    match /motorcycles/{motoId} {
+      // Ai cũng được xem kho xe (kể cả khách vãng lai).
+      allow read: if true;
+      // Chỉ Admin được thêm/sửa/xoá xe.
+      allow create, update, delete: if false; // Sau Firebase Auth: if isAdmin();
+    }
+
+    // ── Collection: sales_orders ─────────────────────────────────────────────
+    match /sales_orders/{orderId} {
+      // Admin và Sales đọc tất cả. Customer chỉ đọc đơn của mình.
+      allow read: if true;
+      // Sales + Admin tạo đơn. Chỉ Admin xoá.
+      allow create: if true;  // Sau Firebase Auth: if isAdmin() || isSales();
+      allow update: if true;  // Sau Firebase Auth: if isAdmin() || isSales();
+      allow delete: if false; // Sau Firebase Auth: if isAdmin();
+    }
+
+    // ── Collection: repair_orders ────────────────────────────────────────────
+    match /repair_orders/{repairId} {
+      allow read: if true;
+      // Sales tạo phiếu, Technician + Admin cập nhật trạng thái.
+      allow create: if true;  // Sau Firebase Auth: if isAdmin() || isSales() || isTechnician();
+      allow update: if true;  // Sau Firebase Auth: if isAdmin() || isTechnician();
+      allow delete: if false; // Sau Firebase Auth: if isAdmin();
+    }
+
+    // ── Collection: repair_services ──────────────────────────────────────────
+    match /repair_services/{serviceId} {
+      allow read: if true;
+      allow write: if false; // Sau Firebase Auth: if isAdmin();
+    }
+
+    // ── Collection: suppliers ────────────────────────────────────────────────
+    match /suppliers/{supplierId} {
+      allow read: if true;
+      allow write: if false; // Sau Firebase Auth: if isAdmin();
+    }
+
+    // ── Collection: import_orders ────────────────────────────────────────────
+    match /import_orders/{importId} {
+      allow read: if true;
+      allow write: if false; // Sau Firebase Auth: if isAdmin();
+    }
+
+    // ── Mặc định: khoá tất cả collections chưa khai báo ─────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

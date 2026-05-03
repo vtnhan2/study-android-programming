@@ -55,7 +55,7 @@ public class UserSession {
 
     // Lấy giá trị dữ liệu đang được lưu trong object.
     public String getUserRole() {
-        return pref.getString(KEY_USER_ROLE, ROLE_SALES);
+        return pref.getString(KEY_USER_ROLE, "");
     }
 
     // Lấy giá trị dữ liệu đang được lưu trong object.

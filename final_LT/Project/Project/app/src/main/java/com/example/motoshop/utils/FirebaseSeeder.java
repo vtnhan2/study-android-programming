@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class FirebaseSeeder {
@@ -168,9 +169,16 @@ public class FirebaseSeeder {
             o.discount = obj.optDouble("discount");
             o.finalAmount = obj.optDouble("finalAmount");
             o.paymentMethod = obj.optString("paymentMethod");
-            o.status = obj.optString("status");
+            o.status = obj.optString("status", "COMPLETED");
             o.note = obj.optString("note");
-            o.orderDate = System.currentTimeMillis() - (long)(Math.random() * 864000000L); // Random trong 10 ngày qua
+            
+            // Phân bổ dữ liệu cho 2024, 2025 và 2026 để biểu đồ có dữ liệu
+            Calendar cal = Calendar.getInstance();
+            int year = 2024 + (int)(Math.random() * 3); // 2024, 2025, 2026
+            int month = (int)(Math.random() * 12);
+            int day = (int)(Math.random() * 28) + 1;
+            cal.set(year, month, day, (int)(Math.random() * 24), (int)(Math.random() * 60));
+            o.orderDate = cal.getTimeInMillis();
 
             JSONArray itemsArray = obj.optJSONArray("items");
             if (itemsArray != null) {
@@ -186,6 +194,27 @@ public class FirebaseSeeder {
                     items.add(item);
                 }
                 o.items = items;
+            }
+            
+            // Sinh thêm nhiều dữ liệu mẫu cho mỗi mẫu trong JSON để biểu đồ trông đầy đặn hơn
+            for (int k = 0; k < 3; k++) {
+                SalesOrder clone = new SalesOrder();
+                clone.customerDocumentId = o.customerDocumentId;
+                clone.customerName = o.customerName;
+                clone.totalAmount = o.totalAmount;
+                clone.discount = o.discount;
+                clone.finalAmount = o.finalAmount;
+                clone.paymentMethod = o.paymentMethod;
+                clone.status = "COMPLETED";
+                clone.items = o.items;
+                
+                Calendar c2 = Calendar.getInstance();
+                c2.set(2024 + (int)(Math.random() * 3), (int)(Math.random() * 12), (int)(Math.random() * 28) + 1);
+                clone.orderDate = c2.getTimeInMillis();
+                clone.orderCode = "DH_" + i + "_" + k + "_" + (int)(Math.random() * 1000);
+                clone.documentId = clone.orderCode;
+                
+                batch.set(db.collection("sales_orders").document(clone.documentId), clone);
             }
             
             String id = obj.optString("id", o.orderCode);
@@ -214,7 +243,14 @@ public class FirebaseSeeder {
             r.totalCost = obj.optDouble("totalCost");
             r.status = obj.optString("status");
             r.technicianName = obj.optString("technicianName");
-            r.receivedDate = System.currentTimeMillis() - (long)(Math.random() * 864000000L);
+            
+            // Phân bổ dữ liệu lịch sử sửa chữa
+            Calendar cal = Calendar.getInstance();
+            int year = 2024 + (int)(Math.random() * 3);
+            int month = (int)(Math.random() * 12);
+            int day = (int)(Math.random() * 28) + 1;
+            cal.set(year, month, day, (int)(Math.random() * 24), (int)(Math.random() * 60));
+            r.receivedDate = cal.getTimeInMillis();
             
             String id = obj.optString("id", r.repairCode);
             r.documentId = id;

@@ -1,31 +1,48 @@
 package com.example.motoshop.utils;
 
 public class VNCharacterUtils {
-    private static final String[] VIETNAMESE_SIGNS = new String[] {
-            "aAeEoOuUiIdDyY",
-            "áàạảãâấầậẩẫăắằặẳẵ",
-            "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
-            "éèẹẻẽêếềệểễ",
-            "ÉÈẸẺẼÊẾỀỆỂỄ",
-            "óòọỏõôốồộổỗơớờợởỡ",
-            "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
-            "úùụủũưứừựửữ",
-            "ÚÙỤỦŨƯỨỪỰỬỮ",
-            "íìịỉĩ",
-            "ÍÌỊỈĨ",
-            "đ",
-            "Đ",
-            "ýỳỵỷỹ",
-            "ÝỲỴỶỸ"
-    };
+    private static final String VIETNAMESE_CHARS = 
+            "àáạảãâầấậẩẫăằắặẳẵ" +
+            "èéẹẻẽêềếệểễ" +
+            "ìíịỉĩ" +
+            "òóọỏõôồốộổỗơờớợởỡ" +
+            "ùúụủũưừứựửữ" +
+            "ỳýỵỷỹ" +
+            "đ" +
+            "ÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴ" +
+            "ÈÉẸẺẼÊỀẾỆỂỄ" +
+            "ÌÍỊỈĨ" +
+            "ÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠ" +
+            "ÙÚỤỦŨƯỪỨỰỬỮ" +
+            "ỲÝỴỶỸ" +
+            "Đ";
+
+    private static final String REPLACEMENT_CHARS = 
+            "aaaaaaaaaaaaaaaaa" +
+            "eeeeeeeeeee" +
+            "iiiii" +
+            "ooooooooooooooooo" +
+            "uuuuuuuuuuu" +
+            "yyyyy" +
+            "d" +
+            "AAAAAAAAAAAAAAAAA" +
+            "EEEEEEEEEEE" +
+            "IIIII" +
+            "OOOOOOOOOOOOOOOOO" +
+            "UUUUUUUUUUU" +
+            "YYYYY" +
+            "D";
 
     public static String removeAccents(String str) {
         if (str == null) return null;
-        for (int i = 1; i < VIETNAMESE_SIGNS.length; i++) {
-            for (int j = 0; j < VIETNAMESE_SIGNS[i].length(); j++) {
-                str = str.replace(VIETNAMESE_SIGNS[i].charAt(j), VIETNAMESE_SIGNS[0].charAt(i - 1));
+        StringBuilder sb = new StringBuilder(str);
+        for (int i = 0; i < sb.length(); i++) {
+            char c = sb.charAt(i);
+            int index = VIETNAMESE_CHARS.indexOf(c);
+            if (index >= 0) {
+                sb.setCharAt(i, REPLACEMENT_CHARS.charAt(index));
             }
         }
-        return str;
+        return sb.toString();
     }
 }

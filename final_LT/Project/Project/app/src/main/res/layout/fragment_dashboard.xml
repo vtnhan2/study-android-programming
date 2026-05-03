@@ -413,4 +413,19 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <!-- FAB Tạo đơn hàng -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddOrder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="82dp"
+        android:contentDescription="Tạo đơn hàng"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@color/on_primary"
+        android:backgroundTint="@color/primary"
+        android:visibility="gone" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

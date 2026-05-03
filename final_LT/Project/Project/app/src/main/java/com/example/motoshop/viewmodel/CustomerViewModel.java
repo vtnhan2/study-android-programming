@@ -111,6 +111,18 @@ public class CustomerViewModel extends BaseViewModel {
         }
     }
 
+    // Đồng bộ điểm và hạng thành viên dựa trên tổng chi tiêu (dùng cùng hệ rank với SalesViewModel).
+    public void updateLoyalty(String docId, double totalSpent) {
+        if (docId == null) return;
+        String rank = "NORMAL";
+        if (totalSpent >= 100000000) rank = "VIP";
+        else if (totalSpent >= 50000000) rank = "GOLD";
+        else if (totalSpent >= 20000000) rank = "SILVER";
+        int points = (int) (totalSpent / 100000);
+        db.collection("customers").document(docId)
+                .update("totalSpent", totalSpent, "memberRank", rank, "loyaltyPoints", points);
+    }
+
     // Xóa hoặc bỏ dữ liệu theo thao tác của người dùng.
     public void delete(String docId, OnActionListener listener) {
         if (docId != null) {
@@ -124,20 +136,4 @@ public class CustomerViewModel extends BaseViewModel {
         }
     }
 
-    // Định dạng dữ liệu để hiển thị dễ đọc hơn.
-    public void updateLoyalty(String docId, double totalSpent) {
-        if (docId == null) return;
-
-        String rank = "NORMAL";
-        if (totalSpent >= 100000000) rank = "VIP";
-        else if (totalSpent >= 50000000) rank = "GOLD";
-        else if (totalSpent >= 20000000) rank = "SILVER";
-
-        int points = (int) (totalSpent / 100000);
-
-        db.collection("customers").document(docId)
-                .update("totalSpent", totalSpent,
-                        "memberRank", rank,
-                        "loyaltyPoints", points);
-    }
 }

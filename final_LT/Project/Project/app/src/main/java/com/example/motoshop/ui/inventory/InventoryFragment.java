@@ -118,13 +118,13 @@ public class InventoryFragment extends Fragment {
     private void setupFAB(View v) {
         FloatingActionButton fab = v.findViewById(R.id.fabAddMotorcycle);
         if (fab != null) {
-            if (UserSession.ROLE_USER.equals(session.getUserRole()) || UserSession.ROLE_SALES.equals(session.getUserRole())) {
-                fab.setVisibility(View.GONE);
-            } else {
+            if (UserSession.ROLE_ADMIN.equals(session.getUserRole())) {
                 fab.setVisibility(View.VISIBLE);
                 fab.setOnClickListener(view -> {
                     startActivity(new Intent(getContext(), AddEditMotorcycleActivity.class));
                 });
+            } else {
+                fab.setVisibility(View.GONE);
             }
         }
     }

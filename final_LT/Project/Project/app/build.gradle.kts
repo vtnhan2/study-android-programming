@@ -1,8 +1,7 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.google.services)
+    alias(libs.plugins.secrets.gradle.plugin)
 }
 
 android {
@@ -17,18 +16,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        val properties = Properties()
-        val localPropertiesFile = project.rootProject.file("local.properties")
-        if (localPropertiesFile.exists()) {
-            localPropertiesFile.inputStream().use { properties.load(it) }
-        }
-
-        val geminiKey = (properties.getProperty("GEMINI_API_KEY") ?: "").trim()
-        val escapedGeminiKey = geminiKey.replace("\"", "\\\"")
-        buildConfigField("String", "GEMINI_API_KEY", "\"$escapedGeminiKey\"")
     }
-
+    
+    // Cấu hình Secrets Gradle Plugin
+    // Phương án: Mặc định sẽ dùng Key cung cấp sẵn nếu không tìm thấy trong local.properties
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -48,6 +39,11 @@ android {
         viewBinding = true
         buildConfig = true
     }
+}
+
+secrets {
+    // Tệp này chứa key mặc định 
+    defaultPropertiesFileName = "secrets.defaults.properties"
 }
 
 dependencies {

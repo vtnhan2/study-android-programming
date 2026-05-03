@@ -57,9 +57,15 @@ public class DateUtils {
         return c.getTimeInMillis();
     }
 
-    // Tạo mã đơn giản theo ngày hiện tại và số ngẫu nhiên.
+    // Tạo mã đơn giản theo ngày hiện tại và số thứ tự (STT).
+    public static String generateCode(String prefix, int sequence) {
+        SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        return prefix + "_" + f.format(new Date()) + "_" + String.format(Locale.getDefault(), "%03d", sequence);
+    }
+
+    // Tạo mã đơn giản theo ngày hiện tại và số ngẫu nhiên (dùng tạm khi chưa có STT).
     public static String generateCode(String prefix) {
         SimpleDateFormat f = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
-        return prefix + "_" + f.format(new Date()) + "_" + (int)(Math.random() * 9000 + 1000);
+        return prefix + "_" + f.format(new Date()) + "_" + (int)(Math.random() * 900 + 100);
     }
 }

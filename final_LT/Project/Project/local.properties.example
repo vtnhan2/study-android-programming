@@ -1,0 +1,9 @@
+## This file shows the required properties for the project to build correctly.
+## Copy this file to 'local.properties' and fill in your actual API keys.
+
+# Gemini API Key for Chatbot
+# Get yours at: https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=YOUR_API_KEY_HERE
+
+# Firebase configuration usually handled by google-services.json
+# but other local configs can go here.

@@ -59,6 +59,11 @@
         android:label="Quản lý Nhân viên" />
 
     <fragment
+        android:id="@+id/nav_repair_services"
+        android:name="com.example.motoshop.ui.repair.RepairServicesFragment"
+        android:label="Quản lý Dịch vụ" />
+
+    <fragment
         android:id="@+id/userDashboardFragment"
         android:name="com.example.motoshop.ui.dashboard.UserDashboardFragment"
         android:label="My Dashboard"

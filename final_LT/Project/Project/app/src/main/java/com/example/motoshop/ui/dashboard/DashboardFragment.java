@@ -51,9 +51,41 @@ public class DashboardFragment extends Fragment {
         setupDrawerToggle(view);
         setupRecyclerViews(view);
         setupExploreButton(view);
+        setupFab(view);
         initViewModels();
         setupManagementSummary(view);
         observeData();
+    }
+
+    private void setupFab(View view) {
+        com.google.android.material.floatingactionbutton.FloatingActionButton fab = view.findViewById(R.id.fabAddOrder);
+        if (fab == null) return;
+        
+        String role = session.getUserRole();
+        if (UserSession.ROLE_USER.equals(role)) {
+            fab.setVisibility(View.GONE);
+            return;
+        }
+
+        fab.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(v -> {
+            if (UserSession.ROLE_TECHNICIAN.equals(role)) {
+                startActivity(new Intent(getContext(), com.example.motoshop.ui.repair.CreateRepairActivity.class));
+            } else {
+                // Admin or Sales
+                String[] options = {"Tạo đơn bán hàng", "Tạo phiếu sửa chữa"};
+                new android.app.AlertDialog.Builder(requireContext())
+                        .setTitle("Chọn loại đơn")
+                        .setItems(options, (dialog, which) -> {
+                            if (which == 0) {
+                                startActivity(new Intent(getContext(), com.example.motoshop.ui.sales.CreateSaleActivity.class));
+                            } else {
+                                startActivity(new Intent(getContext(), com.example.motoshop.ui.repair.CreateRepairActivity.class));
+                            }
+                        })
+                        .show();
+            }
+        });
     }
 
     // Chuẩn bị view, dữ liệu hoặc sự kiện cần dùng cho màn hình.

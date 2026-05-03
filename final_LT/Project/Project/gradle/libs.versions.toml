@@ -18,6 +18,7 @@ gson = "2.11.0"
 okhttp = "4.12.0"
 googleServices = "4.4.2"
 firebaseBom = "33.7.0"
+secretsGradlePlugin = "2.0.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -66,3 +67,4 @@ firebase-storage = { group = "com.google.firebase", name = "firebase-storage" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+secrets-gradle-plugin = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }

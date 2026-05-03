@@ -53,6 +53,13 @@ public class RepairOrderAdapter extends RecyclerView.Adapter<RepairOrderAdapter.
         holder.tvRepairCode.setText(repair.repairCode);
         holder.tvCustomerName.setText("Khách hàng: " + repair.customerName);
         holder.tvMotorInfo.setText("Xe: " + repair.motorcycleBrand + " - " + repair.licensePlate);
+        
+        if (repair.note != null && !repair.note.isEmpty()) {
+            holder.tvNote.setVisibility(View.VISIBLE);
+            holder.tvNote.setText("Ghi chú: " + repair.note);
+        } else {
+            holder.tvNote.setVisibility(View.GONE);
+        }
 
         applyStatusStyle(holder.chipStatus, repair.status != null ? repair.status : "RECEIVED", context);
 
@@ -91,7 +98,7 @@ public class RepairOrderAdapter extends RecyclerView.Adapter<RepairOrderAdapter.
 
     // ViewHolder giữ các view của một item để RecyclerView dùng lại.
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvRepairCode, tvCustomerName, tvMotorInfo;
+        TextView tvRepairCode, tvCustomerName, tvMotorInfo, tvNote;
         Chip chipStatus;
 
         ViewHolder(View itemView) {
@@ -99,6 +106,7 @@ public class RepairOrderAdapter extends RecyclerView.Adapter<RepairOrderAdapter.
             tvRepairCode = itemView.findViewById(R.id.tvRepairCode);
             tvCustomerName = itemView.findViewById(R.id.tvCustomerName);
             tvMotorInfo = itemView.findViewById(R.id.tvMotorInfo);
+            tvNote = itemView.findViewById(R.id.tvNote);
             chipStatus = itemView.findViewById(R.id.chipStatus);
         }
     }

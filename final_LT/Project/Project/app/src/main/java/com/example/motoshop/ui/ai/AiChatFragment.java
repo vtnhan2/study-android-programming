@@ -179,6 +179,17 @@ public class AiChatFragment extends Fragment {
         if (progressBar != null) progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
         if (btnSend != null) btnSend.setEnabled(!isLoading);
         if (etMessage != null) etMessage.setEnabled(!isLoading);
+        if (btnAiSearch != null) btnAiSearch.setEnabled(!isLoading);
+        
+        // Vô hiệu hóa các chip để tránh spam API gây lỗi 429
+        View v = getView();
+        if (v != null) {
+            int[] chipIds = {R.id.chipBestSeller, R.id.chipMaintenance, R.id.chipConsult, R.id.chipStockSuggest};
+            for (int id : chipIds) {
+                View chip = v.findViewById(id);
+                if (chip != null) chip.setEnabled(!isLoading);
+            }
+        }
     }
 
     private void showAiSearchDialog() {

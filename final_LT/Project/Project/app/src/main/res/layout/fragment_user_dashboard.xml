@@ -11,15 +11,32 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Header -->
-        <TextView
-            android:id="@+id/tvWelcomeUser"
-            android:layout_width="wrap_content"
+        <!-- Header with Menu Button -->
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Chào bạn, Khách hàng!"
-            android:textColor="@color/primary_dark"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/btnDrawerMenu"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:padding="6dp"
+                android:src="@drawable/ic_menu_drawer"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/tvWelcomeUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Chào bạn, Khách hàng!"
+                android:textColor="@color/primary_dark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvMemberRank"
@@ -28,6 +45,60 @@
             android:text="Hạng: Silver | Điểm: 500"
             android:textColor="@color/primary"
             android:textSize="14sp" />
+
+        <!-- Most Searched Bikes Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="XE NỔI BẬT"
+                android:textColor="@color/primary_dark"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSeeAllBikes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem tất cả"
+                android:textColor="@color/primary"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMostSearched"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            android:paddingEnd="8dp" />
+
+        <!-- Recommended Bikes Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="GỢI Ý CHO BẠN"
+            android:textColor="@color/primary_dark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecommended"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            android:paddingEnd="8dp" />
 
         <!-- My Vehicles Section -->
         <TextView

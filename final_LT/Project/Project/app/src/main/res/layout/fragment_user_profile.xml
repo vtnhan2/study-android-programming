@@ -80,6 +80,7 @@
 
             <!-- Thống kê điểm & Hạng -->
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLoyalty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
@@ -187,6 +188,7 @@
 
             <!-- Bảo dưỡng -->
             <TextView
+                android:id="@+id/tvMaintenanceSectionLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -197,6 +199,7 @@
                 android:textStyle="bold" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardMaintenance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
@@ -215,6 +218,7 @@
 
             <!-- Lịch sử giao dịch -->
             <TextView
+                android:id="@+id/tvHistoryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -229,6 +233,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
+
+            <!-- Nút Đăng xuất -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:text="Đăng xuất"
+                android:textColor="@color/error"
+                app:icon="@drawable/ic_signout_white"
+                app:iconTint="@color/error"
+                app:strokeColor="@color/error" />
 
         </LinearLayout>
     </LinearLayout>

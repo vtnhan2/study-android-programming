@@ -39,7 +39,6 @@ public class MotorcycleViewModel extends BaseViewModel {
         });
 
         listenToFirebase();
-        fixCorruptedData(); // Script sửa lỗi một lần
     }
 
     private void fixCorruptedData() {
@@ -96,8 +95,10 @@ public class MotorcycleViewModel extends BaseViewModel {
     public void insert(Motorcycle m) {
         m.createdAt = System.currentTimeMillis();
         if (m.documentId == null || m.documentId.isEmpty()) {
-            String safeBrand = m.brand != null ? m.brand.toLowerCase().replaceAll("\\s+", "_") : "moto";
-            String safeModel = m.model != null ? m.model.toLowerCase().replaceAll("\\s+", "_") : "model";
+            String safeBrand = m.brand != null ? 
+                com.example.motoshop.utils.VNCharacterUtils.removeAccents(m.brand.toLowerCase()).replaceAll("\\s+", "_") : "moto";
+            String safeModel = m.model != null ? 
+                com.example.motoshop.utils.VNCharacterUtils.removeAccents(m.model.toLowerCase()).replaceAll("\\s+", "_") : "model";
             m.documentId = safeBrand + "_" + safeModel + "_" + m.year;
         }
         db.collection("motorcycles").document(m.documentId).set(m);

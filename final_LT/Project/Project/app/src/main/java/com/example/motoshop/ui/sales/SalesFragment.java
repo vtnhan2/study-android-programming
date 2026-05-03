@@ -47,9 +47,19 @@ public class SalesFragment extends Fragment {
         RecyclerView rv = v.findViewById(R.id.rvSales);
         adapter = new SalesOrderAdapter(new SalesOrderAdapter.OnOrderActionListener() {
             @Override
-            public void onComplete(String documentId) {
-                viewModel.updateStatus(documentId, "COMPLETED");
-                Toast.makeText(getContext(), "Đã cập nhật trạng thái đơn hàng", Toast.LENGTH_SHORT).show();
+            public void onComplete(com.example.motoshop.data.model.SalesOrder order) {
+                viewModel.completeOrderWithLoyalty(order, new SalesViewModel.OrderCallback() {
+                    @Override
+                    public void onSuccess() {
+                        if (getContext() != null)
+                            Toast.makeText(getContext(), "Hoàn tất đơn hàng & cộng điểm tích lũy!", Toast.LENGTH_SHORT).show();
+                    }
+                    @Override
+                    public void onError(String message) {
+                        if (getContext() != null)
+                            Toast.makeText(getContext(), "Lỗi: " + message, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
 
             @Override

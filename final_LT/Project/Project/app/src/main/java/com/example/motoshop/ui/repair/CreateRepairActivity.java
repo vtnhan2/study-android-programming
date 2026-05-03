@@ -57,7 +57,7 @@ public class CreateRepairActivity extends AppCompatActivity {
     private SalesViewModel salesViewModel;
 
     private AutoCompleteTextView autoCompleteCustomer;
-    private TextInputEditText etBrand, etModel, etLicensePlate, etIssueDescription;
+    private TextInputEditText etBrand, etModel, etLicensePlate, etIssueDescription, etNote;
     private TextView tvTotalCost;
     private MaterialButton btnSave, btnAiAnalyze, btnApprove, btnReject, btnAddManual;
     private ProgressBar pbAi;
@@ -111,6 +111,7 @@ public class CreateRepairActivity extends AppCompatActivity {
         etModel = findViewById(R.id.etModel);
         etLicensePlate = findViewById(R.id.etLicensePlate);
         etIssueDescription = findViewById(R.id.etIssueDescription);
+        etNote = findViewById(R.id.etNote);
         tvTotalCost = findViewById(R.id.tvTotalCost);
         btnSave = findViewById(R.id.btnSave);
         btnAiAnalyze = findViewById(R.id.btnAiAnalyze);
@@ -321,6 +322,7 @@ public class CreateRepairActivity extends AppCompatActivity {
         r.partsCost = standardParts;
         r.totalCost = standardLabor + standardParts + manualTotal;
         r.status = status;
+        r.note = etNote.getText().toString().trim();
         r.receivedDate = System.currentTimeMillis();
         repairViewModel.insert(r);
         Toast.makeText(this, "Đã lưu phiếu sửa chữa", Toast.LENGTH_SHORT).show();
