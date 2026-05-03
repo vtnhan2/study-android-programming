@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors -->
+    <color name="primary">#E65100</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="secondary">#1A237E</color>
+    <color name="on_secondary">#FFFFFF</color>
+
+    <!-- UI Backgrounds -->
+    <color name="background">#F5F5F5</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_background">#1C1B1F</color>
+
+    <!-- Text Colors - Contextual -->
+    <color name="text_primary">#1C1B1F</color>
+    <color name="text_secondary">#49454F</color>
+
+    <!-- Semantic Colors -->
+    <color name="error">#B00020</color>
+    <color name="success">#2E7D32</color>
+    <color name="warning">#F9A825</color>
+    <color name="info">#0277BD</color>
+
+    <!-- Status Colors -->
+    <color name="status_green_bg">#E8F5E9</color>
+    <color name="status_green_text">#2E7D32</color>
+    <color name="status_red_bg">#FFEBEE</color>
+    <color name="status_red_text">#C62828</color>
+    <color name="status_orange_bg">#FFF3E0</color>
+    <color name="status_orange_text">#EF6C00</color>
+    <color name="status_blue_bg">#E3F2FD</color>
+    <color name="status_blue_text">#1565C0</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_dark">#424242</color>
+    <color name="gray_light">#9E9E9E</color>
+
+    <color name="success_bg">#E8F5E9</color>
+    <color name="error_bg">#FFEBEE</color>
+</resources>

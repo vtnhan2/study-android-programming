@@ -1,0 +1,111 @@
+<resources>
+    <string name="app_name">MotoShop</string>
+    <string name="tagline">Quản lý cửa hàng thông minh</string>
+    <string name="no_data">Chưa có dữ liệu</string>
+    <string name="welcome_ai">Xin chào! Tôi là trợ lý AI của MotoShop. Tôi có thể tư vấn xe máy, bảo dưỡng và hỗ trợ bạn tìm xe phù hợp. Bạn cần hỗ trợ gì?</string>
+
+    <!-- Roles -->
+    <string name="role_admin">Quản trị viên</string>
+    <string name="role_sales">Nhân viên bán hàng</string>
+    <string name="role_tech">Kỹ thuật viên</string>
+
+    <!-- Common Actions -->
+    <string name="btn_login">ĐĂNG NHẬP</string>
+    <string name="btn_save">Lưu lại</string>
+    <string name="btn_cancel">Hủy bỏ</string>
+    <string name="btn_ok">Đồng ý</string>
+    <string name="btn_understand">Đã hiểu</string>
+    <string name="search_hint">Tìm kiếm...</string>
+    <string name="status_all">Tất cả</string>
+
+    <!-- Login -->
+    <string name="login_user_id">Mã nhân viên</string>
+    <string name="login_password">Mật khẩu</string>
+    <string name="login_demo_label">Tài khoản dùng thử (Chạm để nhập nhanh):</string>
+    <string name="login_error">Sai thông tin đăng nhập, vui lòng kiểm tra lại.</string>
+    <string name="login_empty_error">Vui lòng nhập đầy đủ thông tin</string>
+
+    <!-- Navigation & Titles -->
+    <string name="nav_dashboard">Tổng quan</string>
+    <string name="nav_inventory">Kho xe</string>
+    <string name="nav_customer">Khách hàng</string>
+    <string name="nav_sales">Bán hàng</string>
+    <string name="nav_repair">Sửa chữa</string>
+    <string name="nav_profile">Cá nhân</string>
+    <string name="title_customer_mgmt">Quản lý khách hàng</string>
+    <string name="title_inventory_mgmt">Kho xe máy</string>
+    <string name="title_repair_mgmt">Quản lý sửa chữa</string>
+    <string name="title_sales_mgmt">Quản lý bán hàng</string>
+    <string name="title_order_mgmt">Quản lý đơn hàng</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_welcome">Chào buổi sáng,</string>
+    <string name="dashboard_revenue">Doanh thu</string>
+    <string name="dashboard_stock">Tồn kho</string>
+    <string name="dashboard_orders">Đơn hàng</string>
+    <string name="dashboard_repairs">Sửa chữa</string>
+    <string name="dashboard_chart_title">Phân tích doanh thu</string>
+    <string name="dashboard_recent_orders">Đơn hàng mới nhất</string>
+    <string name="revenue_chart_label">Doanh thu (VNĐ)</string>
+
+    <!-- Inventory -->
+    <string name="status_in_stock">Còn hàng</string>
+    <string name="status_low_stock">Sắp hết</string>
+    <string name="status_sold_out">Hết hàng</string>
+
+    <!-- Sales & Orders Status -->
+    <string name="status_processing">Đang xử lý</string>
+    <string name="status_completed">Hoàn thành</string>
+    <string name="status_cancelled">Đã hủy</string>
+    <string name="create_sale_title">Tạo đơn hàng mới</string>
+    <string name="err_select_customer">Vui lòng chọn khách hàng</string>
+    <string name="err_select_vehicle">Vui lòng chọn ít nhất 1 xe</string>
+    <string name="sale_success">Tạo đơn hàng thành công</string>
+    <string name="out_of_stock">Hết hàng hoặc đạt giới hạn tồn kho</string>
+
+    <!-- Repair Status -->
+    <string name="status_in_progress">Đang sửa</string>
+    <string name="status_done">Hoàn tất</string>
+    <string name="create_repair_title">Tạo phiếu sửa chữa</string>
+    <string name="repair_success">Tạo phiếu sửa chữa thành công</string>
+    <string name="err_enter_cust_name">Nhập tên khách hàng</string>
+    <string name="err_enter_brand">Nhập hãng xe</string>
+
+    <!-- Customer & Profile Labels -->
+    <string name="add_customer_title">Thêm khách hàng mới</string>
+    <string name="hint_name">Họ tên (*)</string>
+    <string name="hint_phone">Số điện thoại (*)</string>
+    <string name="hint_address">Địa chỉ</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_id_card">Số CCCD</string>
+    <string name="hint_note">Ghi chú</string>
+    <string name="customer_added">Đã thêm khách hàng</string>
+    <string name="err_fill_required">Vui lòng nhập tên và số điện thoại</string>
+    <string name="label_total_spending">Tổng chi tiêu</string>
+    <string name="label_member_rank">Hạng thành viên</string>
+    <string name="label_member_points">Điểm tích lũy</string>
+    <string name="label_recent_activity">HOẠT ĐỘNG GẦN ĐÂY</string>
+    <string name="label_my_profile">HỒ SƠ CỦA TÔI</string>
+    <string name="label_points">ĐIỂM</string>
+    <string name="label_rank">HẠNG</string>
+    <string name="btn_edit_info">Chỉnh sửa thông tin</string>
+
+    <!-- AI Chat -->
+    <string name="ai_analyzing">📊 Đang phân tích tồn kho...</string>
+    <string name="ai_error">Lỗi AI: %s</string>
+    <string name="ai_invalid_res">AI trả về kết quả không hợp lệ</string>
+    <string name="ai_search_title">🔍 Tìm xe bằng AI</string>
+    <string name="ai_search_hint">Mô tả nhu cầu (Ví dụ: xe tay ga màu đỏ...)</string>
+    <string name="ai_search_msg">Nhập yêu cầu của bạn, AI sẽ tìm trong kho xe hiện có:</string>
+    <string name="ai_no_result">Xin lỗi, AI không tìm thấy xe nào phù hợp trong kho.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Cài đặt ứng dụng</string>
+    <string name="setting_theme">Giao diện</string>
+    <string name="setting_theme_light">Chế độ sáng</string>
+    <string name="setting_theme_dark">Chế độ tối</string>
+    <string name="setting_language">Ngôn ngữ</string>
+    <string name="setting_lang_vi">Tiếng Việt</string>
+    <string name="setting_lang_en">English</string>
+    <string name="hint_shop_name">Tên cửa hàng</string>
+</resources>

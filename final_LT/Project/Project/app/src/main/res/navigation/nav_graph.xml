@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_dashboard">
+
+    <fragment
+        android:id="@+id/nav_dashboard"
+        android:name="com.example.motoshop.ui.dashboard.DashboardFragment"
+        android:label="@string/nav_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/nav_inventory"
+        android:name="com.example.motoshop.ui.inventory.InventoryFragment"
+        android:label="@string/nav_inventory"
+        tools:layout="@layout/fragment_inventory" />
+
+    <fragment
+        android:id="@+id/nav_customer"
+        android:name="com.example.motoshop.ui.customer.CustomerFragment"
+        android:label="@string/nav_customer"
+        tools:layout="@layout/fragment_customer" />
+
+    <fragment
+        android:id="@+id/nav_revenue"
+        android:name="com.example.motoshop.ui.dashboard.RevenueChartFragment"
+        android:label="Statistics"
+        tools:layout="@layout/fragment_revenue_chart" />
+
+    <fragment
+        android:id="@+id/nav_sales"
+        android:name="com.example.motoshop.ui.sales.SalesFragment"
+        android:label="@string/nav_sales"
+        tools:layout="@layout/fragment_sales" />
+
+    <fragment
+        android:id="@+id/nav_repair"
+        android:name="com.example.motoshop.ui.repair.RepairFragment"
+        android:label="@string/nav_repair"
+        tools:layout="@layout/fragment_repair" />
+
+    <fragment
+        android:id="@+id/nav_ai"
+        android:name="com.example.motoshop.ui.ai.AiChatFragment"
+        android:label="@string/ai_search_title"
+        tools:layout="@layout/fragment_ai_chat" />
+
+    <fragment
+        android:id="@+id/nav_user_profile"
+        android:name="com.example.motoshop.ui.customer.UserProfileFragment"
+        android:label="@string/nav_profile"
+        tools:layout="@layout/fragment_user_profile" />
+</navigation>

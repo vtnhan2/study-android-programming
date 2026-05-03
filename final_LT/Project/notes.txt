@@ -1,0 +1,43 @@
+1. Bảng motorcycles (Kho xe / Danh mục xe máy)
+Bạn nên đặt ID theo cú pháp mà bạn từng yêu cầu trước đó, rất chuẩn để tránh lặp xe:
+
+Format: [hãng]_[tênxe]_[phânkhối/phiênbản]_[năm] (tất cả viết thường, không dấu, cách nhau bằng dấu gạch dưới).
+Ví dụ: honda_lead_125_caocap_2024, yamaha_exciter_155_vva_2023.
+Lý do: Khi import xe mới, nếu cùng dòng xe này thì sẽ tự đè (update số lượng) lên ID cũ thay vì tạo ra 1 dòng data mới rác.
+2. Bảng customers (Khách hàng)
+Số điện thoại là duy nhất với mỗi khách hàng, nên dùng nó làm gốc.
+
+Format: KH_[Số_điện_thoại]
+Ví dụ: KH_0901234567, KH_0987654321.
+Lý do: Tránh việc tạo 2 profile cho cùng 1 khách hàng. Khi cần tìm thông tin khách hàng, chỉ cần search đúng số điện thoại của họ trên Firebase là ra ngay.
+3. Bảng customer_vehicles (Xe của khách)
+Mỗi chiếc xe chạy ngoài đường đều có 1 biển số duy nhất.
+
+Format: [SĐT_Khách]_[Biển_số_xe] (Loại bỏ khoảng trắng và dấu chấm).
+Ví dụ: 59A1_12345 hoặc KH_0901234567_59A1_12345.
+Lý do: Khi xe quay lại bảo dưỡng, thợ chỉ cần gõ biển số là lấy được toàn bộ lịch sử sửa chữa của chiếc xe đó.
+4. Bảng sales_orders (Đơn bán hàng)
+Bạn đang dùng DH-20260503-275 là khá tốt rồi, nhưng mình chuẩn hoá lại một chút cho dễ nhìn.
+
+Format: DH_[YYYYMMDD]_[STT]
+Ví dụ: DH_20260503_001 (Đơn hàng số 1 của ngày 03/05/2026).
+Lý do: Khi sắp xếp trên database, các đơn cùng ngày sẽ tự động gom lại với nhau và xếp theo thứ tự thời gian, cực kì dễ tra cứu.
+5. Bảng repair_orders (Đơn sửa chữa / Phiếu dịch vụ)
+Tương tự như Đơn bán hàng nhưng đổi tiền tố để phân biệt.
+
+Format: SC_[YYYYMMDD]_[STT]
+Ví dụ: SC_20260503_001 (Phiếu sửa chữa số 1 trong ngày).
+6. Bảng repair_services (Danh mục Dịch vụ & Phụ tùng sửa chữa)
+Format: DV_[Mã_Dịch_Vụ] (cho tiền công/dịch vụ) hoặc PT_[Mã_Phụ_Tùng] (cho phụ tùng).
+Ví dụ: DV_RUA_XE, DV_THAY_NHOT, PT_BUGI_NGK, PT_LOP_MICHELIN.
+Lý do: Rất dễ dàng để Admin cập nhật giá dịch vụ. ID gợi nhớ tốt hơn nhiều so với mã random.
+7. Bảng suppliers (Nhà cung cấp)
+Số lượng nhà cung cấp thường không nhiều, nên đặt theo tên viết tắt của họ.
+
+Format: NCC_[Tên_viết_tắt]
+Ví dụ: NCC_HONDA_VN, NCC_YAMAHA, NCC_NHOT_MOTUL.
+Tóm tắt lợi ích nếu bạn áp dụng Format này:
+
+Khi nhìn vào Database, bạn có thể đọc hiểu data ngay lập tức mà không cần ấn mở chi tiết từng Document.
+Tránh triệt để được rác dữ liệu do lỗi người dùng tạo trùng lặp (ví dụ: tạo 2 ông Nguyễn Văn A, hoặc nhập 2 chiếc xe Lead y hệt nhau).
+Sau này con AI Gemini khi đọc Database sẽ dễ dàng gom nhóm và báo cáo chính xác (ví dụ: "Hôm nay có 5 đơn SC và 2 đơn DH").

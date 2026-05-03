@@ -1,0 +1,53 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MotoShop" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Main colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+
+        <!-- Background and Surface -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">@color/primary</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Components Style -->
+        <item name="materialButtonStyle">@style/Widget.MotoShop.Button</item>
+        <item name="textInputStyle">@style/Widget.MotoShop.TextInputLayout</item>
+    </style>
+
+    <style name="Theme.MotoShop" parent="Base.Theme.MotoShop" />
+
+    <style name="Theme.Project" parent="Theme.MotoShop" />
+
+    <!-- Overlay styles -->
+    <style name="Theme.MotoShop.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+    <style name="Theme.MotoShop.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <!-- Button Style -->
+    <style name="Widget.MotoShop.Button" parent="Widget.Material3.Button">
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.MotoShop.MediumComponent</item>
+        <item name="android:minHeight">@dimen/btn_height</item>
+    </style>
+
+    <!-- TextInputLayout Style -->
+    <style name="Widget.MotoShop.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/input_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/input_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/input_corner_radius</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/input_corner_radius</item>
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="hintTextColor">@color/primary</item>
+    </style>
+
+    <style name="ShapeAppearance.MotoShop.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">@dimen/btn_corner_radius</item>
+    </style>
+</resources>

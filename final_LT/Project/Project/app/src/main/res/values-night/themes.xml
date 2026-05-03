@@ -1,0 +1,26 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme for Dark Mode. -->
+    <style name="Base.Theme.MotoShop" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Main colors -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorSecondary">@color/secondary</item>
+        <item name="colorOnSecondary">@color/on_secondary</item>
+
+        <!-- Background and Surface -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/on_surface</item>
+
+        <!-- Status Bar -->
+        <item name="android:statusBarColor">#000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Components Style -->
+        <item name="materialButtonStyle">@style/Widget.MotoShop.Button</item>
+        <item name="textInputStyle">@style/Widget.MotoShop.TextInputLayout</item>
+    </style>
+
+    <style name="Theme.MotoShop" parent="Base.Theme.MotoShop" />
+    <style name="Theme.Project" parent="Theme.MotoShop" />
+</resources>

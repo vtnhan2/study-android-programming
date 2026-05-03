@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">MotoShop</string>
+    <string name="tagline">Smart Shop Management</string>
+    <string name="no_data">No data available</string>
+    <string name="welcome_ai">Hello! I am MotoShop AI Assistant. I can consult on motorcycles, maintenance and help you find the right bike. How can I help you?</string>
+
+    <!-- Roles -->
+    <string name="role_admin">Administrator</string>
+    <string name="role_sales">Sales Staff</string>
+    <string name="role_tech">Technician</string>
+
+    <!-- Common Actions -->
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_understand">Understood</string>
+    <string name="search_hint">Search...</string>
+    <string name="status_all">All</string>
+
+    <!-- Navigation & Titles -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_inventory">Inventory</string>
+    <string name="nav_customer">Customer</string>
+    <string name="nav_sales">Sales</string>
+    <string name="nav_repair">Repairs</string>
+    <string name="nav_profile">Profile</string>
+    <string name="title_customer_mgmt">Customer Management</string>
+    <string name="title_inventory_mgmt">Motorcycle Inventory</string>
+    <string name="title_repair_mgmt">Repair Management</string>
+    <string name="title_sales_mgmt">Sales Management</string>
+    <string name="title_order_mgmt">Order Management</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_welcome">Good morning,</string>
+    <string name="dashboard_revenue">Revenue</string>
+    <string name="dashboard_stock">Stock</string>
+    <string name="dashboard_orders">Orders</string>
+    <string name="dashboard_repairs">Repairs</string>
+    <string name="dashboard_chart_title">Revenue Analysis</string>
+    <string name="dashboard_recent_orders">Recent Orders</string>
+    <string name="revenue_chart_label">Revenue (VNĐ)</string>
+
+    <!-- Inventory -->
+    <string name="status_in_stock">In Stock</string>
+    <string name="status_low_stock">Low Stock</string>
+    <string name="status_sold_out">Sold Out</string>
+
+    <!-- Sales & Orders Status -->
+    <string name="status_processing">Processing</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_cancelled">Cancelled</string>
+    <string name="create_sale_title">Create New Order</string>
+    <string name="err_select_customer">Please select a customer</string>
+    <string name="err_select_vehicle">Please select at least 1 vehicle</string>
+    <string name="sale_success">Order created successfully</string>
+    <string name="out_of_stock">Out of stock or limit reached</string>
+
+    <!-- Repair Status -->
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_done">Done</string>
+    <string name="create_repair_title">Create Repair Slip</string>
+    <string name="repair_success">Repair slip created successfully</string>
+    <string name="err_enter_cust_name">Enter customer name</string>
+    <string name="err_enter_brand">Enter brand</string>
+
+    <!-- Customer & Profile Labels -->
+    <string name="add_customer_title">Add New Customer</string>
+    <string name="hint_name">Full Name (*)</string>
+    <string name="hint_phone">Phone Number (*)</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_id_card">ID Card Number</string>
+    <string name="hint_note">Note</string>
+    <string name="customer_added">Customer added</string>
+    <string name="err_fill_required">Please enter name and phone number</string>
+    <string name="label_total_spending">Total Spending</string>
+    <string name="label_member_rank">Membership Rank</string>
+    <string name="label_member_points">Loyalty Points</string>
+    <string name="label_recent_activity">RECENT ACTIVITY</string>
+    <string name="label_my_profile">MY PROFILE</string>
+    <string name="label_points">POINTS</string>
+    <string name="label_rank">RANK</string>
+    <string name="btn_edit_info">Edit Information</string>
+
+    <!-- AI Chat -->
+    <string name="ai_analyzing">📊 Analyzing inventory...</string>
+    <string name="ai_error">AI Error: %s</string>
+    <string name="ai_invalid_res">AI returned invalid result</string>
+    <string name="ai_search_title">🔍 AI Vehicle Search</string>
+    <string name="ai_search_hint">Describe your needs (e.g., red scooter...)</string>
+    <string name="ai_search_msg">Enter your request, AI will find it in existing stock:</string>
+    <string name="ai_no_result">Sorry, AI could not find any matching vehicles in stock.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">App Settings</string>
+    <string name="setting_theme">Appearance</string>
+    <string name="setting_theme_light">Light Mode</string>
+    <string name="setting_theme_dark">Dark Mode</string>
+    <string name="setting_language">Language</string>
+    <string name="setting_lang_vi">Tiếng Việt</string>
+    <string name="setting_lang_en">English</string>
+    <string name="hint_shop_name">Shop Name</string>
+</resources>

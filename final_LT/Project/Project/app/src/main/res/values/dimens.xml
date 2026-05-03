@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text Sizes -->
+    <dimen name="text_headline">28sp</dimen>
+    <dimen name="text_title">20sp</dimen>
+    <dimen name="text_subtitle">16sp</dimen>
+    <dimen name="text_body">15sp</dimen>
+    <dimen name="text_label">13sp</dimen>
+    <dimen name="text_value_large">24sp</dimen>
+
+    <!-- Spacing -->
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_medium">16dp</dimen>
+    <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_xlarge">32dp</dimen>
+
+    <!-- UI Elements -->
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="card_padding">20dp</dimen>
+    <dimen name="section_margin">32dp</dimen>
+    <dimen name="btn_height">56dp</dimen>
+    <dimen name="btn_corner_radius">12dp</dimen>
+    <dimen name="input_corner_radius">12dp</dimen>
+    <dimen name="chip_corner_radius">8dp</dimen>
+
+    <!-- Images -->
+    <dimen name="logo_size">120dp</dimen>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Mode Colors - Material 3 standard -->
+    <color name="primary">#FFB74D</color> <!-- Lighter orange for dark mode -->
+    <color name="on_primary">#4E342E</color>
+    <color name="secondary">#9FA8DA</color>
+    <color name="on_secondary">#1A237E</color>
+
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="on_surface">#E0E0E0</color>
+    <color name="on_background">#E0E0E0</color>
+
+    <!-- Map old hardcoded color names to high contrast dark variants -->
+    <color name="white">#1E1E1E</color>
+    <color name="black">#E0E0E0</color>
+    <color name="gray_dark">#BDBDBD</color>
+    <color name="gray_light">#757575</color>
+
+    <color name="text_primary">#E0E0E0</color>
+    <color name="text_secondary">#BDBDBD</color>
+
+    <!-- Status Colors -->
+    <color name="status_green_bg">#1B5E20</color>
+    <color name="status_green_text">#A5D6A7</color>
+    <color name="status_red_bg">#B71C1C</color>
+    <color name="status_red_text">#EF9A9A</color>
+    
+    <color name="error">#CF6679</color>
+    <color name="success">#81C784</color>
+    <color name="warning">#FFD54F</color>
+    <color name="info">#4FC3F7</color>
+</resources>

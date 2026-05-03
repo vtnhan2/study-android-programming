@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "172535369626",
+    "project_id": "motor-shop-687a0",
+    "storage_bucket": "motor-shop-687a0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:172535369626:android:a29eb024879e7a4f76b423",
+        "android_client_info": {
+          "package_name": "com.example.motoshop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI29wif5Klk6iJYkUxdCZBciEIsWUI4o0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

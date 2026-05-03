@@ -1,0 +1,8 @@
+1. Database can not update when added customer
+description: 
+--steps: [tong quan] --> [tao don] -->[fill data] --> data updated but name_of_data on [firebase] is not update as format form. 
+--ex: format: sale_001  =! 2HuvoKxfK1UbRyILmtDB 
+
+-------------------------------------------------
+
+2. 
