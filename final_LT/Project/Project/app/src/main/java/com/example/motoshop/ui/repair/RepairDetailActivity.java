@@ -70,9 +70,22 @@ public class RepairDetailActivity extends AppCompatActivity {
         String role = session.getUserRole();
         String status = currentOrder.status != null ? currentOrder.status : "RECEIVED";
 
-        // Chỉ hiện nút Hoàn thành nếu là TECHNICIAN và trạng thái là IN_PROGRESS
-        if (UserSession.ROLE_TECHNICIAN.equals(role) && "IN_PROGRESS".equals(status)) {
+        if (!UserSession.ROLE_TECHNICIAN.equals(role) && !UserSession.ROLE_ADMIN.equals(role)) {
+            binding.btnCompleteRepair.setVisibility(View.GONE);
+            return;
+        }
+
+        // Trạng thái RECEIVED → hiện nút "Bắt đầu sửa"
+        if ("RECEIVED".equals(status) || "PENDING".equals(status)) {
             binding.btnCompleteRepair.setVisibility(View.VISIBLE);
+            binding.btnCompleteRepair.setText("Bắt đầu sửa chữa");
+            binding.btnCompleteRepair.setOnClickListener(v -> startRepair());
+        }
+        // Trạng thái IN_PROGRESS → hiện nút "Hoàn tất"
+        else if ("IN_PROGRESS".equals(status)) {
+            binding.btnCompleteRepair.setVisibility(View.VISIBLE);
+            binding.btnCompleteRepair.setText("Hoàn tất sửa chữa");
+            binding.btnCompleteRepair.setOnClickListener(v -> completeOrder());
         } else {
             binding.btnCompleteRepair.setVisibility(View.GONE);
         }
@@ -86,11 +99,26 @@ public class RepairDetailActivity extends AppCompatActivity {
         currentOrder.completedDate = System.currentTimeMillis();
         currentOrder.technicianName = session.getUserName();
 
+        updateRepairInFirestore();
+    }
+
+    // Bắt đầu quá trình sửa chữa.
+    private void startRepair() {
+        if (currentOrder == null) return;
+
+        currentOrder.status = "IN_PROGRESS";
+        currentOrder.technicianName = session.getUserName();
+
+        updateRepairInFirestore();
+    }
+
+    private void updateRepairInFirestore() {
         FirebaseFirestore.getInstance().collection("repair_orders")
                 .document(currentOrder.documentId)
                 .set(currentOrder)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Đã hoàn thành sửa chữa", Toast.LENGTH_SHORT).show();
+                    String msg = "DONE".equals(currentOrder.status) ? "Đã hoàn thành sửa chữa" : "Đã bắt đầu sửa chữa";
+                    Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
                     displayData(currentOrder);
                     checkTechnicianPermission();
                 })

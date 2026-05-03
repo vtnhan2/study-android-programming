@@ -3,17 +3,21 @@
     <item
         android:id="@+id/nav_dashboard"
         android:icon="@drawable/ic_home"
-        android:title="@string/nav_home" />
+        android:title="Tổng quan" />
     <item
         android:id="@+id/nav_inventory"
         android:icon="@drawable/ic_search"
-        android:title="@string/nav_search" />
+        android:title="Kho xe" />
     <item
         android:id="@+id/nav_customer"
         android:icon="@drawable/ic_heart_outline"
-        android:title="@string/nav_likes" />
+        android:title="Khách hàng" />
     <item
-        android:id="@+id/nav_sales"
+        android:id="@+id/nav_staff"
         android:icon="@drawable/ic_profile"
-        android:title="@string/nav_profile" />
+        android:title="Nhân viên" />
+    <item
+        android:id="@+id/nav_revenue"
+        android:icon="@drawable/ic_heart_outline"
+        android:title="Báo cáo" />
 </menu>

@@ -26,6 +26,8 @@ public class SalesOrder {
     public long orderDate;
     public String note;
     public String cancelReason;
+    public String createdByStaffId;   // ID nhân viên tạo đơn
+    public String createdByStaffName; // Tên nhân viên tạo đơn
 
     @Ignore
     public List<SalesOrderItem> items;

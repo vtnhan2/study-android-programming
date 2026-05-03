@@ -25,6 +25,7 @@ import com.example.motoshop.data.model.SalesOrderItem;
 import com.example.motoshop.utils.CurrencyFormatter;
 import com.example.motoshop.utils.DateUtils;
 import com.example.motoshop.utils.MoneyInputTextWatcher;
+import com.example.motoshop.utils.UserSession;
 import com.example.motoshop.viewmodel.CustomerViewModel;
 import com.example.motoshop.viewmodel.MotorcycleViewModel;
 import com.example.motoshop.viewmodel.SalesViewModel;
@@ -39,6 +40,7 @@ public class CreateSaleActivity extends AppCompatActivity {
     private SalesViewModel salesViewModel;
     private MotorcycleViewModel motorViewModel;
     private CustomerViewModel customerViewModel;
+    private UserSession session;
 
     private AutoCompleteTextView spinnerCustomer, spinnerPaymentMethod;
     private RecyclerView rvSelectedVehicles;
@@ -68,6 +70,7 @@ public class CreateSaleActivity extends AppCompatActivity {
         setupRecyclerView();
         setupSpinners();
         observeData();
+        session = new UserSession(this);
 
         btnAddVehicle.setOnClickListener(v -> showAddVehicleDialog());
         btnConfirm.setOnClickListener(v -> confirmOrder());
@@ -247,6 +250,8 @@ public class CreateSaleActivity extends AppCompatActivity {
         order.orderDate = System.currentTimeMillis();
         order.note = etNote.getText().toString().trim();
         order.items = new ArrayList<>(selectedItems);
+        order.createdByStaffId   = session.getUserId();
+        order.createdByStaffName = session.getUserName();
 
         // Hiển thị loading/vô hiệu hóa nút để tránh click nhiều lần
         btnConfirm.setEnabled(false);

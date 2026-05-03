@@ -32,11 +32,42 @@
     <string name="nav_sales">Bán hàng</string>
     <string name="nav_repair">Sửa chữa</string>
     <string name="nav_profile">Cá nhân</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_likes">Likes</string>
     <string name="title_customer_mgmt">Quản lý khách hàng</string>
     <string name="title_inventory_mgmt">Kho xe máy</string>
     <string name="title_repair_mgmt">Quản lý sửa chữa</string>
     <string name="title_sales_mgmt">Quản lý bán hàng</string>
     <string name="title_order_mgmt">Quản lý đơn hàng</string>
+
+    <!-- Home Screen (Bike App) -->
+    <string name="home_greeting">Hi Scott G!</string>
+    <string name="home_search_hint">Search your favourite bike here…</string>
+    <string name="home_explore_latest">Explore Latest</string>
+    <string name="home_bikes_with_price">Bikes with Price</string>
+    <string name="home_explore">Explore</string>
+    <string name="home_most_searched">The most searched Bikes</string>
+    <string name="home_recommended">Recommended Bikes For You</string>
+    <string name="home_view_all">View all</string>
+
+    <!-- Bike Details Screen -->
+    <string name="detail_title">Bike Details</string>
+    <string name="detail_rating">Rating</string>
+    <string name="detail_price">Price</string>
+    <string name="detail_variants">Variants</string>
+    <string name="detail_bike_details">Bike Details</string>
+    <string name="detail_prebook">Pre-book Now</string>
+
+    <!-- Drawer Menu -->
+    <string name="drawer_welcome">Welcome John!</string>
+    <string name="drawer_home_page">Home Page</string>
+    <string name="drawer_best_deal">Best Deal Bikes</string>
+    <string name="drawer_notifications">Notifications</string>
+    <string name="drawer_rate_us">Rate Us</string>
+    <string name="drawer_help_center">Help Center</string>
+    <string name="drawer_sign_out">Sign Out</string>
+    <string name="drawer_brand">Insightlancer</string>
 
     <!-- Dashboard -->
     <string name="dashboard_welcome">Chào buổi sáng,</string>

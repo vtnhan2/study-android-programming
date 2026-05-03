@@ -67,22 +67,36 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Đăng nhập nhân viên
-        if (id.equals("AD01") && pass.equals("1111")) {
-            session.createLoginSession(id, "Admin Manager", UserSession.ROLE_ADMIN);
-            navigateToMain();
-        } else if (id.equals("SL01") && pass.equals("2222")) {
-            session.createLoginSession(id, "Sales Staff", UserSession.ROLE_SALES);
-            navigateToMain();
-        } else if (id.equals("KT01") && pass.equals("3333")) {
-            session.createLoginSession(id, "Technician", UserSession.ROLE_TECHNICIAN);
-            navigateToMain();
-        } else if (pass.equals("123")) {
-            // Đăng nhập khách hàng
-            checkCustomerLogin(id);
-        } else {
-            Toast.makeText(this, "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
-        }
+        // Ưu tiên kiểm tra Staff trước
+        db.collection("staff")
+                .whereEqualTo("staffId", id)
+                .whereEqualTo("password", pass)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        com.google.firebase.firestore.DocumentSnapshot doc = querySnapshot.getDocuments().get(0);
+                        String name = doc.getString("name");
+                        String role = doc.getString("role");
+                        session.createLoginSession(id, name, role);
+                        navigateToMain();
+                    } else {
+                        // Nếu không phải staff, kiểm tra xem có phải khách hàng đăng nhập bằng pass mặc định không
+                        if (pass.equals("123")) {
+                            checkCustomerLogin(id);
+                        } else {
+                            // Fallback cho tài khoản demo nếu Firestore trống (chỉ dùng trong quá trình dev)
+                            if (id.equals("AD01") && pass.equals("1111")) {
+                                session.createLoginSession(id, "Admin Manager", UserSession.ROLE_ADMIN);
+                                navigateToMain();
+                            } else {
+                                Toast.makeText(this, "Sai thông tin đăng nhập", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Lỗi kết nối: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     // Kiểm tra dữ liệu trước khi tiếp tục xử lý.

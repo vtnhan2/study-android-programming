@@ -6,5 +6,5 @@ public class AppConfig {
     public static final String WEBSITE_URL = "https://motoshop.example.com";
 
     // Màu sắc primary của app (trùng với colors.xml)
-    public static final int COLOR_PRIMARY = 0xFFE65100;
+    public static final int COLOR_PRIMARY = 0xFF009688;
 }

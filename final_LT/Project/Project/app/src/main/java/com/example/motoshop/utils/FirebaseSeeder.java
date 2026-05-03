@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 import com.example.motoshop.data.model.*;
+import com.example.motoshop.data.model.Staff;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ public class FirebaseSeeder {
             importCustomerVehicles(db, root.optJSONArray("customer_vehicles"));
             importSalesOrders(db, root.optJSONArray("sales_orders"));
             importRepairOrders(db, root.optJSONArray("repair_orders"));
+            importStaff(db, root.optJSONArray("staff"));
 
             Toast.makeText(context, "Đang import dữ liệu mẫu...", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
@@ -217,6 +219,26 @@ public class FirebaseSeeder {
             String id = obj.optString("id", r.repairCode);
             r.documentId = id;
             batch.set(db.collection("repair_orders").document(id), r);
+        }
+        batch.commit();
+    }
+
+    private static void importStaff(FirebaseFirestore db, JSONArray array) throws Exception {
+        if (array == null) return;
+        WriteBatch batch = db.batch();
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject obj = array.getJSONObject(i);
+            Staff s = new Staff();
+            s.staffId = obj.optString("staffId");
+            s.password = obj.optString("password");
+            s.name = obj.optString("name");
+            s.role = obj.optString("role");
+            s.phone = obj.optString("phone");
+            s.active = obj.optBoolean("active", true);
+
+            String id = obj.optString("id", s.staffId);
+            s.documentId = id;
+            batch.set(db.collection("staff").document(id), s);
         }
         batch.commit();
     }

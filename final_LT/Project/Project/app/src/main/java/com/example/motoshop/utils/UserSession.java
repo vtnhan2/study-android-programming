@@ -78,6 +78,11 @@ public class UserSession {
         return pref.getString(KEY_USER_NAME, "User");
     }
 
+    // Lấy ID người dùng hiện tại.
+    public String getUserId() {
+        return pref.getString(KEY_USER_ID, "");
+    }
+
     // Mở màn hình khác bằng Intent hoặc điều hướng trong app.
     public void logout() {
         editor.clear();

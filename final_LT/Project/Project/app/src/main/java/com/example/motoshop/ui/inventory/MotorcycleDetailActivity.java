@@ -1,35 +1,28 @@
 package com.example.motoshop.ui.inventory;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.example.motoshop.R;
 import com.example.motoshop.data.model.Motorcycle;
-import com.example.motoshop.databinding.ActivityMotorcycleDetailBinding;
 import com.example.motoshop.utils.AppConfig;
 import com.example.motoshop.utils.CurrencyFormatter;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.util.Map;
 
-// Màn hình xử lý chức năng chính tương ứng với tên Activity này.
+// Màn hình hiển thị chi tiết xe theo giao diện Bike App template.
 public class MotorcycleDetailActivity extends AppCompatActivity {
-
-    private ActivityMotorcycleDetailBinding binding;
 
     // Khởi tạo màn hình khi Activity được mở.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMotorcycleDetailBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_motorcycle_detail);
 
         setupToolbar();
 
@@ -38,20 +31,23 @@ public class MotorcycleDetailActivity extends AppCompatActivity {
             loadMotorcycleDetail(docId);
         }
 
-        binding.btnContact.setOnClickListener(v -> showContactOptions());
+        // Nút Pre-book
+        MaterialButton btnPrebook = findViewById(R.id.btnPrebook);
+        btnPrebook.setOnClickListener(v -> showContactOptions());
     }
 
     // Chuẩn bị view, dữ liệu hoặc sự kiện cần dùng cho màn hình.
     private void setupToolbar() {
-        setSupportActionBar(binding.toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle("");
-        }
-        // Đổi màu nút back sang màu Primary để nhìn rõ trên nền trắng
-        binding.toolbar.setNavigationIconTint(AppConfig.COLOR_PRIMARY);
-        binding.toolbar.setNavigationOnClickListener(v -> finish());
+        ImageView btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> finish());
+
+        ImageView btnShare = findViewById(R.id.btnShare);
+        btnShare.setOnClickListener(v -> {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out this bike on MotoShop!");
+            startActivity(Intent.createChooser(shareIntent, "Share via"));
+        });
     }
 
     // Lấy dữ liệu cần thiết và đưa lên giao diện.
@@ -65,43 +61,52 @@ public class MotorcycleDetailActivity extends AppCompatActivity {
                 });
     }
 
-    // Hiển thị thông tin hoặc hộp thoại cho người dùng.
+    // Hiển thị dữ liệu xe lên giao diện.
     private void displayData(Motorcycle m) {
-        binding.tvMotorName.setText(String.format("%s %s", m.brand, m.model));
-        binding.tvMotorPrice.setText(CurrencyFormatter.format(m.price));
+        TextView tvMotorName = findViewById(R.id.tvMotorName);
+        TextView tvMotorBrand = findViewById(R.id.tvMotorBrand);
+        TextView tvPrice = findViewById(R.id.tvPrice);
+        TextView tvVariants = findViewById(R.id.tvVariants);
+        TextView tvDescription = findViewById(R.id.tvDescription);
+        ImageView ivMotorMain = findViewById(R.id.ivMotorMain);
+        ImageView btnFavorite = findViewById(R.id.btnFavorite);
 
+        // Tên xe (model)
+        tvMotorName.setText(m.model != null ? m.model : "Unknown");
+        // Hãng xe
+        tvMotorBrand.setText("By " + (m.brand != null ? m.brand : "Unknown"));
+        // Giá
+        tvPrice.setText(CurrencyFormatter.format(m.price));
+        // Variants (dùng quantity)
+        tvVariants.setText(m.quantity + " Variants");
+
+        // Mô tả
         String desc = (m.longDescription != null && !m.longDescription.isEmpty()) ? m.longDescription : m.description;
-        binding.tvDescription.setText(desc != null ? desc : "Đang cập nhật...");
-
-        // Hiển thị trạng thái xe bằng chip
-        if (m.quantity > 0) {
-            binding.chipStatus.setText("Còn hàng");
-            binding.chipStatus.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_green_bg)));
-            binding.chipStatus.setTextColor(ContextCompat.getColor(this, R.color.status_green_text));
-        } else {
-            binding.chipStatus.setText("Hết hàng");
-            binding.chipStatus.setChipBackgroundColor(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_red_bg)));
-            binding.chipStatus.setTextColor(ContextCompat.getColor(this, R.color.status_red_text));
+        if (desc == null || desc.isEmpty()) {
+            desc = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
         }
-        // Hiển thị hình ảnh xe
+        tvDescription.setText(desc);
+
+        // Hình ảnh xe
         int resId = getMotorcycleImageResId(m.imageUri);
         if (resId != 0) {
-            Glide.with(this).load(resId).placeholder(R.drawable.ic_inventory).into(binding.ivMotorMain);
+            Glide.with(this).load(resId).into(ivMotorMain);
         } else {
-            Glide.with(this).load(R.drawable.ic_inventory).into(binding.ivMotorMain);
+            ivMotorMain.setImageResource(R.drawable.ic_inventory);
         }
 
-        // Hiển thị thông số kỹ thuật của xe
-        binding.layoutSpecs.removeAllViews();
-        if (m.technicalSpecs != null && !m.technicalSpecs.isEmpty()) {
-            for (Map.Entry<String, String> entry : m.technicalSpecs.entrySet()) {
-                addSpecRow(entry.getKey(), entry.getValue());
+        // Toggle favorite
+        final boolean[] isFavorite = {false};
+        btnFavorite.setOnClickListener(v -> {
+            isFavorite[0] = !isFavorite[0];
+            if (isFavorite[0]) {
+                btnFavorite.setColorFilter(getResources().getColor(R.color.notification_red));
+                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+            } else {
+                btnFavorite.setColorFilter(getResources().getColor(R.color.heart_green));
+                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            addSpecRow("Thương hiệu", m.brand);
-            addSpecRow("Đời xe", String.valueOf(m.year));
-            addSpecRow("Màu sắc", m.color);
-        }
+        });
     }
 
     // Xử lý hình ảnh cần hiển thị trên màn hình.
@@ -119,25 +124,14 @@ public class MotorcycleDetailActivity extends AppCompatActivity {
         return getResources().getIdentifier(safeName, "drawable", getPackageName());
     }
 
-    // Thêm mới hoặc lưu dữ liệu người dùng nhập.
-    private void addSpecRow(String label, String value) {
-        View row = LayoutInflater.from(this).inflate(R.layout.item_spec_row, binding.layoutSpecs, false);
-        TextView tvLabel = row.findViewById(R.id.tvLabel);
-        TextView tvValue = row.findViewById(R.id.tvValue);
-        tvLabel.setText(label);
-        tvValue.setText(value);
-        binding.layoutSpecs.addView(row);
-    }
-
-    // Hiển thị thông tin hoặc hộp thoại cho người dùng.
+    // Hiển thị hộp thoại liên hệ.
     private void showContactOptions() {
         String[] options = {"Gọi Hotline: " + AppConfig.HOTLINE, "Xem website cửa hàng"};
-        new MaterialAlertDialogBuilder(this)
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
                 .setTitle("Liên hệ tư vấn")
                 .setItems(options, (dialog, which) -> {
                     if (which == 0) {
                         Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                        // Chuẩn hóa số điện thoại bỏ khoảng trắng để intent dial đọc đúng
                         String cleanPhone = AppConfig.HOTLINE.replace(" ", "");
                         callIntent.setData(Uri.parse("tel:" + cleanPhone));
                         startActivity(callIntent);

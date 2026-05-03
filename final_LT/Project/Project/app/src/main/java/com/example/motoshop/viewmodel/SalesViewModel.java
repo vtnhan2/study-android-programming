@@ -22,6 +22,7 @@ public class SalesViewModel extends BaseViewModel {
     public final LiveData<Double> totalRevenue;
     public final LiveData<Integer> completedCount;
     public final LiveData<List<SalesOrder>> recentOrders;
+    public final LiveData<java.util.Map<String, Double>> revenueByStaff;
 
     // Callback báo kết quả khi tạo hoặc cập nhật đơn bán.
     public interface OrderCallback {
@@ -57,6 +58,19 @@ public class SalesViewModel extends BaseViewModel {
             return list;
         });
 
+        revenueByStaff = Transformations.map(_firebaseOrders, list -> {
+            java.util.Map<String, Double> map = new java.util.HashMap<>();
+            if (list != null) {
+                for (SalesOrder o : list) {
+                    if ("COMPLETED".equals(o.status) && o.createdByStaffName != null) {
+                        double current = map.getOrDefault(o.createdByStaffName, 0.0);
+                        map.put(o.createdByStaffName, current + o.finalAmount);
+                    }
+                }
+            }
+            return map;
+        });
+
         listenToOrders();
     }
 
@@ -79,6 +93,52 @@ public class SalesViewModel extends BaseViewModel {
     public void updateStatus(String documentId, String status) {
         if (documentId == null) return;
         db.collection("sales_orders").document(documentId).update("status", status);
+    }
+
+    /**
+     * Hoàn tất đơn hàng và tự động cộng điểm tích lũy cho khách hàng.
+     * Cập nhật hạng thành viên dựa trên tổng chi tiêu.
+     */
+    public void completeOrderWithLoyalty(SalesOrder order, OrderCallback callback) {
+        if (order == null || order.documentId == null || order.customerDocumentId == null) {
+            if (callback != null) callback.onError("Dữ liệu không hợp lệ");
+            return;
+        }
+
+        db.runTransaction(transaction -> {
+            DocumentReference orderRef = db.collection("sales_orders").document(order.documentId);
+            DocumentReference customerRef = db.collection("customers").document(order.customerDocumentId);
+
+            // 1. Đọc thông tin khách hàng hiện tại
+            com.example.motoshop.data.model.Customer customer = transaction.get(customerRef).toObject(com.example.motoshop.data.model.Customer.class);
+            if (customer == null) throw new RuntimeException("Không tìm thấy khách hàng");
+
+            // 2. Cập nhật trạng thái đơn hàng
+            transaction.update(orderRef, "status", "COMPLETED");
+
+            // 3. Tính toán điểm và hạng mới
+            // Giả sử: 1,000,000đ = 1 điểm.
+            int newPoints = (int) (order.finalAmount / 1000000);
+            double newTotalSpent = customer.totalSpent + order.finalAmount;
+            
+            String newRank = "Standard";
+            if (newTotalSpent >= 500000000) newRank = "Diamond";
+            else if (newTotalSpent >= 200000000) newRank = "Gold";
+            else if (newTotalSpent >= 50000000) newRank = "Silver";
+
+            transaction.update(customerRef, 
+                "loyaltyPoints", customer.loyaltyPoints + newPoints,
+                "totalSpent", newTotalSpent,
+                "memberRank", newRank
+            );
+
+            return null;
+        }).addOnSuccessListener(aVoid -> {
+            if (callback != null) callback.onSuccess();
+        }).addOnFailureListener(e -> {
+            Log.e("SalesViewModel", "Complete order with loyalty failed", e);
+            if (callback != null) callback.onError(e.getMessage());
+        });
     }
 
     // Xóa hoặc bỏ dữ liệu theo thao tác của người dùng.

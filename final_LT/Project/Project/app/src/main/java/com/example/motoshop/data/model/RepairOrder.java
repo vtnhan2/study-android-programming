@@ -29,6 +29,8 @@ public class RepairOrder {
     public long receivedDate;
     public long completedDate;
     public String note;
+    public String createdByStaffId;   // ID nhân viên tạo phiếu
+    public String createdByStaffName; // Tên nhân viên tạo phiếu
 
     // Id cũ dùng cho dữ liệu local nếu còn tham chiếu.
     public int customerId;

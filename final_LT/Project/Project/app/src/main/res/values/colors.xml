@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand Colors -->
-    <color name="primary">#E65100</color>
+    <!-- Brand Colors - Emerald Green Theme -->
+    <color name="primary">#009688</color>
+    <color name="primary_dark">#00796B</color>
+    <color name="primary_light">#4DB6AC</color>
     <color name="on_primary">#FFFFFF</color>
     <color name="secondary">#1A237E</color>
     <color name="on_secondary">#FFFFFF</color>
@@ -15,6 +17,7 @@
     <!-- Text Colors - Contextual -->
     <color name="text_primary">#1C1B1F</color>
     <color name="text_secondary">#49454F</color>
+    <color name="text_hint">#9E9E9E</color>
 
     <!-- Semantic Colors -->
     <color name="error">#B00020</color>
@@ -31,6 +34,18 @@
     <color name="status_orange_text">#EF6C00</color>
     <color name="status_blue_bg">#E3F2FD</color>
     <color name="status_blue_text">#1565C0</color>
+
+    <!-- Bike App Specific -->
+    <color name="emerald_green">#009688</color>
+    <color name="emerald_dark">#00796B</color>
+    <color name="emerald_light">#B2DFDB</color>
+    <color name="hero_banner_bg">#009688</color>
+    <color name="notification_red">#FF3D00</color>
+    <color name="heart_green">#009688</color>
+    <color name="card_bg_light">#F8F9FA</color>
+    <color name="bottom_nav_inactive">#9E9E9E</color>
+    <color name="drawer_bg">#009688</color>
+    <color name="rating_star">#FFC107</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>

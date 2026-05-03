@@ -13,8 +13,8 @@
         <item name="colorOnSurface">@color/on_surface</item>
 
         <!-- Status Bar -->
-        <item name="android:statusBarColor">@color/primary</item>
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <!-- Components Style -->
         <item name="materialButtonStyle">@style/Widget.MotoShop.Button</item>
@@ -49,5 +49,13 @@
 
     <style name="ShapeAppearance.MotoShop.MediumComponent" parent="ShapeAppearance.Material3.MediumComponent">
         <item name="cornerSize">@dimen/btn_corner_radius</item>
+    </style>
+
+    <!-- Bottom Nav Custom Style -->
+    <style name="Widget.BikeApp.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemIconTint">@color/bottom_nav_colors</item>
+        <item name="itemTextColor">@color/bottom_nav_colors</item>
+        <item name="android:background">@color/white</item>
+        <item name="elevation">8dp</item>
     </style>
 </resources>

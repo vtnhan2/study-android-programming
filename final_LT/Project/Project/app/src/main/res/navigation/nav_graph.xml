@@ -8,19 +8,19 @@
     <fragment
         android:id="@+id/nav_dashboard"
         android:name="com.example.motoshop.ui.dashboard.DashboardFragment"
-        android:label="@string/nav_dashboard"
+        android:label="@string/nav_home"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/nav_inventory"
         android:name="com.example.motoshop.ui.inventory.InventoryFragment"
-        android:label="@string/nav_inventory"
+        android:label="@string/nav_search"
         tools:layout="@layout/fragment_inventory" />
 
     <fragment
         android:id="@+id/nav_customer"
         android:name="com.example.motoshop.ui.customer.CustomerFragment"
-        android:label="@string/nav_customer"
+        android:label="@string/nav_likes"
         tools:layout="@layout/fragment_customer" />
 
     <fragment
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/nav_sales"
         android:name="com.example.motoshop.ui.sales.SalesFragment"
-        android:label="@string/nav_sales"
+        android:label="@string/nav_profile"
         tools:layout="@layout/fragment_sales" />
 
     <fragment
@@ -52,4 +52,15 @@
         android:name="com.example.motoshop.ui.customer.UserProfileFragment"
         android:label="@string/nav_profile"
         tools:layout="@layout/fragment_user_profile" />
+
+    <fragment
+        android:id="@+id/nav_staff"
+        android:name="com.example.motoshop.ui.staff.StaffFragment"
+        android:label="Quản lý Nhân viên" />
+
+    <fragment
+        android:id="@+id/userDashboardFragment"
+        android:name="com.example.motoshop.ui.dashboard.UserDashboardFragment"
+        android:label="My Dashboard"
+        tools:layout="@layout/fragment_user_dashboard" />
 </navigation>

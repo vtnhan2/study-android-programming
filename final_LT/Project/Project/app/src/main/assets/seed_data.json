@@ -1384,5 +1384,47 @@
       "status": "DONE",
       "technicianName": "Nguyễn Văn Kỹ"
     }
+  ],
+  "staff": [
+    {
+      "staffId": "AD01",
+      "password": "1111",
+      "name": "Quản trị viên",
+      "role": "ADMIN",
+      "phone": "0900000001",
+      "active": true
+    },
+    {
+      "staffId": "SL01",
+      "password": "2222",
+      "name": "Bán hàng 01",
+      "role": "SALES",
+      "phone": "0900000002",
+      "active": true
+    },
+    {
+      "staffId": "SL02",
+      "password": "2222",
+      "name": "Bán hàng 02",
+      "role": "SALES",
+      "phone": "0900000004",
+      "active": true
+    },
+    {
+      "staffId": "KT01",
+      "password": "3333",
+      "name": "Kỹ thuật 01",
+      "role": "TECHNICIAN",
+      "phone": "0900000003",
+      "active": true
+    },
+    {
+      "staffId": "KT02",
+      "password": "3333",
+      "name": "Kỹ thuật 02",
+      "role": "TECHNICIAN",
+      "phone": "0900000005",
+      "active": true
+    }
   ]
 }
