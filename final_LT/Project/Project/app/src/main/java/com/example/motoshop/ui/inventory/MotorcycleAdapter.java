@@ -23,6 +23,7 @@ import java.util.Set;
 // Adapter dùng để đưa dữ liệu lên RecyclerView.
 public class MotorcycleAdapter extends RecyclerView.Adapter<MotorcycleAdapter.ViewHolder> {
     private List<Motorcycle> motors = new ArrayList<>();
+    private Set<String> favoriteIds = new HashSet<>();
     private OnItemClickListener listener;
 
     // Interface báo ra ngoài khi người dùng bấm vào một item.
@@ -33,6 +34,11 @@ public class MotorcycleAdapter extends RecyclerView.Adapter<MotorcycleAdapter.Vi
     // Nhận sự kiện click từ màn hình để xử lý khi bấm vào item.
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setFavoriteIds(Set<String> ids) {
+        this.favoriteIds = (ids != null) ? ids : new HashSet<>();
+        notifyDataSetChanged();
     }
 
     // Gán danh sách xe mới cho Adapter và lọc bớt dữ liệu trùng.
@@ -97,6 +103,9 @@ public class MotorcycleAdapter extends RecyclerView.Adapter<MotorcycleAdapter.Vi
             holder.ivMotorcycle.setImageResource(android.R.drawable.ic_menu_gallery);
         }
 
+        boolean isFav = motor.documentId != null && favoriteIds.contains(motor.documentId);
+        holder.ivFavoriteIndicator.setVisibility(isFav ? View.VISIBLE : View.GONE);
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) listener.onItemClick(motor);
         });
@@ -140,13 +149,14 @@ public class MotorcycleAdapter extends RecyclerView.Adapter<MotorcycleAdapter.Vi
 
     // ViewHolder giữ các view của một item để RecyclerView dùng lại.
     static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView ivMotorcycle;
+        ImageView ivMotorcycle, ivFavoriteIndicator;
         TextView tvMotorName, tvMotorInfo, tvMotorPrice, tvQuantityBadge;
         Chip chipStatus;
 
         ViewHolder(View itemView) {
             super(itemView);
             ivMotorcycle = itemView.findViewById(R.id.ivMotorcycle);
+            ivFavoriteIndicator = itemView.findViewById(R.id.ivFavoriteIndicator);
             tvMotorName = itemView.findViewById(R.id.tvMotorName);
             tvMotorInfo = itemView.findViewById(R.id.tvMotorInfo);
             tvMotorPrice = itemView.findViewById(R.id.tvMotorPrice);

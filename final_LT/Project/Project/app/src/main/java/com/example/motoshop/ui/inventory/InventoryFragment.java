@@ -18,8 +18,12 @@ import com.example.motoshop.utils.UserSession;
 import com.example.motoshop.viewmodel.MotorcycleViewModel;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Fragment hiển thị danh sách kho xe máy.
@@ -30,6 +34,7 @@ public class InventoryFragment extends Fragment {
     private MotorcycleViewModel viewModel;
     private MotorcycleAdapter adapter;
     private List<Motorcycle> fullList = new ArrayList<>();
+    private List<String> favoriteIds = new ArrayList<>();
     private String currentQuery = "";
     private int currentFilterId = R.id.chipAll;
     private View layoutEmpty;
@@ -56,6 +61,25 @@ public class InventoryFragment extends Fragment {
         setupFAB(view);
 
         observeData();
+        loadFavorites();
+    }
+
+    private void loadFavorites() {
+        if (!UserSession.ROLE_USER.equals(session.getUserRole())) return;
+        String customerId = session.getCustomerDocId();
+        if (customerId == null) return;
+
+        FirebaseFirestore.getInstance()
+                .collection("customers").document(customerId)
+                .addSnapshotListener((snapshot, e) -> {
+                    if (snapshot != null && snapshot.exists()) {
+                        List<String> ids = (List<String>) snapshot.get("favoriteBikeIds");
+                        favoriteIds = (ids != null) ? ids : new ArrayList<>();
+                        Set<String> favSet = new LinkedHashSet<>(favoriteIds);
+                        adapter.setFavoriteIds(favSet);
+                        applyFilter();
+                    }
+                });
     }
 
     private void setupRecyclerView(View v) {
@@ -142,7 +166,7 @@ public class InventoryFragment extends Fragment {
 
     private void applyFilter() {
         if (adapter == null) return;
-        
+
         List<Motorcycle> filteredList = new ArrayList<>();
         for (Motorcycle m : fullList) {
             if (m == null) continue;
@@ -150,7 +174,7 @@ public class InventoryFragment extends Fragment {
             String brand = (m.brand != null) ? m.brand : "";
             String model = (m.model != null) ? m.model : "";
             String fullName = (brand + " " + model).toLowerCase();
-            
+
             boolean matchesSearch = fullName.contains(currentQuery);
             boolean matchesChip = false;
 
@@ -168,6 +192,29 @@ public class InventoryFragment extends Fragment {
                 filteredList.add(m);
             }
         }
+
+        // Sắp xếp: xe yêu thích lên đầu, cái tim sau thì lên trước (reverse order of favoriteIds)
+        if (!favoriteIds.isEmpty()) {
+            Set<String> favSet = new HashSet<>(favoriteIds);
+            List<Motorcycle> favBikes = new ArrayList<>();
+            List<Motorcycle> otherBikes = new ArrayList<>();
+            for (Motorcycle m : filteredList) {
+                if (m.documentId != null && favSet.contains(m.documentId)) {
+                    favBikes.add(m);
+                } else {
+                    otherBikes.add(m);
+                }
+            }
+            // Sắp xếp favBikes theo thứ tự ngược của favoriteIds (tim sau lên trước)
+            favBikes.sort((a, b) -> {
+                int ia = favoriteIds.indexOf(a.documentId);
+                int ib = favoriteIds.indexOf(b.documentId);
+                return Integer.compare(ib, ia);
+            });
+            filteredList = new ArrayList<>(favBikes);
+            filteredList.addAll(otherBikes);
+        }
+
         adapter.setMotors(filteredList);
         if (layoutEmpty != null) {
             layoutEmpty.setVisibility(filteredList.isEmpty() ? View.VISIBLE : View.GONE);

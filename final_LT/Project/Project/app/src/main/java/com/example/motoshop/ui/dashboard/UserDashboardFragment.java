@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.motoshop.R;
@@ -150,13 +151,8 @@ public class UserDashboardFragment extends Fragment {
     private void setupHeader(View view) {
         View ivBell = view.findViewById(R.id.ivBell);
         if (ivBell != null) {
-            ivBell.setOnClickListener(v -> {
-                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("Thông báo")
-                        .setMessage("Tính năng thông báo đang được phát triển.")
-                        .setPositiveButton("Đã hiểu", null)
-                        .show();
-            });
+            ivBell.setOnClickListener(v ->
+                    Navigation.findNavController(v).navigate(R.id.nav_notifications));
         }
     }
 

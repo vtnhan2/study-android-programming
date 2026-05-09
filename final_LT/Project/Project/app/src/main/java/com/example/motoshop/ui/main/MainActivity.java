@@ -2,6 +2,7 @@ package com.example.motoshop.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -17,11 +18,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 import com.example.motoshop.R;
 import com.example.motoshop.ui.login.LoginActivity;
+import com.example.motoshop.utils.AppConfig;
 import com.example.motoshop.utils.FirebaseSeeder;
 import com.example.motoshop.utils.LocaleHelper;
 import com.example.motoshop.utils.ThemeHelper;
 import com.example.motoshop.utils.UserSession;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -120,11 +123,11 @@ public class MainActivity extends AppCompatActivity {
                 // Use bottomNav to switch tab — avoids broken back stack
                 bottomNav.setSelectedItemId(R.id.nav_inventory);
             } else if (id == R.id.drawer_notifications) {
-                Toast.makeText(this, "Tính năng thông báo đang được phát triển!", Toast.LENGTH_SHORT).show();
+                if (navController != null) navController.navigate(R.id.nav_notifications);
             } else if (id == R.id.drawer_rate_us) {
                 Toast.makeText(this, "Cảm ơn bạn đã đánh giá!", Toast.LENGTH_SHORT).show();
             } else if (id == R.id.drawer_help) {
-                Toast.makeText(this, "Trung tâm hỗ trợ đang được phát triển!", Toast.LENGTH_SHORT).show();
+                showSupportDialog();
             } else if (id == R.id.drawer_import_data) {
                 FirebaseSeeder.uploadSeedData(this);
             } else if (id == R.id.drawer_profile) {
@@ -181,5 +184,33 @@ public class MainActivity extends AppCompatActivity {
         if (drawerLayout != null) {
             drawerLayout.openDrawer(GravityCompat.START);
         }
+    }
+
+    private void showSupportDialog() {
+        String[] options = {
+                "Gọi Hotline: " + AppConfig.HOTLINE,
+                "Xem website cửa hàng",
+                "Xem bản đồ cửa hàng"
+        };
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Trung tâm hỗ trợ")
+                .setMessage("Chúng tôi luôn sẵn sàng hỗ trợ bạn!\nThời gian làm việc: 8:00 – 18:00 (Thứ 2 – Thứ 7)")
+                .setItems(options, (dialog, which) -> {
+                    if (which == 0) {
+                        Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                        callIntent.setData(Uri.parse("tel:" + AppConfig.HOTLINE.replace(" ", "")));
+                        startActivity(callIntent);
+                    } else if (which == 1) {
+                        Intent webIntent = new Intent(Intent.ACTION_VIEW);
+                        webIntent.setData(Uri.parse(AppConfig.WEBSITE_URL));
+                        startActivity(webIntent);
+                    } else {
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+                        mapIntent.setData(Uri.parse("geo:0,0?q=MotoShop+cửa+hàng+xe+máy"));
+                        startActivity(mapIntent);
+                    }
+                })
+                .setNegativeButton("Đóng", null)
+                .show();
     }
 }

@@ -412,40 +412,121 @@ erDiagram
 
 ---
 
-## 11. 👥 Phân chia Công việc và Vai trò Nhóm (4 Thành viên)
+## 11. 👥 Phân chia Nội dung Thuyết trình — Chia File Cụ thể
 
-Dựa trên cấu trúc dự án **MotoShop**, đây là phương án phân chia khối lượng công việc tối ưu:
-
-### 🛡️ Thành viên 1: Backend & AI Engineer (Nhóm trưởng)
-> **Trọng tâm**: Cấu trúc dữ liệu, Logic nghiệp vụ lõi, Tích hợp AI.
-
-- **Thiết lập Firebase**: Cấu trúc Firestore Collections, Rules và Authentication.
-- **Logic Nghiệp vụ (ViewModels)**: `SalesViewModel` (Transactions), `BaseViewModel`.
-- **Tích hợp AI**: Phát triển `GeminiHelper.java`, xây dựng prompt chuyên sâu.
-- **Tiện ích**: `FirebaseSeeder`, `UserSession`, `LocaleHelper`.
-
-### 🎨 Thành viên 2: Frontend & UI/UX Designer
-> **Trọng tâm**: Giao diện người dùng, Navigation, Trải nghiệm người dùng.
-
-- **Layout & Styling**: Thiết kế XML, áp dụng Dark/Light mode (`ThemeHelper`).
-- **Navigation**: Thiết lập `nav_graph.xml` và điều hướng trong `MainActivity`.
-- **Dashboard UI**: `DashboardFragment` (nhân viên) và `UserDashboardFragment` (khách hàng).
-- **Hiệu ứng**: Micro-animations, transitions và Custom Adapters (`BikeCardAdapter`).
-
-### 📦 Thành viên 3: Sales & Inventory Specialist
-> **Trọng tâm**: Module Quản lý kho và Bán hàng.
-
-- **Module Kho xe**: Màn hình danh sách xe, CRUD xe máy, logic lọc/tìm kiếm.
-- **Module Bán hàng**: Quy trình tạo đơn hàng (`CreateSaleActivity`), giỏ hàng, chiết khấu.
-- **Báo cáo**: Thống kê tồn kho thực tế và doanh số đơn lẻ.
-
-### 🛠️ Thành viên 4: Services & Customer Specialist
-> **Trọng tâm**: Module Sửa chữa và Chăm sóc khách hàng.
-
-- **Module Sửa chữa**: Tạo phiếu sửa chữa, tích hợp gợi ý AI, quản lý trạng thái phiếu.
-- **Module Khách hàng**: Quản lý hồ sơ, hiển thị lịch sử mua/sửa.
-- **Loyalty & Partner**: Hệ thống điểm/hạng thành viên và quản lý nhà cung cấp.
+> **Tổng cộng: 69 file Java · 46 layout · 48 drawable · 10 menu · 1 nav_graph · 7 values**
+> Mỗi file được gán cho đúng 1 người, không bỏ sót file nào.
 
 ---
 
-> 📅 Cập nhật lần cuối: 03/05/2026
+### 🛡️ Thành viên 1: Trí — Backend & AI Engineer (Nhóm trưởng)
+
+**Trình bày**: Kiến trúc Firebase, ViewModel lõi, tích hợp AI Gemini, seed dữ liệu.
+
+#### Java files (20 file)
+
+| Package | File |
+|---------|------|
+| *(root)* | `MotoShopApplication.java` |
+| `data/model` | `Motorcycle.java` · `Customer.java` · `Staff.java` · `Supplier.java` · `ImportOrder.java` |
+| `viewmodel` | `BaseViewModel.java` · `MotorcycleViewModel.java` · `SalesViewModel.java` · `StaffViewModel.java` · `SupplierViewModel.java` |
+| `ui/ai` | `AiChatFragment.java` · `AiSearchResultAdapter.java` · `ChatAdapter.java` · `ChatMessage.java` |
+| `utils` | `GeminiHelper.java` · `FirebaseSeeder.java` · `UserSession.java` · `AppConfig.java` · `MotorcycleCatalog.java` |
+
+#### Layout files (3 file)
+
+`fragment_ai_chat.xml` · `item_ai_search_result.xml` · `item_chat_message.xml`
+
+---
+
+### 🎨 Thành viên 2: Quân — Frontend & UI/UX Designer
+
+**Trình bày**: Navigation, màn hình khởi động/đăng nhập, Dashboard, Thông báo, toàn bộ tài nguyên giao diện.
+
+#### Java files (14 file)
+
+| Package | File |
+|---------|------|
+| `ui/splash` | `SplashActivity.java` |
+| `ui/login` | `LoginActivity.java` |
+| `ui/main` | `MainActivity.java` |
+| `ui/dashboard` | `DashboardFragment.java` · `UserDashboardFragment.java` · `BikeCardAdapter.java` · `RecentOrderAdapter.java` · `RevenueChartFragment.java` |
+| `ui/notifications` | `NotificationsFragment.java` · `NewsAdapter.java` · `NewsItem.java` |
+| `utils` | `ThemeHelper.java` · `LocaleHelper.java` · `VNCharacterUtils.java` |
+
+#### Layout files (11 file)
+
+`activity_splash.xml` · `activity_login.xml` · `activity_main.xml` · `fragment_dashboard.xml` · `fragment_user_dashboard.xml` · `fragment_revenue_chart.xml` · `fragment_notifications.xml` · `item_news.xml` · `item_bike_card.xml` · `nav_header_drawer.xml` · `dialog_settings.xml`
+
+#### Resource files (tất cả — 65 file)
+
+**Drawable (48 file)**:
+`bg_avatar_placeholder.xml` · `bg_explore_button.xml` · `bg_gradient_chart.xml` · `bg_gradient_green.xml` · `bg_gradient_navy.xml` · `bg_gradient_orange.xml` · `bg_gradient_purple.xml` · `bg_heart_circle.xml` · `bg_hero_banner.xml` · `bg_info_card.xml` · `bg_notification_dot.xml` · `bg_quantity_badge.xml` · `bg_search_view.xml` · `bg_stat_card.xml` · `bg_stat_card_total.xml` · `bg_status_badge.xml` · `ic_add.xml` · `ic_ai.xml` · `ic_back.xml` · `ic_best_deal.xml` · `ic_camera.xml` · `ic_currency.xml` · `ic_customer.xml` · `ic_dashboard.xml` · `ic_heart_outline.xml` · `ic_help_white.xml` · `ic_home.xml` · `ic_home_white.xml` · `ic_inventory.xml` · `ic_launcher_background.xml` · `ic_launcher_foreground.xml` · `ic_logout.xml` · `ic_menu_drawer.xml` · `ic_motorcycle_logo.xml` · `ic_notification_bell.xml` · `ic_notification_white.xml` · `ic_profile.xml` · `ic_rate_white.xml` · `ic_repair.xml` · `ic_revenue.xml` · `ic_sales.xml` · `ic_search.xml` · `ic_settings.xml` · `ic_share.xml` · `ic_signout_white.xml` · `ic_star.xml` · `ic_supplier.xml` · `ic_wheel.xml`
+
+**Menu (10 file)**:
+`bottom_nav_menu.xml` · `drawer_menu.xml` · `main_top_menu.xml` · `menu_admin.xml` · `menu_customer_detail.xml` · `menu_dashboard.xml` · `menu_inventory.xml` · `menu_sales.xml` · `menu_tech.xml` · `menu_user.xml`
+
+**Navigation (1 file)**:
+`nav_graph.xml`
+
+**Values (7 file)**:
+`values/colors.xml` · `values/dimens.xml` · `values/strings.xml` · `values/themes.xml` · `values-night/colors.xml` · `values-night/themes.xml` · `values-en/strings.xml`
+
+---
+
+### 📦 Thành viên 3: Thịnh — Sales & Inventory Specialist
+
+**Trình bày**: Module kho xe, module bán hàng, quản lý nhân viên, tiện ích tài chính.
+
+#### Java files (16 file)
+
+| Package | File |
+|---------|------|
+| `data/model` | `SalesOrder.java` · `SalesOrderItem.java` |
+| `viewmodel` | `CustomerVehicleViewModel.java` |
+| `ui/inventory` | `InventoryFragment.java` · `MotorcycleDetailActivity.java` · `AddEditMotorcycleActivity.java` · `MotorcycleAdapter.java` |
+| `ui/sales` | `SalesFragment.java` · `CreateSaleActivity.java` · `SalesOrderAdapter.java` |
+| `ui/staff` | `StaffFragment.java` · `StaffAdapter.java` |
+| `utils` | `CurrencyFormatter.java` · `MoneyInputTextWatcher.java` · `VietnameseMoneyTextFormatter.java` · `DateUtils.java` |
+
+#### Layout files (13 file)
+
+`fragment_inventory.xml` · `activity_add_edit_motorcycle.xml` · `activity_motorcycle_detail.xml` · `fragment_sales.xml` · `activity_create_sale.xml` · `item_motorcycle.xml` · `item_spec_row.xml` · `item_sales_order.xml` · `item_order_detail_bike.xml` · `item_selected_motorcycle.xml` · `item_history_simple.xml` · `dialog_cancel_order.xml` · `dialog_order_details.xml`
+
+---
+
+### 🛠️ Thành viên 4: Nhân — Services & Customer Specialist
+
+**Trình bày**: Module sửa chữa (+ AI gợi ý dịch vụ), module khách hàng, module nhà cung cấp, hệ thống tích điểm.
+
+#### Java files (19 file)
+
+| Package | File |
+|---------|------|
+| `data/model` | `RepairOrder.java` · `RepairService.java` · `CustomerVehicle.java` |
+| `viewmodel` | `CustomerViewModel.java` · `RepairViewModel.java` |
+| `ui/repair` | `RepairFragment.java` · `CreateRepairActivity.java` · `RepairDetailActivity.java` · `RepairOrderAdapter.java` · `RepairServiceAdapter.java` · `RepairServicesFragment.java` · `AiRepairSuggestionAdapter.java` |
+| `ui/customer` | `CustomerFragment.java` · `CustomerDetailActivity.java` · `CustomerAdapter.java` · `UserProfileFragment.java` |
+| `ui/supplier` | `SupplierFragment.java` · `SupplierAdapter.java` · `ImportOrderActivity.java` |
+
+#### Layout files (19 file)
+
+`fragment_repair.xml` · `activity_create_repair.xml` · `activity_repair_detail.xml` · `fragment_customer.xml` · `activity_customer_detail.xml` · `fragment_user_profile.xml` · `fragment_supplier.xml` · `activity_import_order.xml` · `item_repair_order.xml` · `item_repair_service.xml` · `item_ai_repair_suggestion.xml` · `item_manual_repair_item.xml` · `item_customer.xml` · `item_customer_bike.xml` · `item_supplier.xml` · `item_user_detail_row.xml` · `item_user_history.xml` · `dialog_add_customer.xml` · `dialog_edit_maintenance.xml`
+
+---
+
+### 📊 Tổng kết phân chia
+
+| | TV1 (Backend/AI) | TV2 (UI/UX) | TV3 (Sales/Kho) | TV4 (Sửa chữa/KH) | **Tổng** |
+|---|:---:|:---:|:---:|:---:|:---:|
+| **Java files** | 20 | 14 | 16 | 19 | **69** |
+| **Layout XML** | 3 | 11 | 13 | 19 | **46** |
+| **Drawable XML** | — | 48 | — | — | **48** |
+| **Menu XML** | — | 10 | — | — | **10** |
+| **Navigation** | — | 1 | — | — | **1** |
+| **Values XML** | — | 7 | — | — | **7** |
+| **Tổng cộng** | **23** | **91** | **29** | **38** | **181** |
+
+---
+
+> 📅 Cập nhật lần cuối: 09/05/2026

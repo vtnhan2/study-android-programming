@@ -68,4 +68,10 @@
         android:name="com.example.motoshop.ui.dashboard.UserDashboardFragment"
         android:label="Bảng điều khiển"
         tools:layout="@layout/fragment_user_dashboard" />
+
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.example.motoshop.ui.notifications.NotificationsFragment"
+        android:label="Thông báo"
+        tools:layout="@layout/fragment_notifications" />
 </navigation>
