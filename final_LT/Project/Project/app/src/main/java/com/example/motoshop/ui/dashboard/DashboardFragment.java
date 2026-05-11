@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -247,13 +248,8 @@ public class DashboardFragment extends Fragment {
     private void setupHeader(View view) {
         View btnNotif = view.findViewById(R.id.btnNotification);
         if (btnNotif != null) {
-            btnNotif.setOnClickListener(v -> {
-                new com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
-                        .setTitle("Thông báo")
-                        .setMessage("Tính năng thông báo đang được phát triển.")
-                        .setPositiveButton("Đã hiểu", null)
-                        .show();
-            });
+            btnNotif.setOnClickListener(v ->
+                    Navigation.findNavController(v).navigate(R.id.nav_notifications));
         }
     }
 }

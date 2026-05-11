@@ -1,6 +1,6 @@
 # Danh sách các điểm cải thiện ứng dụng MotoShop
 
-Tài liệu này tổng hợp các góp ý và đề xuất để hoàn thiện ứng dụng, nâng cao trải nghiệm người dùng và bổ sung các tính năng còn thiếu.
+Tài liệu này tổng hợp các góp ý, đề xuất cải tiến và lỗi cần sửa để hoàn thiện ứng dụng, nâng cao trải nghiệm người dùng.
 
 ---
 
@@ -10,7 +10,7 @@ Tài liệu này tổng hợp các góp ý và đề xuất để hoàn thiện 
 - Chức năng "tim" (like) đã có nhưng chưa trực quan và thiếu tính năng quản lý danh sách yêu thích.
 
 **Đề xuất cải thiện:**
-- **Sắp xếp thông minh:** Tự động đẩy các sản phẩm đã được "tim" lên đầu danh sách sản phẩm chung. Áp dụng quy tắc LIFO (Last In, First Out) - sản phẩm nào vừa yêu thích sẽ hiện lên trên cùng.
+- **Sắp xếp thông minh:** Tự động đẩy các sản phẩm đã được "tim" lên đầu danh sách sản phẩm chung. Áp dụng quy tắc LIFO (Last In, First Out) — sản phẩm nào vừa yêu thích sẽ hiện lên trên cùng.
 - **Trang danh sách riêng:** Bổ sung một mục "Sản phẩm yêu thích" riêng biệt trên giao diện chính (hoặc trong Profile) để người dùng dễ dàng xem lại toàn bộ xe đã lưu.
 
 ---
@@ -18,11 +18,13 @@ Tài liệu này tổng hợp các góp ý và đề xuất để hoàn thiện 
 ## 2. Hệ thống Thông báo (Notifications)
 
 **Hiện trạng:**
-- Chức năng này hiện tại chưa có trong ứng dụng.
+- Chức năng thông báo chưa có trong ứng dụng.
+- **Lỗi quyền truy cập:** Icon chuông thông báo hiện chỉ cho phép role **Khách hàng** nhấn được; các role **Admin**, **Sale**, **Tech** nhấn vào chuông nhưng không có phản hồi.
 
 **Đề xuất cải thiện:**
+- Sửa lỗi phân quyền: Đảm bảo icon chuông có thể nhấn được ở tất cả các role, hoặc ẩn đi nếu chức năng chưa hỗ trợ cho role đó.
 - Xây dựng module thông báo để cập nhật tin tức, khuyến mãi hoặc trạng thái đơn hàng.
-- **Nguồn nội dung (News):** Có thể cập nhật các tin tức từ Honda Việt Nam hoặc VinFast để làm phong phú nội dung. 
+- **Nguồn nội dung (News):** Có thể cập nhật các tin tức từ Honda Việt Nam, Yamaha, hoặc VinFast để làm phong phú nội dung.
 
 ---
 
@@ -37,7 +39,20 @@ Tài liệu này tổng hợp các góp ý và đề xuất để hoàn thiện 
 
 ---
 
-## 4. Nội dung Tin tức Mẫu (Cập nhật 2025-2026)
+## 4. Lỗi Giao diện cần Sửa
+
+### 4.1. Hiển thị thông tin Khách hàng (Mục KH của Admin và Sale)
+
+**Hiện trạng:**
+- Khách hàng **Lê Thị Lan** bị lỗi không xuống hàng ở phần thông tin mã KH, trong khi các khách hàng khác hiển thị đúng.
+
+**Đề xuất:**
+- Kiểm tra và sửa layout của item trong danh sách KH để đảm bảo mã KH xuống hàng đúng cách (wrap text) giống các khách hàng khác.
+- Có thể dùng `android:maxLines` kết hợp `android:ellipsize` hoặc `wrap_content` cho TextView tương ứng.
+
+---
+
+## 5. Nội dung Tin tức Mẫu (Cập nhật 2025–2026)
 
 Dưới đây là các nội dung có thể dùng để demo cho phần thông báo/tin tức:
 
@@ -49,7 +64,7 @@ Dưới đây là các nội dung có thể dùng để demo cho phần thông b
 
 ### Tin tức Yamaha Motor Việt Nam
 - **Hội nghị Đại lý 2026:** Định hướng "Move as One, Succeed as One".
-- **Sản phẩm mới:** Ra mắt Yamaha Gear 125 Hybrid - mẫu xe tay ga phổ thông đạt chuẩn châu Âu.
+- **Sản phẩm mới:** Ra mắt Yamaha Gear 125 Hybrid — mẫu xe tay ga phổ thông đạt chuẩn châu Âu.
 
 ### Tin tức VinFast (Xe máy điện)
 - **Kỷ lục doanh số:** Nhận 135.000 đơn đặt hàng trong tháng 03/2026.
@@ -58,7 +73,8 @@ Dưới đây là các nội dung có thể dùng để demo cho phần thông b
 
 ---
 
-## 5. Lựa chọn xe 50cc cho học sinh/sinh viên
+## 6. Lựa chọn xe 50cc cho học sinh/sinh viên
+
 - **Lý do lựa chọn:** Giá thành hợp lý, tiết kiệm nhiên liệu, dễ điều khiển và không yêu cầu bằng lái (phù hợp học sinh).
 - **Gợi ý sản phẩm:** SYM PRITI 50cc với thiết kế trẻ trung, động cơ bền bỉ.
 
@@ -66,5 +82,4 @@ Dưới đây là các nội dung có thể dùng để demo cho phần thông b
 
 > [!NOTE]
 > **Phân công nhiệm vụ:**
-> Sau khi hoàn thiện, vui lòng yêu cầu AI liệt kê cụ thể các file đã chỉnh sửa tương ứng với từng thành viên để phục vụ việc báo cáo và trả lời câu hỏi của giảng viên.
-
+> Sau khi hoàn thiện, vui lòng yêu cầu AI liệt kê cụ thể các file đã chỉnh sửa tương ứng với từng thành viên để phục vụ việc báo cáo và trả lời câu hỏi của giảng viên (chia để không sót lại bất cứ file nào).
