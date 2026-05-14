@@ -1,0 +1,857 @@
+
+ĐẠI HỌC QUỐC GIA TP.HCM
+TRƯỜNG ĐẠI HỌC KHOA HỌC TỰ NHIÊN
+KHOA ĐIỆN TỬ - VIỄN THÔNG
+
+LẬP TRÌNH ỨNG DỤNG TRÊN THIẾT BỊ DI ĐỘNG
+
+
+
+
+
+
+
+
+
+
+BÁO CÁO CUỐI KÌ
+Giáo viên hướng dẫn: Nguyễn Quang Anh
+APP QUẢN LÍ CỬA HÀNG BÁN XE GẮN MÁY
+
+
+Sinh viên thực hiện
+22200114
+Võ Thành Nhân
+Services & Customer Specialist
+22200131
+Lâm Minh Quân
+Frontend & UI/UX Designer
+22200148
+Đặng Bảo Thịnh
+Sales & Inventory Specialist
+22200166
+Hứa Cao Trí
+Backend & AI Engineer
+
+
+Ngày 5 Tháng 5 Năm 2026
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Mục lục
+
+I) Giới thiệu2
+1) Mục đích đề tài2
+2) Phân tích đề tài2
+II) Cơ sở lý thuyết5
+1) Nền tảng Android5
+2) Android Studio6
+3) Ngôn ngữ lập trình Java6
+4) XML trong thiết kế giao diện Android6
+5) Các thành phần giao diện cơ bản7
+6) Adapter trong Android8
+7) Activity và Fragment9
+8) Intent và điều hướng9
+9) Cơ sở dữ liệu (Room Database và Firebase)9
+10) Tích hợp trí tuệ nhân tạo (AI)9
+III) Thiết kế code phần mềm10
+1) Thiết kế Model (Dữ liệu)11
+2) Thiết kế Database12
+3) Thiết kế Activity (Giao diện chính)16
+4) Thiết kế Adapter18
+5) Xử lý logic chính của hệ thống21
+6) Tích hợp trí tuệ nhân tạo (AI)23
+IV) Kết quả Demo27
+1) Màn hình đăng nhập27
+2) Màn hình chính (Dashboard)27
+3) Chức năng thêm xe28
+4) Xem chi tiết xe29
+5) Chức năng tìm kiếm29
+6) Quản lý khách hàng30
+7) Quản lý đơn hàng30
+8) Quản lý sửa chữa31
+9) Chức năng AI31
+10) Các thông tin trên Firebase32
+V) ĐÁNH GIÁ VÀ KẾT LUẬN35
+1) Đánh giá về chức năng hệ thống35
+2) Ứng dụng của đề tài35
+3) Ưu điểm của hệ thống35
+4) Hạn chế36
+5) Hướng phát triển36
+6) Kiến thức và kỹ năng đạt được36
+7) Kết luận37
+
+LỜI MỞ ĐẦU
+Trong thời đại công nghệ thông tin phát triển mạnh mẽ như hiện nay, việc ứng dụng các giải pháp phần mềm vào công tác quản lý đã trở thành một nhu cầu thiết yếu trong nhiều lĩnh vực, đặc biệt là trong kinh doanh và dịch vụ. Việc số hóa quy trình quản lý không chỉ giúp tiết kiệm thời gian, chi phí mà còn nâng cao hiệu quả vận hành và khả năng cạnh tranh của doanh nghiệp.
+Trong khuôn khổ đồ án này, nhóm chúng em thực hiện đề tài “Xây dựng ứng dụng quản lý cửa hàng xe máy MotoShop trên nền tảng Android”. Ứng dụng được phát triển bằng ngôn ngữ Java theo hướng lập trình hướng đối tượng trên Android Studio, kết hợp với các công nghệ như Room Database/Firebase và tích hợp trí tuệ nhân tạo (AI) nhằm hỗ trợ tư vấn và nâng cao trải nghiệm người dùng. Hệ thống được thiết kế theo hướng dễ sử dụng, dễ bảo trì và có khả năng mở rộng trong tương lai.
+Thông qua quá trình nghiên cứu, thiết kế và triển khai đề tài, nhóm chúng em đã có cơ hội củng cố và vận dụng các kiến thức đã học như lập trình Android, thiết kế giao diện người dùng, quản lý cơ sở dữ liệu và tổ chức mã nguồn theo mô hình kiến trúc phần mềm. Bên cạnh đó, việc tích hợp các chức năng thực tế như quản lý sản phẩm, khách hàng, đơn hàng và hỗ trợ AI đã giúp nhóm hiểu rõ hơn về quy trình xây dựng một ứng dụng hoàn chỉnh.
+Chúng em xin chân thành cảm ơn thầy đã tận tình hướng dẫn, hỗ trợ và tạo điều kiện thuận lợi trong suốt quá trình thực hiện đồ án. Mặc dù đã cố gắng hoàn thiện sản phẩm một cách tốt nhất, nhưng do hạn chế về thời gian và kinh nghiệm, đồ án không tránh khỏi những thiếu sót. Nhóm chúng em rất mong nhận được sự góp ý từ thầy để có thể hoàn thiện hơn trong tương lai.
+
+
+
+
+
+
+
+
+
+
+
+I) Giới thiệu
+1) Mục đích đề tài
+Mục tiêu của đề tài là xây dựng một ứng dụng quản lý cửa hàng xe máy trên nền tảng Android, nhằm mô phỏng hỗ trợ tối ưu hóa các hoạt động kinh doanh, quản lý và chăm sóc khách hàng trong thực tế.
+Trước hết, xây dựng một hệ thống cho phép quản lý toàn bộ thông tin liên quan đến cửa hàng xe máy, bao gồm danh sách xe, khách hàng, nhà cung cấp, đơn hàng bán và đơn sửa chữa. Hệ thống cần đảm bảo việc lưu trữ và truy xuất dữ liệu một cách nhanh chóng, chính xác và dễ dàng.
+Thứ hai, phát triển các chức năng hỗ trợ hoạt động kinh doanh như tạo đơn bán hàng, theo dõi doanh thu, quản lý tồn kho và nhập hàng từ nhà cung cấp. Qua đó giúp người quản lý có cái nhìn tổng quan về tình hình kinh doanh và đưa ra quyết định phù hợp.
+Thứ ba, xây dựng chức năng quản lý sửa chữa xe, cho phép tạo và theo dõi các đơn sửa chữa, cập nhật trạng thái và hỗ trợ ghi nhận thông tin dịch vụ. Điều này giúp nâng cao chất lượng dịch vụ và tăng sự hài lòng của khách hàng.
+Ngoài ra, đề tài còn hướng đến việc tích hợp trí tuệ nhân tạo (AI) để hỗ trợ tư vấn, gợi ý sửa chữa và nâng cao trải nghiệm người dùng, góp phần tăng tính thực tiễn và hiện đại cho ứng dụng. Xây dựng giao diện thân thiện, dễ sử dụng trên thiết bị di động, giúp người dùng có thể thao tác thuận tiện và hiệu quả trong quá trình sử dụng.
+2) Phân tích đề tài
+Đề tài xây dựng ứng dụng được phát triển bằng Java trên Android Studio nhằm hỗ trợ cửa hàng trong việc quản lý toàn diện hoạt động kinh doanh của cửa hàng, từ kho xe, khách hàng, đơn hàng bán, phiếu sửa chữa đến tích điểm thành viên và hỗ trợ trí tuệ nhân tạo (AI). Ứng dụng được thiết kế theo kiến trúc MVVM + Firebase, đảm bảo tính thời gian thực (real-time), bảo mật phân quyền rõ ràng và trải nghiệm người dùng tốt trên thiết bị di động.
+Ứng dụng hỗ trợ 4 vai trò chính với quyền hạn khác nhau:
+Vai trò
+Mã đăng nhập
+Mô tả
+Admin
+AD01
+Quản trị toàn bộ hệ thống
+Nhân viên bán hàng
+SL01
+Tư vấn, tạo đơn bán hàng
+Kỹ thuật viên
+KT01
+Xử lí phiếu sửa chữa
+Khách hàng (User)
+SĐT danh bạ
+Xem xe, mua hàng, theo dõi lịch sử, chat AI
+
+
+
+1.1) Quản lý kho xe
+Xem danh sách xe máy (thương hiệu, model, giá, số lượng tồn kho, hình ảnh).
+Thêm/Sửa/Xóa xe (chỉ Admin).
+Tìm kiếm và lọc xe.
+Tích hợp AI: Gợi ý xe phù hợp theo yêu cầu của khách hàng (Gemini).
+1.2) Quản lý khách hàng (Inventory)
+Thêm, sửa, xóa thông tin khách hàng.
+Phân hạng thành viên (NORMAL -> SILVER -> GOLD -> VIP).
+Quản lý xe của khách hàng (biển số, thương hiệu).
+1.3) Quản lý bán hàng (Sales)
+Tạo đơn hàng bán xe.
+Kiểm tra tồn kho thời gian thực.
+Áp dụng tích điểm thành viên (100.000 VNĐ = 1 điểm).
+Hủy đơn và hoàn kho tự động.
+Xem lịch sử đơn hàng.
+1.4) Quản lý sửa chữa (Repair)
+Tạo phiếu sửa chữa.
+Quản lý danh sách dịch vụ & phụ tùng.
+Trạng thái phiếu: RECEIVED -> IN_PROGRESS -> DONE.
+Kỹ thuật viên cập nhật tiến độ sửa chữa.
+Tích hợp AI: Phân tích lỗi xe từ mô tả -> gợi ý dịch vụ/phụ tùng phù hợp.
+1.5) Hệ thống Tích điểm và Thành viên
+Tự động tính điểm khi hoàn tất đơn hàng.
+Hiển thị hạng thành viên và điểm tích lũy trên Dashboard khách hàng.
+Ưu đãi theo hạng thành viên (có thể mở rộng sau).
+1.6) Trí tuệ nhân tạo (AI Gemini)
+Chat AI đa lượt hội thoại.
+Tìm xe thông minh theo mô tả tự nhiên.
+Phân tích lỗi xe và gợi ý sửa chữa.
+Fallback mechanism (keyword matching) khi AI gặp lỗi.
+1.7) Dashboard theo vai trò
+Admin/Sales/Tech: Dashboard quản lý (doanh thu, đơn hàng, tồn kho, top nhân viên…).
+Khách hàng: Dashboard cá nhân (xe yêu thích, đơn mua gần đây, lịch sử sửa chữa, điểm tích lũy).
+1.8) Các chức năng hỗ trợ
+Đăng nhập / Đăng xuất.
+Phân quyền động (menu, bottom navigation, drawer thay đổi theo role).
+Realtime đồng bộ dữ liệu (Firestore Snapshot Listener).
+Import dữ liệu mẫu (Seed Data).
+Xem chi tiết, yêu thích xe (Favorite).
+
+II) Cơ sở lý thuyết
+1) Nền tảng Android
+Android là hệ điều hành mã nguồn mở do Google phát triển, được sử dụng rộng rãi trên các thiết bị di động như điện thoại thông minh và máy tính bảng. Android cung cấp một môi trường phát triển mạnh mẽ, cho phép lập trình viên xây dựng ứng dụng thông qua Android SDK.
+Trong đồ án này, ứng dụng quản lý cửa hàng xe máy được phát triển trên nền tảng Android nhằm đảm bảo tính linh hoạt, tiện lợi và khả năng triển khai thực tế. Người dùng có thể sử dụng trực tiếp trên thiết bị di động để quản lý dữ liệu mọi lúc, mọi nơi.
+2) Android Studio
+Android Studio là môi trường phát triển tích hợp (IDE) chính thức dành cho Android. Công cụ này hỗ trợ toàn bộ quá trình phát triển ứng dụng từ thiết kế giao diện, lập trình, kiểm thử đến đóng gói sản phẩm.
+Các chức năng chính của Android Studio bao gồm:
+Trình soạn thảo mã nguồn Java/Kotlin 
+Trình thiết kế giao diện XML trực quan 
+Android Emulator dùng để giả lập thiết bị 
+Hệ thống build Gradle 
+Công cụ debug và kiểm tra lỗi 
+Trong đồ án, Android Studio được sử dụng để xây dựng toàn bộ hệ thống, từ giao diện người dùng đến xử lý nghiệp vụ và lưu trữ dữ liệu.
+3) Ngôn ngữ lập trình Java
+Java là ngôn ngữ lập trình hướng đối tượng, được sử dụng phổ biến trong phát triển ứng dụng Android. Java cho phép tổ chức chương trình theo mô hình lớp và đối tượng, giúp mã nguồn dễ quản lý và mở rộng.
+Trong ứng dụng quản lý cửa hàng xe máy, Java được sử dụng để:
+Xây dựng logic nghiệp vụ 
+Xử lý sự kiện giao diện 
+Quản lý dữ liệu 
+Tương tác với cơ sở dữ liệu 
+Triển khai các chức năng như quản lý xe, khách hàng, đơn hàng, sửa chữa 
+
+
+
+4) XML trong thiết kế giao diện Android
+XML là ngôn ngữ đánh dấu được sử dụng để xây dựng giao diện trong Android. Mỗi màn hình sẽ được định nghĩa thông qua một file XML riêng biệt. Việc sử dụng XML giúp tách biệt giữa giao diện và logic xử lý, từ đó tăng khả năng bảo trì và mở rộng hệ thống.
+Trong đồ án, XML được sử dụng để thiết kế:
+Màn hình đăng nhập 
+Màn hình chính (Dashboard) 
+Danh sách xe 
+Danh sách khách hàng 
+Danh sách đơn hàng và sửa chữa 
+Form thêm/sửa dữ liệu 
+5) Các thành phần giao diện cơ bản
+5.1) TextView
+TextView là thành phần dùng để hiển thị văn bản trên giao diện. Trong ứng dụng, TextView được sử dụng để hiển thị:
+Tên xe 
+Giá bán 
+Thông tin khách hàng 
+Doanh thu 
+Trạng thái đơn hàng 
+Tiêu đề các màn hình 
+5.2) EditText
+EditText cho phép người dùng nhập dữ liệu từ bàn phím. Trong đồ án, EditText được sử dụng cho:
+Nhập tài khoản và mật khẩu 
+Nhập thông tin xe 
+Nhập thông tin khách hàng 
+Nhập nội dung sửa chữa 
+Nhập nội dung tìm kiếm hoặc chat AI 
+5.3) Button
+Button là thành phần dùng để thực hiện hành động khi người dùng nhấn vào. Các chức năng sử dụng Button gồm:
+Đăng nhập 
+Thêm / sửa / xóa dữ liệu 
+Tạo đơn hàng 
+Lưu thông tin 
+Gửi yêu cầu AI 
+5.4) ImageView
+ImageView dùng để hiển thị hình ảnh. Trong ứng dụng:
+Hiển thị hình ảnh xe 
+Hiển thị icon chức năng 
+Tăng tính trực quan cho giao diện 
+5.5) RecyclerView
+RecyclerView là thành phần hiển thị danh sách dữ liệu hiệu quả và linh hoạt hơn ListView. Trong đồ án, RecyclerView được dùng để hiển thị:
+Danh sách xe 
+Danh sách khách hàng 
+Danh sách đơn hàng 
+Danh sách sửa chữa 
+Danh sách nhà cung cấp 
+RecyclerView giúp tối ưu hiệu năng khi xử lý danh sách lớn nhờ cơ chế tái sử dụng ViewHolder.
+5.6) Custom Layout
+Custom Layout cho phép thiết kế giao diện riêng cho từng item trong danh sách. Ví dụ:
+Item xe: ảnh, tên, giá, trạng thái 
+Item đơn hàng: mã đơn, khách hàng, tổng tiền 
+Việc sử dụng Custom Layout giúp giao diện rõ ràng và chuyên nghiệp hơn.
+6) Adapter trong Android
+Adapter là thành phần trung gian giữa dữ liệu và giao diện (RecyclerView/ListView). Chức năng của Adapter:
+Nhận dữ liệu từ nguồn 
+Tạo giao diện cho từng item 
+Gán dữ liệu vào View 
+Xử lý sự kiện click 
+Trong đồ án, các Adapter được sử dụng để hiển thị dữ liệu như:
+Danh sách xe 
+Khách hàng 
+Đơn hàng 
+Sửa chữa 
+Chat AI 
+7) Activity và Fragment
+Activity đại diện cho một màn hình trong ứng dụng. Ví dụ:
+Màn hình đăng nhập 
+Màn hình chính 
+Màn hình thêm/sửa dữ liệu 
+Fragment là thành phần giao diện con, có thể tái sử dụng trong nhiều Activity. Việc sử dụng Fragment giúp:
+Tổ chức giao diện tốt hơn 
+Tăng khả năng tái sử dụng 
+Dễ quản lý các module chức năng 
+8) Intent và điều hướng
+Intent là cơ chế dùng để chuyển đổi giữa các Activity hoặc truyền dữ liệu. Trong đồ án, Intent được dùng để:
+Chuyển giữa các màn hình 
+Truyền dữ liệu (ID xe, khách hàng, đơn hàng) 
+Mở màn hình chi tiết 
+9) Cơ sở dữ liệu (Room Database và Firebase)
+Room là thư viện hỗ trợ lưu trữ dữ liệu cục bộ trên thiết bị, có ưu điểm:
+Hoạt động offline 
+Dễ sử dụng 
+Tích hợp tốt với SQLite 
+Firebase là nền tảng cloud của Google. Trong đồ án, Firebase có thể dùng để:
+Xác thực người dùng 
+Đồng bộ dữ liệu 
+Lưu trữ file 
+Mở rộng hệ thống lên cloud 
+10) Tích hợp trí tuệ nhân tạo (AI)
+AI giúp nâng cao khả năng hỗ trợ người dùng trong hệ thống.
+10.1) Chat AI
+Cho phép người dùng đặt câu hỏi và nhận phản hồi tự động với các ứng dụng:
+Tư vấn xe 
+Giải thích thông tin kỹ thuật 
+Hỗ trợ nghiệp vụ 
+10.2) Gợi ý sửa chữa
+AI phân tích mô tả lỗi và đưa ra hướng xử lý. Ví dụ:
+Xe khó khởi động 
+Hao xăng 
+Tiếng kêu lạ 
+10.3) Tư vấn sản phẩm
+AI có thể giúp hỗ trợ tìm kiếm xe theo nhu cầu như:
+Giá tiền 
+Mục đích sử dụng 
+Tiết kiệm nhiên liệu
+III) Thiết kế code phần mềm
+Trong quá trình phát triển ứng dụng quản lý cửa hàng xe máy trên nền tảng Android, việc tổ chức và thiết kế mã nguồn đóng vai trò quan trọng nhằm đảm bảo tính rõ ràng, dễ bảo trì và khả năng mở rộng của hệ thống. Phần này trình bày cách xây dựng cấu trúc code, các thành phần chính và cách chúng tương tác với nhau trong ứng dụng.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1) Thiết kế Model (Dữ liệu)
+Trong ứng dụng quản lý cửa hàng xe máy, Model là thành phần dùng để biểu diễn dữ liệu của hệ thống dưới dạng các đối tượng trong chương trình. Các Model thường tương ứng với các bảng trong cơ sở dữ liệu và được sử dụng xuyên suốt trong quá trình xử lý dữ liệu, từ lưu trữ đến hiển thị. Việc thiết kế Model giúp:
+Chuẩn hóa dữ liệu 
+Dễ dàng thao tác với database 
+Tái sử dụng dữ liệu giữa các thành phần (Activity, Adapter, DAO) 
+Tăng tính rõ ràng và dễ bảo trì
+
+Các file Model chính và thuộc tính của nó:
+Tên file
+Chức năng
+Thuộc tính
+Mô tả
+Motorcycle.java
+Quản lý thông tin xe trong cửa hàng
+id
+Mã xe (khóa chính)
+
+
+name
+Tên xe
+
+
+brand
+Hãng xe
+
+
+price
+Giá bán
+
+
+quantity
+Số lượng tồn
+
+
+status
+Trạng thái
+
+
+image
+Hình ảnh xe
+Customer.java
+Quản lý thông tin khách hàng
+id
+Mã khách hàng
+
+
+name
+Tên khách
+
+
+phone
+Số điện thoại
+
+
+address
+Địa chỉ
+SalesOrder.java
+Quản lý đơn bán hàng
+id
+Mã đơn hàng
+
+
+customerId
+Liên kết khách hàng
+
+
+date
+Ngày tạo đơn
+
+
+totalPrice
+Tổng tiền
+
+
+status
+Trạng thái đơn
+RepairOrder.java
+Quản lý đơn sửa chữa
+id
+Mã đơn sửa chữa
+
+
+customerName
+Tên khách
+
+
+description
+Mô tả lỗi
+
+
+cost
+Chi phí sửa
+
+
+status
+Trạng thái
+Supplier.java
+Quản lý nhà cung cấp
+id
+Mã nhà cung cấp
+
+
+name
+Tên nhà cung cấp
+
+
+phone
+Số điện thoại
+
+
+address
+Địa chỉ
+ChatMessage.java
+Lưu trữ tin nhắn giữa người dùng và AI
+sender
+Người gửi (User/AI)
+
+
+message
+Nội dung tin nhắn
+
+
+timestamp
+Thời gian gửi
+
+
+Code minh họa:
+public class Motorcycle {    private int id;    private String name;    private String brand;    private double price;    private int quantity;    private String status;    private String image;    // Constructor, Getter, Setter}
+Mối quan hệ giữa các Model
+Các Model trong hệ thống có mối liên kết với nhau:
+Customer – SalesOrder: Một khách hàng có thể có nhiều đơn hàng 
+Customer – RepairOrder: Một khách hàng có thể có nhiều lần sửa chữa 
+SalesOrder – Motorcycle: Một đơn hàng có thể chứa nhiều xe 
+=>Các mối quan hệ này thường được thể hiện thông qua customerId trong đơn hàng hoặc xử lý logic trong code 
+Vai trò của Model trong hệ thống
+Model đóng vai trò trung tâm trong toàn bộ ứng dụng:
+Nhận dữ liệu từ giao diện (Activity) 
+Truyền dữ liệu vào Database (DAO) 
+Cung cấp dữ liệu cho Adapter hiển thị 
+Làm trung gian giữa UI và Database
+2) Thiết kế Database
+Cơ sở dữ liệu đóng vai trò trung tâm trong hệ thống, chịu trách nhiệm lưu trữ, quản lý và cung cấp dữ liệu cho toàn bộ ứng dụng. Trong đồ án này, hệ thống sử dụng Room Database để lưu trữ dữ liệu cục bộ trên thiết bị Android. Trong đó, Room là một lớp trừu tượng trên SQLite, giúp đơn giản hóa việc thao tác với cơ sở dữ liệu thông qua các annotation và API rõ ràng, đồng thời đảm bảo tính an toàn và hiệu năng.
+Hệ thống cơ sở dữ liệu được tổ chức thành 3 thành phần chính:
+Entity: định nghĩa bảng dữ liệu 
+DAO (Data Access Object): thao tác với dữ liệu 
+Database: quản lý kết nối và toàn bộ database 
+Luồng hoạt động: Activity → DAO → Database → SQLite → trả dữ liệu về UI
+Thiết kế Entity (Bảng dữ liệu): Entity là các class đại diện cho bảng trong cơ sở dữ liệu. Mỗi thuộc tính trong class tương ứng với một cột trong bảng.
+@Entity(tableName = "motorcycles")
+public class Motorcycle {
+
+    @PrimaryKey(autoGenerate = true)
+    public int id;
+
+    public String name;
+    public String brand;
+    public double price;
+    public int quantity;
+    public String status;
+}
+@Entity: khai báo bảng 
+tableName: tên bảng trong database 
+@PrimaryKey: khóa chính 
+autoGenerate: tự động tăng 
+Ngoài ra còn có các Entity khác như: Customer , SalesOrder, RepairOrder, Supplier được thiết kế tương tự, phù hợp với nghiệp vụ
+Thiết kế DAO (Data Access Object): là nơi định nghĩa các phương thức thao tác với dữ liệu như thêm, sửa, xóa, truy vấn.
+@Dao
+public interface MotorcycleDao {
+
+    @Insert
+    void insert(Motorcycle m);
+
+    @Update
+    void update(Motorcycle m);
+
+    @Delete
+    void delete(Motorcycle m);
+
+    @Query("SELECT * FROM motorcycles")
+    List<Motorcycle> getAll();
+
+    @Query("SELECT * FROM motorcycles WHERE name LIKE :keyword")
+    List<Motorcycle> search(String keyword);
+}
+@Insert: thêm dữ liệu 
+@Update: cập nhật 
+@Delete: xóa 
+@Query: truy vấn SQL 
+=> DAO giúp tách biệt logic xử lý dữ liệu khỏi giao diện.
+Thiết kế Database: Database là lớp trung tâm, dùng để khởi tạo và quản lý toàn bộ hệ thống dữ liệu.
+@Database(entities = {Motorcycle.class}, version = 1)
+public abstract class AppDatabase extends RoomDatabase {
+
+    public abstract MotorcycleDao motorcycleDao();
+
+}
+entities: danh sách bảng 
+version: phiên bản database 
+Kế thừa RoomDatabase và cung cấp DAO để truy cập dữ liệu
+Khởi tạo Database trong hệ thống
+AppDatabase database = Room.databaseBuilder(
+        getApplicationContext(),
+        AppDatabase.class,
+        "motorcycle_db"
+).allowMainThreadQueries().build();
+Tạo database với tên motorcycle_db 
+allowMainThreadQueries(): cho phép truy vấn trực tiếp
+Luồng xử lý dữ liệu
+Motorcycle m = new Motorcycle("Wave Alpha", 18000000);
+database.motorcycleDao().insert(m);
+Luồng xử lý thêm dữ liệu:
+Người dùng nhập dữ liệu 
+Activity tạo object 
+Gọi DAO 
+DAO ghi dữ liệu vào SQLite 
+Database lưu trữ
+List<Motorcycle> list = database.motorcycleDao().getAll();
+Luồng xử lý lấy dữ liệu:
+Activity gọi DAO 
+DAO truy vấn database 
+Trả về danh sách 
+Hiển thị lên UI
+List<Motorcycle> list = database.motorcycleDao().search("%Wave%");
+Luồng xử lý tìm kiếm:
+Sử dụng câu lệnh SQL LIKE 
+Lọc dữ liệu theo từ khóa 
+Trả kết quả về giao diện
+3) Thiết kế Activity (Giao diện chính)
+Activity là thành phần đại diện cho một màn hình trong ứng dụng Android. Trong hệ thống MotoShop, mỗi Activity đảm nhiệm một chức năng riêng biệt như hiển thị danh sách, thêm/sửa dữ liệu hoặc xem chi tiết. Trong đó, MainActivity đóng vai trò là màn hình chính, nơi hiển thị danh sách xe và điều hướng đến các chức năng khác trong hệ thống.
+Các Activity chính trong hệ thống
+MainActivity: hiển thị danh sách xe 
+AddEditMotorcycleActivity: thêm hoặc chỉnh sửa thông tin xe 
+DetailActivity: hiển thị chi tiết xe 
+LoginActivity: đăng nhập hệ thống 
+OrderActivity / RepairActivity: quản lý đơn hàng và sửa chữa 
+=> Mỗi Activity tương ứng với một chức năng nghiệp vụ cụ thể.
+Cấu trúc một Activity thường gồm các thành phần:
+onCreate(): khởi tạo giao diện 
+setContentView(): gắn layout XML 
+findViewById(): ánh xạ các thành phần giao diện 
+Xử lý sự kiện (Event Handling) 
+Gọi dữ liệu từ Database 
+Code minh họa Main Activity:
+public class MainActivity extends AppCompatActivity {    RecyclerView recyclerView;    MotorcycleAdapter adapter;    List<Motorcycle> list;    AppDatabase database;    @Override    protected void onCreate(Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_main);        recyclerView = findViewById(R.id.recyclerView);        database = Room.databaseBuilder(                getApplicationContext(),                AppDatabase.class,                "motorcycle_db"        ).allowMainThreadQueries().build();        loadData();    }    private void loadData() {        list = database.motorcycleDao().getAll();        adapter = new MotorcycleAdapter(list);        recyclerView.setAdapter(adapter);    }}
+Quá trình hoạt động của MainActivity diễn ra như sau:
+Activity được khởi tạo thông qua onCreate() 
+Giao diện được thiết lập bằng setContentView() 
+Ánh xạ các thành phần giao diện (RecyclerView) 
+Khởi tạo database 
+Gọi hàm loadData() để lấy dữ liệu 
+Dữ liệu được truyền vào Adapter 
+Adapter hiển thị dữ liệu lên RecyclerView 
+Database → Adapter → RecyclerView → Người dùng
+Xử lý sự kiện trong Activity: Activity chịu trách nhiệm xử lý các sự kiện từ người dùng, ví dụ:
+btnAdd.setOnClickListener(v -> {    Intent intent = new Intent(MainActivity.this, AddEditMotorcycleActivity.class);    startActivity(intent);});
+Ví dụ nút thêm xe: Người dùng nhấn nút và hệ thống tạo Intent rồi chuyển sang màn hình thêm xe 
+Cập nhật dữ liệu sau khi quay lại màn hình
+@Overrideprotected void onResume() {    super.onResume();    loadData();}
+Khi quay lại màn hình chính thì dữ liệu được load lại và danh sách luôn được cập nhật mới nhất 
+Vai trò của Activity trong hệ thống
+Hiển thị giao diện người dùng 
+Nhận dữ liệu từ người dùng 
+Gọi các xử lý logic 
+Điều hướng giữa các màn hình 
+Kết nối với Adapter và Database 
+4) Thiết kế Adapter
+Adapter là thành phần trung gian trong Android, có nhiệm vụ kết nối dữ liệu (Model) với giao diện hiển thị (RecyclerView hoặc ListView). Adapter chịu trách nhiệm chuyển đổi dữ liệu thành các thành phần giao diện tương ứng và hiển thị lên màn hình.
+Trong ứng dụng MotoShop, Adapter đóng vai trò quan trọng trong việc hiển thị các danh sách như:
+Danh sách xe 
+Danh sách khách hàng 
+Danh sách đơn hàng 
+Danh sách sửa chữa 
+Danh sách tin nhắn AI
+
+Cấu trúc của Adapter
+Danh sách dữ liệu (List) 
+ViewHolder: giữ các View của từng item 
+onCreateViewHolder(): tạo layout cho item 
+onBindViewHolder(): gán dữ liệu vào item 
+getItemCount(): trả về số lượng phần tử 
+
+Code minh họa thiết kế MotorcycleAdapter
+public class MotorcycleAdapter extends RecyclerView.Adapter<MotorcycleAdapter.ViewHolder> {    private List<Motorcycle> list;    private Context context;    public MotorcycleAdapter(Context context, List<Motorcycle> list) {        this.context = context;        this.list = list;    }    public class ViewHolder extends RecyclerView.ViewHolder {        TextView txtName, txtPrice;        public ViewHolder(View itemView) {            super(itemView);            txtName = itemView.findViewById(R.id.txtName);            txtPrice = itemView.findViewById(R.id.txtPrice);        }    }    @Override    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {        View view = LayoutInflater.from(context).inflate(R.layout.item_motorcycle, parent, false);        return new ViewHolder(view);    }    @Override    public void onBindViewHolder(ViewHolder holder, int position) {        Motorcycle m = list.get(position);        holder.txtName.setText(m.getName());        holder.txtPrice.setText(String.valueOf(m.getPrice()));    }    @Override    public int getItemCount() {        return list.size();    }}
+Activity truyền danh sách dữ liệu vào Adapter 
+RecyclerView gọi onCreateViewHolder() để tạo item 
+RecyclerView gọi onBindViewHolder() để gán dữ liệu 
+ViewHolder giữ các thành phần giao diện 
+Dữ liệu được hiển thị lên màn hình
+Model → Adapter → ViewHolder → RecyclerView → UI
+Adapter có thể xử lý các sự kiện tương tác trên từng item:
+holder.itemView.setOnClickListener(v -> {    Intent intent = new Intent(context, DetailActivity.class);    intent.putExtra("id", m.getId());    context.startActivity(intent);});
+Người dùng nhấn vào item 
+Adapter bắt sự kiện 
+Tạo Intent 
+Chuyển sang màn hình chi tiết 
+
+Cập nhật dữ liệu trong Adapter: Khi dữ liệu thay đổi, Adapter cần cập nhật lại giao diện
+public void updateList(List<Motorcycle> newList) {    this.list = newList;    notifyDataSetChanged();}
+Cập nhật danh sách mới  và gọi notifyDataSetChanged() để refresh UI 
+Tìm kiếm và lọc dữ liệu
+public void filter(String keyword) {    List<Motorcycle> filtered = new ArrayList<>();    for (Motorcycle m : originalList) {        if (m.getName().toLowerCase().contains(keyword.toLowerCase())) {            filtered.add(m);        }    }    list = filtered;    notifyDataSetChanged();}
+So sánh chuỗi theo từ khóa, lọc danh sách và cập nhật giao diện 
+Adapter có vai trò:
+Kết nối dữ liệu và giao diện 
+Hiển thị danh sách dữ liệu 
+Xử lý sự kiện trên từng item 
+Cập nhật giao diện khi dữ liệu thay đổi
+5) Xử lý logic chính của hệ thống
+Chức năng thêm dữ liệu
+btnSave.setOnClickListener(v -> {    String name = edtName.getText().toString();    String priceStr = edtPrice.getText().toString();    if (name.isEmpty() || priceStr.isEmpty()) {        Toast.makeText(this, "Vui lòng nhập đầy đủ", Toast.LENGTH_SHORT).show();        return;    }    double price = Double.parseDouble(priceStr);    Motorcycle m = new Motorcycle(name, price);    database.motorcycleDao().insert(m);    Toast.makeText(this, "Thêm thành công", Toast.LENGTH_SHORT).show();    finish();});
+Luồng xử lý:
+Nhận dữ liệu từ người dùng 
+Kiểm tra hợp lệ 
+Tạo object 
+Lưu vào database 
+Thông báo kết quả 
+
+Hiển thị danh sách
+List<Motorcycle> list = database.motorcycleDao().getAll();adapter = new MotorcycleAdapter(list);recyclerView.setAdapter(adapter);
+Luồng xử lý:
+Lấy dữ liệu từ database 
+Truyền vào Adapter 
+Hiển thị lên giao diện 
+
+Chuyển màn hình (Intent)
+Intent intent = new Intent(MainActivity.this, DetailActivity.class);intent.putExtra("id", motorcycle.getId());startActivity(intent);
+Luồng xử lý:
+Bắt sự kiện 
+Tạo Intent 
+Truyền dữ liệu
+Mở màn hình mới 
+
+Tìm kiếm dữ liệu
+public void filter(String keyword) {    List<Motorcycle> filtered = new ArrayList<>();    for (Motorcycle m : originalList) {        if (m.getName().toLowerCase().contains(keyword.toLowerCase())) {            filtered.add(m);        }    }    list = filtered;    notifyDataSetChanged();}
+Luồng xử lý:
+Duyệt danh sách 
+So sánh dữ liệu 
+Cập nhật lại UI 
+6) Tích hợp trí tuệ nhân tạo (AI)
+Trong hệ thống MotoShop, trí tuệ nhân tạo (AI) được tích hợp nhằm nâng cao khả năng hỗ trợ người dùng, không chỉ dừng lại ở việc quản lý dữ liệu mà còn cung cấp các chức năng tư vấn thông minh. Trong đồ án, AI được tích hợp thông qua việc gọi API từ dịch vụ AI (ví dụ: Gemini API), giúp hệ thống:
+Tự động trả lời câu hỏi của người dùng 
+Hỗ trợ tư vấn lựa chọn xe 
+Phân tích lỗi và đề xuất sửa chữa 
+Tăng trải nghiệm người dùng 
+Kiến trúc tích hợp AI
+User → Activity (UI) → ViewModel/Logic → API AI → Response → UI
+Trong đó:
+Activity: nhận input từ người dùng 
+Logic/API: gửi request đến AI 
+AI Server: xử lý và trả kết quả 
+UI: hiển thị phản hồi 
+
+Thiết kế chức năng Chat AI: Người dùng nhập câu hỏi vào giao diện chat, hệ thống gửi nội dung đó đến AI và hiển thị phản hồi.
+public void sendMessage(String message) {    // thêm tin nhắn người dùng    chatList.add(new ChatMessage("User", message));    // gửi request đến AI (giả lập)    String response = callAI(message);    // thêm phản hồi từ AI    chatList.add(new ChatMessage("AI", response));    adapter.notifyDataSetChanged();}
+Luồng xử lý:
+Người dùng nhập nội dung 
+Activity nhận dữ liệu 
+Gửi request đến API AI 
+Nhận phản hồi từ AI 
+Lưu vào danh sách chat 
+Cập nhật giao diện 
+
+
+
+Phân tích và gợi ý sửa chữa: AI có thể phân tích mô tả lỗi của xe và đưa ra gợi ý xử lý ban đầu.
+public String analyzeIssue(String description) {    return callAI("Phân tích lỗi xe: " + description);}
+Luồng xử lý:
+Nhận mô tả lỗi 
+Gửi đến AI 
+AI phân tích 
+Trả kết quả về UI 
+
+Tư vấn lựa chọn xe: AI hỗ trợ người dùng lựa chọn xe phù hợp theo nhu cầu.
+public String suggestMotorcycle(String request) {    return callAI("Tư vấn xe: " + request);}
+Hàm gọi API AI (mô phỏng)
+public String callAI(String prompt) {    // Gửi request HTTP đến AI API    // Nhận JSON response    // Trả về nội dung text    return "Phản hồi từ AI (giả lập)";}
+Lưu trữ dữ liệu chat: AI sử dụng model ChatMessage để lưu lịch sử hội thoại
+public class ChatMessage {    private String sender;    private String message;    private long timestamp;}
+Hạn chế và hướng phát triển
+Hạn chế:
+Phụ thuộc vào API bên ngoài 
+Cần internet để hoạt động 
+Độ chính xác phụ thuộc vào dữ liệu đầu vào 
+Hướng phát triển:
+Tích hợp AI offline 
+Cá nhân hóa tư vấn 
+Kết hợp dữ liệu thực tế của cửa hàng 
+Phần thiết kế code phần mềm đã trình bày cách tổ chức và triển khai các thành phần chính trong hệ thống. Việc tách biệt rõ ràng giữa dữ liệu, giao diện và xử lý logic giúp ứng dụng hoạt động ổn định, dễ bảo trì và có khả năng mở rộng trong tương lai.
+
+
+IV) Kết quả Demo
+1) Màn hình đăng nhập
+                     
+  Giao diện login                              Nhập saiĐăng nhập thành công 
+2) Màn hình chính (Dashboard)
+Hiển thị danh sách xe hoặc menu chức năng chính của hệ thống.
+      
+   Giao diện tổng quan               Danh sách xe
+3) Chức năng thêm xe
+Cho phép người dùng nhập thông tin và thêm xe vào hệ thống.
+            
+    Form nhập dữ liệu        Nhập thông tin     Kết quả khi bấm lưu
+So sánh dữ liệu trước và sau khi thêm xe:
+      
+
+4) Xem chi tiết xe
+Hiển thị đầy đủ thông tin của một xe khi người dùng chọn.
+
+5) Chức năng tìm kiếm
+Cho phép tìm xe theo tên hoặc từ khóa.
+            
+       Trước khi tìm   Sau khi nhập keyword      Kết quả lọc 
+6) Quản lý khách hàng
+Hiển thị danh sách và quản lý thông tin khách hàng.
+            
+Danh sách      Thêm khách hàng      Chi tiết khách hàng
+7) Quản lý đơn hàng
+            
+       Danh sách đơn          Tạo đơn mới         Trạng thái đơn 
+8) Quản lý sửa chữa
+Theo dõi và xử lý các yêu cầu sửa chữa.
+            
+     Danh sách sửa chữa         Nhập mô tả lỗi          Kết quả xử lý 
+9) Chức năng AI
+Người dùng tương tác với AI để được hỗ trợ.
+            
+        Giao diện chat    Nhập câu hỏi 
+            
+AI trả lời 
+10) Các thông tin trên Firebase
+customer_vehicles: Lưu trữ thông tin xe của khách hàng giúp quản lý mỗi phương tiện gắn với từng khách cụ thể, phục vụ cho việc theo dõi lịch sử sử dụng, sửa chữa và bảo dưỡng.
+
+customers: Quản lý thông tin khách hàng của cửa hàng, bao gồm tên, số điện thoại, địa chỉ và các thông tin liên quan. Dữ liệu này được sử dụng trong bán hàng, sửa chữa và chăm sóc khách hàng.
+
+motorcycles: Lưu trữ thông tin các loại xe mà cửa hàng đang kinh doanh, bao gồm tên xe, hãng, giá bán, số lượng tồn kho và trạng thái. Đây là nguồn dữ liệu chính cho chức năng bán hàng.
+
+repair_orders: Quản lý các đơn sửa chữa xe, lưu thông tin về khách hàng, xe, mô tả lỗi, chi phí và trạng thái xử lý, giúp theo dõi toàn bộ quá trình sửa chữa.
+
+repair_services: Lưu danh sách các dịch vụ sửa chữa mà cửa hàng cung cấp, ví dụ: thay nhớt, sửa phanh, kiểm tra động cơ,… Giúp chuẩn hóa quy trình sửa chữa và tính toán chi phí.
+
+sales_orders: Quản lý các đơn bán xe. Mỗi document chứa thông tin về khách hàng, xe đã bán, tổng tiền và trạng thái đơn hàng, hỗ trợ theo dõi doanh thu và hoạt động kinh doanh.
+
+
+staff: Lưu trữ thông tin nhân viên trong cửa hàng, bao gồm tên, vai trò, thông tin liên hệ và quyền hạn. Dữ liệu này có thể dùng để phân quyền và quản lý hoạt động nội bộ.
+
+suppliers: Quản lý thông tin nhà cung cấp xe hoặc linh kiện, giúp theo dõi nguồn nhập hàng, hỗ trợ quá trình nhập kho và liên hệ với nhà cung cấp.
+
+V) ĐÁNH GIÁ VÀ KẾT LUẬN
+1) Đánh giá về chức năng hệ thống
+Sau quá trình thiết kế và xây dựng, ứng dụng MotoShop đã hoàn thành các chức năng cơ bản của một hệ thống quản lý cửa hàng xe máy trên nền tảng Android. Các chức năng chính đã được triển khai bao gồm:
+Quản lý danh sách xe (thêm, sửa, xóa, hiển thị) 
+Quản lý khách hàng 
+Quản lý đơn hàng và sửa chữa 
+Tìm kiếm dữ liệu nhanh chóng 
+Điều hướng giữa các màn hình thông qua Activity và Intent 
+Tích hợp trí tuệ nhân tạo (AI) hỗ trợ tư vấn 
+Hệ thống hoạt động ổn định, giao diện thân thiện, dễ sử dụng và đáp ứng được các yêu cầu cơ bản của bài toán đặt ra.
+
+
+2) Ứng dụng của đề tài
+Ứng dụng có khả năng áp dụng trong thực tế tại các cửa hàng xe máy quy mô nhỏ và vừa, hỗ trợ:
+Quản lý thông tin sản phẩm một cách trực quan 
+Theo dõi tình trạng tồn kho 
+Lưu trữ và tra cứu thông tin khách hàng 
+Hỗ trợ quy trình bán hàng và sửa chữa 
+Tư vấn khách hàng thông qua AI 
+Ngoài ra, hệ thống có thể được mở rộng để sử dụng trong các lĩnh vực tương tự như:
+Cửa hàng xe điện 
+Cửa hàng phụ tùng 
+Hệ thống bán lẻ thiết bị 
+3) Ưu điểm của hệ thống
+Giao diện đơn giản, dễ sử dụng 
+Tổ chức code rõ ràng, theo hướng đối tượng 
+Dữ liệu được quản lý hiệu quả thông qua Room Database / Firebase 
+Có khả năng hoạt động offline (nếu dùng Room) 
+Tích hợp AI giúp nâng cao trải nghiệm người dùng 
+Dễ mở rộng thêm chức năng mới 
+4) Hạn chế
+Bên cạnh các kết quả đạt được, hệ thống vẫn còn một số hạn chế:
+Giao diện chưa thực sự tối ưu về mặt thẩm mỹ 
+Chưa xử lý đầy đủ các trường hợp lỗi (validation chưa hoàn chỉnh) 
+Hiệu năng chưa tối ưu khi dữ liệu lớn 
+Chưa có cơ chế phân quyền người dùng 
+Phụ thuộc vào kết nối internet đối với chức năng AI 
+Chưa triển khai đầy đủ kiến trúc MVVM (nếu chưa làm hoàn chỉnh) 
+5) Hướng phát triển
+Trong tương lai, hệ thống có thể được phát triển thêm các chức năng:
+Hoàn thiện kiến trúc MVVM (tách ViewModel rõ ràng) 
+Tích hợp Firebase Authentication cho đăng nhập 
+Đồng bộ dữ liệu real-time giữa nhiều thiết bị 
+Tối ưu giao diện người dùng (UI/UX) 
+Tích hợp thanh toán online 
+Mở rộng chức năng thống kê, báo cáo doanh thu 
+Nâng cấp AI: 
+Cá nhân hóa tư vấn 
+Phân tích dữ liệu khách hàng 
+Hỗ trợ dự đoán nhu cầu 
+6) Kiến thức và kỹ năng đạt được
+Thông qua quá trình thực hiện đồ án, nhóm em đã tích lũy được nhiều kiến thức và kỹ năng quan trọng:
+Về kiến thức:
+Hiểu rõ quy trình phát triển một ứng dụng Android 
+Nắm vững lập trình Java và lập trình hướng đối tượng (OOP) 
+Hiểu cách tổ chức code theo kiến trúc phần mềm (MVVM) 
+Biết cách làm việc với cơ sở dữ liệu (Room / Firebase) 
+Hiểu cách tích hợp API và AI vào ứng dụng 
+Về kỹ năng:
+Kỹ năng phân tích và thiết kế hệ thống 
+Kỹ năng lập trình và debug 
+Kỹ năng tìm kiếm tài liệu và tự học 
+Kỹ năng trình bày và viết báo cáo 
+Kỹ năng quản lý thời gian khi làm đồ án 
+7) Kết luận
+Đồ án “Ứng dụng quản lý cửa hàng xe máy MotoShop trên nền tảng Android” đã hoàn thành các mục tiêu đề ra, xây dựng được một hệ thống có đầy đủ các chức năng cơ bản và có khả năng ứng dụng thực tế.
+Việc tích hợp các công nghệ như Android, Room Database, Firebase và AI đã giúp hệ thống trở nên hiện đại và linh hoạt hơn. Đây là nền tảng quan trọng để tiếp tục phát triển các ứng dụng phức tạp hơn trong tương lai.
+
+
+
+
+
+
+

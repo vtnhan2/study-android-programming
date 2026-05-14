@@ -27,7 +27,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-// Fragment hiển thị danh sách khách hàng - Đã sửa lỗi crash và đồng nhất điều hướng.
+// Fragment hiển thị danh sách khách hàng 
 public class CustomerFragment extends Fragment {
 
     private CustomerViewModel viewModel;
